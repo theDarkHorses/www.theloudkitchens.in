@@ -13,6 +13,13 @@ module.exports = {
       },
       container: {
         center: true
+      },
+      colors:{
+        primary:"#AC2318",
+        text:"#999999"
+      },
+      fontSize:{
+        yash:"11px"
       }
     },
   },

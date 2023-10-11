@@ -1,6 +1,8 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { Lato, Raleway } from "next/font/google";
+import Footer from './components/Footer';
+import Header from './components/Header';
 
 
 const lato = Lato({
@@ -16,20 +18,23 @@ const raleway = Raleway({
   display: "swap"
 });
 
-
 export const metadata = {
   title: 'TheLoudKitchens',
   description: 'Jai Sri Ram.',
 }
 
-export default function RootLayout({ header, children, bottom }) {
+
+
+export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${lato.variable} ${raleway.variable} container`}>
-          {header}
-          {children}
-          {bottom}
+        <body className={`${lato.variable} ${raleway.variable} relative h-screen`}>
+          <Header />
+          <main className='px-2 container'>
+            {children}
+          </main>
+          <Footer />
         </body>
       </html>
     </ClerkProvider>
