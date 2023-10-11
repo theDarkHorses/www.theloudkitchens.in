@@ -29,11 +29,8 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${lato.variable} ${raleway.variable} relative h-screen`}>
-          <Header />
-          <main className='px-2 container'>
-            {children}
-          </main>
+        <body className={`${lato.variable} ${raleway.variable} relative h-screen  bg-app`}>
+          {children}
           <Footer />
         </body>
       </html>
