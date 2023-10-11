@@ -16,7 +16,11 @@ module.exports = {
       },
       colors:{
         primary:"#AC2318",
-        text:"#999999"
+        text:"#999999",
+        app:"#F4F4F4"
+      },
+      maxWidth:{
+        card:"250px"
       },
       fontSize:{
         yash:"11px"
