@@ -2,7 +2,7 @@ import RestaurantIcon from "@/app/components/RestaurantIcon";
 
 const iconData = [
   {
-    isActive: true,
+    isActive: false,
     imgSrc: "https://i.imgur.com/3vjidlG.jpg",
     name: "Great Indian Thalis",
   },
