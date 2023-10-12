@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const RestaurantIcon = ({ isActive, imgSrc, name }) => {
   return (
@@ -9,7 +8,7 @@ const RestaurantIcon = ({ isActive, imgSrc, name }) => {
         className={`h-[82px] w-[82px] ${
           isActive
             ? "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"
-            : "#DEDEDE"
+            : "bg-[#DEDEDE]"
         } rounded-2xl flex items-center justify-center`}
       >
         <Image
