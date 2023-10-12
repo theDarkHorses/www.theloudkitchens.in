@@ -7,7 +7,7 @@ export default function Layout({ dishes, carousel, restaurants }) {
   return (
     <>
       <header className="py-4 bg-[#f5f5f5] pt-14  top-0 px-5 flex  items-center justify-between">
-        <div className="flex space-x-2">
+        <Link href="/address" className="flex space-x-2">
           <div className="text-primary bg-[#D9D9D9] p-2 rounded-full">
             <MapPinIcon size={24} />
           </div>
@@ -18,7 +18,7 @@ export default function Layout({ dishes, carousel, restaurants }) {
             </div>
             <p className="text-[#555] font-lato text-xs ">Room- 323 </p>
           </div>
-        </div>
+        </Link>
         <div className="flex rounded-lg border-[#DDD] items-center border-2 h-fit px-2 py-1">
           <Image
             alt="coin"

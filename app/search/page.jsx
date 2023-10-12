@@ -39,7 +39,7 @@ export default function page() {
   }, [])
 
   return (
-    <section className="px-5 h-screen bg-white w-screen overflow-hidden z-40">
+    <section className="px-5 h-[calc(100vh_-_64px)] bg-white w-screen overflow-hidden z-40">
       <header className="border rounded-lg  flex items-center py-2 px-2 mt-10 bg-white  shadow-md shadow-slate-200">
         <ChevronLeft size={24} color="#AC2323" onClick={() => router.back()} />
         <input ref={searchRef} className=" px-2 leading-none font-lato  text-base w-full h-full border-none outline-none" placeholder="Search...." value={query} onChange={(e) => setQuery(e.target.value)} />
