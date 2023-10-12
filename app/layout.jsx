@@ -28,8 +28,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${lato.variable} ${raleway.variable} relative h-[calc(100vh_-_62px)] overflow-scroll-y  bg-app`}>
+      <html lang="en" className=' overflow-hidden'>
+        <body className={`${lato.variable} ${raleway.variable} h-[calc(100vh_-_62px)] no-scrollbar overflow-y-scroll  bg-app`}>
           {children}
           <Footer />
         </body>

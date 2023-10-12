@@ -1,7 +1,7 @@
 export default function page() {
   return (
-    <main className="aspect-[16/9] bg-red-700 mt-12  mx-5">
-      
+    <main className="mt-12  mx-5">
+      <div className="aspect-[16/9] w-full bg-black"/>
     </main>
   )
 }
