@@ -2,10 +2,15 @@ import Image from "next/image";
 import React from "react";
 
 const RestaurantIcon = ({ isActive, imgSrc, name }) => {
-  console.log(name);
   return (
     <div className="flex flex-col mt-1 ml-2">
-      <div className="h-[82px] w-[82px] bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-2xl flex items-center justify-center">
+      <div
+        className={`h-[82px] w-[82px] ${
+          isActive
+            ? "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"
+            : "#DEDEDE"
+        } rounded-2xl flex items-center justify-center`}
+      >
         <Image
           src={imgSrc}
           height={78}

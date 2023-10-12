@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const iconData = [
   {
-    isActive: true,
+    isActive: false,
     imgSrc: "https://i.imgur.com/3vjidlG.jpg",
     name: "Great Indian Thalis",
   },
