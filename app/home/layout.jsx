@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 import Header from "../components/Header";
 import Link from "next/link";
 
-export default function Layout({ children, restaurants }) {
+export default function Layout({ children, dishes }) {
     return (
         <>
             <Header />
@@ -20,7 +20,7 @@ export default function Layout({ children, restaurants }) {
                         </span>
                         <div className="border-t border-[#CCC] flex-1" />
                     </header>
-                    {restaurants}
+                    {dishes}
                 </section>
 
             </main>
