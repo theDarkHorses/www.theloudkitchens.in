@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const RestaurantIcon = ({ isActive, imgSrc, name }) => {
   return (
-    <div className="flex flex-col mt-1 ml-2">
+    <Link href={"/restaurants"} className="flex first-of-type:ml-5 flex-col mt-1 ml-2">
       <div
         className={`h-[82px] w-[82px] ${
           isActive
@@ -22,7 +23,7 @@ const RestaurantIcon = ({ isActive, imgSrc, name }) => {
       <h2 className="max-w-[75px] font-lato text-xs text-center font-semibold pt-1">
         {name}
       </h2>
-    </div>
+    </Link>
   );
 };
 

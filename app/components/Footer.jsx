@@ -44,11 +44,11 @@ const navLinks = [
 export default function Footer() {
     const pathName = usePathname()
     return (
-        <footer className='h-16 border absolute bottom-0 left-0 right-0 w-screen shadow-sm shadow-slate-600 rounded-t-md'>
+        <footer className=' bg-white h-16 border fixed bottom-0 left-0 right-0 w-screen shadow-sm shadow-slate-600 rounded-t-md'>
             <ul className="flex gap-2 items-center justify-center h-full">
                 {navLinks.map(item =>
                     <Link href={item.pathName} key={item.pathName} className="flex-1  border-primary gap-2 flex flex-col items-center justify-center">
-                        <Image src={pathName == item.pathName ? item.activeIcon : item.icon} width={20} height={20} />
+                        <Image alt="navigation items" src={pathName == item.pathName ? item.activeIcon : item.icon} width={20} height={20} className="w-5 h-5 aspect-square" />
                         <p className={`capitalize text-yash  font-raleway ${pathName == item.pathName ? "text-primary font-semibold" : "text-text"}`}>{item.label}</p>
                     </Link>
                 )}
