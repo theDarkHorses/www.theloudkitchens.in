@@ -1,20 +1,24 @@
-import { MapPinIcon, Search } from "lucide-react";
+import { ChevronRight, MapPinIcon, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import endnotes from "../../public/icons/endnote.svg";
-export default function Layout({ children, dishes, carousel, restaurants }) {
+
+export default function Layout({ dishes, carousel, restaurants }) {
   return (
     <>
       <header className="py-4 bg-[#f5f5f5] pt-14  top-0 px-5 flex  items-center justify-between">
-        <div className="flex space-x-2">
+        <Link href="/address" className="flex space-x-2">
           <div className="text-primary bg-[#D9D9D9] p-2 rounded-full">
             <MapPinIcon size={24} />
           </div>
           <div className="flex flex-col justify-center ">
-            <p className="font-raleway text-sm font-bold">Nit Srinagar</p>
+            <div className="flex  items-center">
+              <span className="font-raleway text-sm font-bold">Nit Srinagar</span>
+              <ChevronRight size={14} color="#AC2318" />
+            </div>
             <p className="text-[#555] font-lato text-xs ">Room- 323 </p>
           </div>
-        </div>
+        </Link>
         <div className="flex rounded-lg border-[#DDD] items-center border-2 h-fit px-2 py-1">
           <Image
             alt="coin"
@@ -33,7 +37,7 @@ export default function Layout({ children, dishes, carousel, restaurants }) {
         >
           <Search size={20} className="text-primary " />
           <p className="font-raleway font-semibold text-[#999] text-xs">
-            Search for restaurants, cuisines and more...{" "}
+            Search for restaurants, cuisines and more...
           </p>
         </Link>
         <section className="mt-8 space-y-2">
@@ -73,7 +77,7 @@ export default function Layout({ children, dishes, carousel, restaurants }) {
           {dishes}
         </section>
         <section className="py-4 bg-[#F6F6F6] mt-4">
-          <header className="flex items-end px-2 space-x-2">
+          <header className="flex items-end px-5 space-x-2">
             <div className="border-t border-[#CCC] flex-1 " />
             <span className="flex flex-col items-center">
               <Image
@@ -90,7 +94,7 @@ export default function Layout({ children, dishes, carousel, restaurants }) {
           </header>
           {carousel}
         </section>
-        <section className="">
+        <section className="px-5 bg-white pt-8">
           <Image
             src={endnotes}
             height={110}
@@ -98,12 +102,13 @@ export default function Layout({ children, dishes, carousel, restaurants }) {
             alt="end notes"
             className="py-8 mx-2"
           />
-          <div className="text-[#BDBDBD] mt-24 mb-10">
-            <div className="relative border-t border-[#CCC] flex-1 border-dashed" />
-            <div className="max-w-[50vw] -m-6 mx-auto text-center bg-[#f4f4f4] relative z-10">
-              Proudly made in <br />
+          <div className="text-[#BDBDBD] items-center py-10 space-x-2 flex">
+            <div className=" border-t  border-[#CCC] flex-1 border-dashed" />
+            <div className="mx-auto text-center  w-36 flex flex-col leading-tight">
+              Proudly made in
               NIT Srinagar
             </div>
+            <div className="relative border-t  border-[#CCC] flex-1 border-dashed" />
           </div>
         </section>
       </main>

@@ -2,7 +2,6 @@ import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { Lato, Raleway } from "next/font/google";
 import Footer from './components/Footer';
-import Header from './components/Header';
 
 
 const lato = Lato({
