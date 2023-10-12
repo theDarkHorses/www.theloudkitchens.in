@@ -1,20 +1,21 @@
 import Image from "next/image";
 import React from "react";
-import dummyFood from "../../public/icons/dummyFood.png";
 
-const RestaurantIcon = () => {
+const RestaurantIcon = ({ isActive, imgSrc, name }) => {
+  console.log(name);
   return (
-    <div className="flex flex-col mt-3">
+    <div className="flex flex-col mt-1 ml-2">
       <div className="h-[82px] w-[82px] bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-2xl flex items-center justify-center">
         <Image
-          src="https://i.imgur.com/3vjidlG.jpg"
+          src={imgSrc}
           height={78}
           width={78}
           className="border-white border-2 rounded-2xl"
+          alt={name}
         />
       </div>
       <h2 className="max-w-[75px] font-lato text-xs text-center font-semibold pt-1">
-        Great Indian Thalis
+        {name}
       </h2>
     </div>
   );
