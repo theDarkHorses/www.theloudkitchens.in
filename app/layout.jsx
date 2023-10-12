@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${lato.variable} ${raleway.variable} relative h-screen  bg-app`}>
+        <body className={`${lato.variable} ${raleway.variable} relative h-[calc(100vh_-_62px)] overflow-scroll-y  bg-app`}>
           {children}
           <Footer />
         </body>
