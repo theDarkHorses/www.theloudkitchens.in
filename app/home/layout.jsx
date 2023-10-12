@@ -109,7 +109,6 @@ export default function Layout({ dishes, carousel, restaurants }) {
               NIT Srinagar
             </div>
             <div className="relative border-t  border-[#CCC] flex-1 border-dashed" />
-
           </div>
         </section>
       </main>
