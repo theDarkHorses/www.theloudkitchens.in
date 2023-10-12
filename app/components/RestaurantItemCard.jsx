@@ -5,10 +5,10 @@ import Link from "next/link";
 export default function RestaurantItemCard({ name, photoUrl, isVeg, tags, time, price }) {
   return (
     <Link href={`/restaurants/${name}`} className="first-of-type:ml-5 last-of-type:mr-5 shadow-lg relative snap-center shadow-gray-300 my-4 bg-white min-w-[250px] rounded-md max-w-card overflow-hidden">
-      <Image src={photoUrl} width={241} height={124} className="object-cover object-center min-w-[250px] max-w-card aspect-auto" />
+      <Image alt={name} src={photoUrl} width={241} height={124} className="object-cover object-center min-w-[250px] max-w-card aspect-auto" />
       <div className="flex items-start p-2 space-x-2 ">
-        <Image src={isVeg ? "/icons/vegTlk.png" : "/icons/nonvegTlk.png"} width={36} height={36} className="w-10 h-10 bg-white rounded-full p-[1px] absolute left-[11px] top-[83px]"/>
-        <Image src={isVeg ? "/icons/veg.png" : "/icons/nonveg.png"} width={12} height={12} className="w-3 h-3 relative top-1" />
+        <Image alt={isVeg?"veg item":"non-veg item"} src={isVeg ? "/icons/vegTlk.png" : "/icons/nonvegTlk.png"} width={36} height={36} className="w-10 h-10 bg-white rounded-full p-[1px] absolute left-[11px] top-[83px]"/>
+        <Image alt={isVeg?"veg item":"non-veg item"} src={isVeg ? "/icons/veg.png" : "/icons/nonveg.png"} width={12} height={12} className="w-3 h-3 relative top-1" />
         <div className=" ">
           <h2 className="font-raleway text-lg font-bold leading-tight" >{name}</h2>
           <div className="space-x-2">
