@@ -10,7 +10,7 @@ const Item = () => {
     setShowMore(!showMore);
   };
   return (
-    <section className="flex justify-between py-7 px-3 border-b-2 border-[#999] border-dotted">
+    <section className="flex justify-between py-7 px-5 border-b-2 border-[#999] border-dotted">
       <div className="flex-[1.2]">
         <Image src={nonveg} height={18} width={18} className="" alt="type" />
         <h3 className="font-raleway text-lg font-semibold ">
@@ -22,7 +22,7 @@ const Item = () => {
             ₹ 189
           </span>
         </p>
-        <p className="text-yash font-bold mt-3">🔥 +934 Kcal </p>
+        <p className="text-yash font-bold mt-5">🔥 +934 Kcal </p>
         <ToggleString
           string="
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque nisi aperiam nam doloribus nulla molestiae accusamus sed atque cum quis! Ipsam ratione nemo illo iure explicabo pariatur error sit.
@@ -37,8 +37,8 @@ const Item = () => {
           alt="item pic"
           className="rounded-xl "
         />
-        <p className="text-primary py-2 px-10 border-2 border-primary font-raleway text-xl font-semibold bg-[#FFE7E7] text-center rounded-xl -m-4 relative max-w-[120px] shadow-lg shadow-red-200">
-          Add
+        <p className="text-primary py-2 px-10 border-[1px] border-primary font-raleway text-lg font-semibold bg-[#FFE7E7] text-center rounded-xl -m-4 relative max-w-[120px] shadow-lg shadow-red-200">
+          ADD
         </p>
       </div>
     </section>

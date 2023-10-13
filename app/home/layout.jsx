@@ -19,7 +19,7 @@ export default function Layout({ dishes, carousel, restaurants }) {
             <p className="text-[#555] font-lato text-xs ">Room- 323 </p>
           </div>
         </Link>
-        <div className="flex rounded-lg border-[#DDD] items-center border-2 h-fit px-2 py-1">
+        <Link href="/orders?tab=2" className="flex rounded-lg border-[#DDD] items-center border-2 h-fit px-2 py-1">
           <Image
             alt="coin"
             src={"/icons/coin.svg"}
@@ -28,7 +28,7 @@ export default function Layout({ dishes, carousel, restaurants }) {
             className="w-5 h-5 aspect-square"
           />
           <p className="font-raleway font-semibold text-xs px-1">100</p>
-        </div>
+        </Link>
       </header>
       <main className="">
         <Link
