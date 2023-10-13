@@ -35,20 +35,19 @@ const iconData = [
 
 const page = () => {
   return (
-   
-      <main className="py-2 last:pr-5 snap-x snap-mandatory items-start flex space-x-4 overflow-x-scroll no-scrollbar pb-8">
-        {iconData?.map(({ isActive, imgSrc, name }, index) => {
-          return (
-            <RestaurantIcon
-              key={index}
-              isActive={isActive}
-              imgSrc={imgSrc}
-              name={name}
-            />
-          );
-        })}
-      </main>
-   
+    <main className="py-2 last:pr-5 snap-x snap-mandatory items-start flex space-x-4 overflow-x-scroll no-scrollbar pb-8">
+      {iconData?.map(({ isActive, imgSrc, name }, index) => {
+        return (
+          <RestaurantIcon
+            key={index}
+            isActive={isActive}
+            imgSrc={imgSrc}
+            name={name}
+            id={index}
+          />
+        );
+      })}
+    </main>
   );
 };
 

@@ -1,9 +1,14 @@
 import Image from "next/image";
 import React from "react";
 import share from "../../../public/icons/share.svg";
+import BackRoute from "@/app/components/common/BackRoute";
+import DrawerButton from "@/app/components/common/DrawerButton";
 const layout = ({ children, menu }) => {
+  const str = "hello testing";
+
   return (
     <main>
+      <BackRoute />
       <Image
         src="https://i.imgur.com/rHQ2DwY.jpg"
         className="w-screen"
@@ -27,10 +32,7 @@ const layout = ({ children, menu }) => {
           <p className="font-lato text-sm text-[#999]">
             North Indian &bull; Fast food
           </p>
-          <div className="flex font-lato text-xs text-[#808080] border-[1px] border-dashed border-[#808080] px-3 py-1 space-x-2 mt-3">
-            <p>Explore</p>
-            <Image src={share} height={9} width={9} />
-          </div>
+          <DrawerButton str={str} />
         </div>
       </section>
       <section className="">{menu}</section>

@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import nonveg from "../../public/icons/nonveg.png";
+import ToggleString from "./common/ToggleString";
 const Item = () => {
   const [showMore, setShowMore] = useState(false);
 
@@ -9,7 +10,7 @@ const Item = () => {
     setShowMore(!showMore);
   };
   return (
-    <section className="flex justify-between py-7 px-3">
+    <section className="flex justify-between py-7 px-3 border-b-2 border-[#999] border-dotted">
       <div className="flex-[1.2]">
         <Image src={nonveg} height={18} width={18} className="" alt="type" />
         <h3 className="font-raleway text-lg font-semibold ">
@@ -22,27 +23,11 @@ const Item = () => {
           </span>
         </p>
         <p className="text-yash font-bold mt-3">🔥 +934 Kcal </p>
-        <div className="relative">
-          <div
-            className={`overflow-hidden ${
-              showMore ? "max-h-full" : "max-h-[38px]"
-            } transition-max-h duration-500 ease-in-out font-lato text-[#666] text-sm`}
-          >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-            voluptatibus debitis enim quia accusamus inventore error eveniet
-            asperiores ut quae unde delectus aliquid quam, tenetur cum at
-            aperiam id temporibus!
-          </div>
-          {"Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia voluptatibus debitis enim quia accusamus inventore error eveniet asperiores ut quae unde delectus aliquid quam, tenetur cum at aperiam id temporibus!"
-            .length > 50 && (
-            <button
-              className="text-[#666] font-lato text-sm font-bold"
-              onClick={toggleShowMore}
-            >
-              {showMore ? "less" : "...more"}
-            </button>
-          )}
-        </div>
+        <ToggleString
+          string="
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque nisi aperiam nam doloribus nulla molestiae accusamus sed atque cum quis! Ipsam ratione nemo illo iure explicabo pariatur error sit.
+        "
+        />
       </div>
       <div className="flex flex-col items-center">
         <Image

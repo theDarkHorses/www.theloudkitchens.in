@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const RestaurantIcon = ({ isActive, imgSrc, name }) => {
+const RestaurantIcon = ({ isActive, imgSrc, name,id }) => {
   return (
-    <Link href={"/restaurants"} className="flex first-of-type:ml-5 flex-col mt-1 ml-2">
+    <Link href={`/restaurants/${id}`} className="flex first-of-type:ml-5 flex-col mt-1 ml-2">
       <div
         className={`h-[82px] w-[82px] ${
           isActive
