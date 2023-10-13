@@ -49,7 +49,7 @@ export default function page() {
         <div className="mt-4 ">
           {DATA.map((item, index) =>
             <div key={index} className="flex p-2 gap-2">
-              <Image src={item.photoUrl} width={52} height={52} />
+              <Image src={item.photoUrl} alt={item.name} width={52} height={52} />
               <div className="flex flex-col items-start justify-center">
                 <h3 className="text-[#292C35] font-medium text-start font-lato text-lg ">
                   {item.name}
