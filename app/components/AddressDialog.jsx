@@ -22,7 +22,7 @@ export default function AddressDialog() {
     }, [id])
 
     const handleDelete = (addressId)=>{
-        console.log(addressId)
+        console.log(a)
     }
 
     return (

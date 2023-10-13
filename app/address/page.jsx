@@ -19,7 +19,7 @@ export default function page() {
     return (
         <section className="h-[calc(100vh_-_64px)] no-scrollbar px-4 bg-[#F5F6FB] w-screen overflow-hidden overflow-y-scroll py-8">
             <header className="flex items-center space-x-2 mt-5 ">
-                <Link href="/">
+                <Link href="/home">
                     <ChevronLeft size={24} color="#AC2323" />
                 </Link>
                 <h1 className="font-lato text-xl font-bold text-[#242539]">Add location</h1>
@@ -50,20 +50,20 @@ export default function page() {
                             <div className="">
                                 <p className="font-lato leading-none text-[#18191B] text-base capitalize">{address.type}</p>
                                 <p className="font-lato mt-1 leading-snug text-xs text-md text-[#777] capitalize">{address.description}</p>
-                                <Link  href={`/address?edit=${index}`} className="w-fit">
+                                <Link href={`/address?edit=${index}`} className="w-fit">
                                     <div className="p-1 bg-white w-fit rounded-full mt-3 shadow border shadow-slate-100">
                                         <MoreHorizontal className="text-primary " size={16} />
                                     </div>
                                 </Link>
                             </div>
                         </div>)}
-                        <div className="flex items-center  pb-4 pt-6 justify-between">
+                        <Link href="/address/new" className="flex items-center  pb-4 pt-6 justify-between">
                             <div className="items-center flex space-x-2">
-                                <Plus size={24} className="text-primary"/>
+                                <Plus size={24} className="text-primary" />
                                 <p className="font-lato text-primary text-md">Add Address</p>
                             </div>
-                            <ChevronRight size={20} className="text-primary"/>
-                        </div>
+                            <ChevronRight size={20} className="text-primary" />
+                        </Link>
                     </main>
                 </section>
             </main>
