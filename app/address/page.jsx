@@ -1,19 +1,26 @@
-import { Briefcase, ChevronLeft, ChevronRight, Home, LocateFixed, MoreHorizontal, Plus } from "lucide-react";
+import {
+  Briefcase,
+  ChevronLeft,
+  ChevronRight,
+  Home,
+  LocateFixed,
+  MoreHorizontal,
+  Plus,
+} from "lucide-react";
 import Link from "next/link";
 
 const ADDRESS = [
-
-    {
-        type: "home",
-        description: "Faculty block, quarter no 2, near girls hostel, near workshop, near front main block near main gate near main colelge"
-
-    },
-    {
-        type: "home",
-        description: "Faculty block, quarter no 2, near girls hostel, near workshop, near front main block near main gate near main colelge"
-
-    }
-]
+  {
+    type: "home",
+    description:
+      "Faculty block, quarter no 2, near girls hostel, near workshop, near front main block near main gate near main colelge",
+  },
+  {
+    type: "home",
+    description:
+      "Faculty block, quarter no 2, near girls hostel, near workshop, near front main block near main gate near main colelge",
+  },
+];
 
 export default function page() {
     return (
@@ -68,5 +75,6 @@ export default function page() {
                 </section>
             </main>
         </section>
-    )
+     
+  );
 }

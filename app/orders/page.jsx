@@ -1,5 +1,6 @@
 import { ChevronLeft } from "lucide-react";
-import Image from "next/image";;
+import Image from "next/image";import BackRoute from "../components/common/BackRoute";
+;
 
 export default function page() {
   return (
@@ -12,6 +13,7 @@ export default function page() {
           height={200}
           alt="restaurant"
         />
+        <BackRoute/>
       </header>
     </section>
   )
