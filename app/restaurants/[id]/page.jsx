@@ -20,6 +20,7 @@ function getRestaurantData() {
             categories: [
               {
                 name: "Gravies",
+                isRequired: true,
                 requiredItems: 3,
                 items: [
                   {
@@ -146,11 +147,11 @@ export default function page({ searchParams }) {
   const activeTab = tab || 0
 
   return (
-    <main>
+    <main className="relative">
       <BackRoute />
       <Image
         src="https://i.imgur.com/rHQ2DwY.jpg"
-        className="w-screen"
+        className="w-full"
         width={350}
         height={200}
         alt="banner"
@@ -163,6 +164,7 @@ export default function page({ searchParams }) {
               height={78}
               width={78}
               className="border-white border-2 rounded-2xl"
+              alt="item"
             />
           </div>
           <h2 className="font-raleway text-lg text-center font-extrabold pt-1">

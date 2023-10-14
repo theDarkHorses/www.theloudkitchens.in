@@ -5,7 +5,7 @@ import React from "react";
 
 export default function page() {
   return (
-    <section className="px-5 h-[calc(100vh_-_64px)] py-16 relative bg-[#F5F5F5] w-screen overflow-hidde overflow-y-scroll z-40">
+    <section className="px-5  py-16 relative bg-[#F5F5F5] w-full no-scrollbar overflow-hidde overflow-y-scroll z-40">
       <nav className="absolute top-5 left-3">
         <Link href="/">
           <ChevronLeft size={28} color="#1C1C1C" />

@@ -12,14 +12,14 @@ const DrawerButton = () => {
   return (
     <Fragment>
       <div
-        className="flex font-lato text-xs text-[#808080] border-b-[1px] border-dashed border-[#808080]  py-1 space-x-2 mt-3 relative"
+        className="flex cursor-pointer font-lato text-xs text-[#808080] border-b-[1px] border-dashed border-[#808080]  py-1 space-x-2 mt-3 "
         onClick={openDrawer}
       >
         <p>Explore</p>
         <Image src={"/icons/share.svg"} height={9} width={9} alt="img" />
       </div>
       <Drawer
-        size={700}
+        size={window.innerHeight*0.8}
         placement="bottom"
         open={openBottom}
         onClose={closeDrawer}
@@ -33,15 +33,15 @@ const DrawerButton = () => {
             className="rounded-lg"
             alt="restaurant"
           />
-          <div className="flex items-center pl-6 -mt-7 ">
+          <div className="flex items-center pl-6 space-x-2 ">
             <Image
               src="https://i.imgur.com/3vjidlG.jpg"
               height={85}
               width={85}
-              className="rounded-full border-white border-4"
+              className="rounded-full border-white border-4 relative -top-7"
               alt="name"
             />
-            <div className="pt-5">
+            <div className="">
               <h3 className="font-raleway font-bold text-lg capitalize">
                 Great Indian Thalis
               </h3>
@@ -70,7 +70,7 @@ const DrawerButton = () => {
           doloremque vel modi corporis enim rerum autem, doloribus optio non
           quos.
         </h4>
-        <div className="bg-white flex justify-end flex-1 w-screen shadow-md shadow-black sticky bottom-0">
+        <div className="bg-white flex justify-end flex-1 w-full shadow-md shadow-black fixed bottom-0">
           <button className="py-3 px-5 bg-red-600 text-white rounded-lg mx-1 my-4">
             Follow Our Journey
           </button>

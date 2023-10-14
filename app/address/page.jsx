@@ -24,7 +24,7 @@ const ADDRESS = [
 
 export default function page() {
     return (
-        <section className="h-[calc(100vh_-_64px)] no-scrollbar px-4 bg-[#F5F6FB] w-screen overflow-hidden overflow-y-scroll py-8">
+        <section className="h-[calc(100vh_-_64px)] no-scrollbar px-4 bg-[#F5F6FB] w-full overflow-hidden overflow-y-scroll py-8">
             <header className="flex items-center space-x-2 mt-5 ">
                 <Link href="/home">
                     <ChevronLeft size={24} color="#AC2323" />

@@ -44,7 +44,7 @@ const navLinks = [
 export default function Footer() {
     const pathName = usePathname()
     return (
-        <footer className=' bg-white h-16 border fixed bottom-0 left-0 right-0 w-screen shadow-lg shadow-slate-600 rounded-t-md'>
+        <footer className=' bg-white h-16 border fixed bottom-0 left-0 right-0 w-full shadow-lg shadow-slate-600 rounded-t-md'>
             <ul className="flex gap-2 items-center justify-center h-full">
                 {navLinks.map(item =>
                     <Link href={item.pathName} key={item.pathName} className="flex-1  border-primary gap-2 flex flex-col items-center justify-center">

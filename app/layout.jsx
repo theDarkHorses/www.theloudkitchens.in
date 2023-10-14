@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <ThemeProvider>
-        <html lang="en" className=' overflow-hidden scroll-smooth'>
+        <html lang="en" className=' overflow-hidden scroll-smooth '>
           <body className={`${lato.variable} ${raleway.variable} h-[calc(100vh_-_62px)] no-scrollbar overflow-x-hidden overflow-y-scroll  bg-app`}>
             {children}
             <Footer />
