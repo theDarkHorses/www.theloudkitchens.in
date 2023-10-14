@@ -15,7 +15,7 @@ const DrawerButton = ({ str }) => {
   return (
     <React.Fragment>
       <div
-        className="flex font-lato text-xs text-[#808080] border-[1px] border-dashed border-[#808080] px-3 py-1 space-x-2 mt-3 bg-app relative"
+        className="flex font-lato text-xs text-[#808080] border-b-[1px] border-dashed border-[#808080]  py-1 space-x-2 mt-3 relative"
         onClick={openDrawer}
       >
         <p>Explore</p>
@@ -26,7 +26,7 @@ const DrawerButton = ({ str }) => {
         placement="bottom"
         open={openBottom}
         onClose={closeDrawer}
-        className="border-t-0 border-black  rounded-t-lg shadow-md shadow-red-800  overflow-y-scroll bg-app flex-1 z-[999999]"
+        className="border-t-0 no-scrollbar border-black  rounded-t-lg shadow-md shadow-red-800  overflow-y-scroll bg-app flex-1 z-[999999]"
       >
         <div className="p-2 bg-white pb-6 z-50">
           <Image

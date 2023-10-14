@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 
 const ToggleString = ({ string }) => {
@@ -9,9 +11,9 @@ const ToggleString = ({ string }) => {
   return (
     <div className="relative">
       <div
-        className={`overflow-hidden ${
+        className={`overflow-hidden transition-all text-[#666] text-sm duration-500 ease-in-out font-lato ${
           showMore ? "max-h-full" : "max-h-[38px]"
-        } transition-max-h duration-500 ease-in-out font-lato text-[#666] text-sm`}
+        } `}
       >
         {string}
       </div>
