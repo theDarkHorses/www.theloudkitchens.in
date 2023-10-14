@@ -2,17 +2,19 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import ToggleString from "./common/ToggleString";
-const Item = () => {
+
+
+const Item = ({ item }) => {
   const [showMore, setShowMore] = useState(false);
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
   return (
-    <section className="flex justify-between py-7 px-5 border-b-2 border-[#999] border-dotted">
+    <section className="flex justify-between py-7 px-5">
       <div className="w-2/3">
         <Image src={"/icons/nonveg.png"} height={18} width={18} className="" alt="type" />
         <h3 className="font-raleway text-lg font-semibold ">
-          Royal Hyderabadi Platter
+          {item.name}
         </h3>
         <p className="font-lato font-semibold flex items-center mt-2">
           <span className="text-[#444]">₹ 149</span>

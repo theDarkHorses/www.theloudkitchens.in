@@ -1,28 +1,25 @@
 "use client";
-import React from "react";
-import share from "../../../public/icons/share.svg";
-import { IconButton, Drawer } from "@material-tailwind/react";
-import Image from "next/image"; // Import Image from next/image
-import { X } from "lucide-react";
+import {  Drawer } from "@material-tailwind/react";
+import Image from "next/image"; 
+import { useState, Fragment } from "react";
 
-const DrawerButton = ({ str }) => {
-  const [openBottom, setOpenBottom] = React.useState(false);
+const DrawerButton = () => {
+  const [openBottom, setOpenBottom] = useState(false);
 
   const openDrawer = () => setOpenBottom(true);
   const closeDrawer = () => setOpenBottom(false);
-  console.log(openBottom);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div
         className="flex font-lato text-xs text-[#808080] border-b-[1px] border-dashed border-[#808080]  py-1 space-x-2 mt-3 relative"
         onClick={openDrawer}
       >
         <p>Explore</p>
-        <Image src={share} height={9} width={9} alt="img" />
+        <Image src={"/icons/share.svg"} height={9} width={9} alt="img" />
       </div>
       <Drawer
-        size="80vh"
+        size={700}
         placement="bottom"
         open={openBottom}
         onClose={closeDrawer}
@@ -79,7 +76,7 @@ const DrawerButton = ({ str }) => {
           </button>
         </div>
       </Drawer>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
