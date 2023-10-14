@@ -144,7 +144,7 @@ const page = ({ searchParams }) => {
   return (
     <div className="bg-white divide-y-[1px] border-[#999] border-dotted">
      {section.menu.map((item, index) => (
-      <Item key={index} item={item} />
+      <Item key={index} item={item} activeTab={activeTab} />
      ))}
     </div>
   );

@@ -17,7 +17,7 @@ export default function page({ searchParams }) {
       <header className=" rounded-b-lg overflow-hidden relative mb-4">
         <Image
           src="https://i.imgur.com/rHQ2DwY.jpg"
-          className="w-screen"
+          className="w-full"
           width={350}
           height={200}
           alt="restaurant"

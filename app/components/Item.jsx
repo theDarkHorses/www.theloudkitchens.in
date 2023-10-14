@@ -1,14 +1,11 @@
-"use client";
+
 import Image from "next/image";
-import React, { useState } from "react";
 import ToggleString from "./common/ToggleString";
+import Link from "next/link";
 
 
-const Item = ({ item }) => {
-  const [showMore, setShowMore] = useState(false);
-  const toggleShowMore = () => {
-    setShowMore(!showMore);
-  };
+const Item = ({ item, activeTab }) => {
+
   return (
     <section className="flex justify-between py-7 px-5">
       <div className="w-2/3">
@@ -37,9 +34,9 @@ const Item = ({ item }) => {
           alt="item pic"
           className="rounded-xl "
         />
-        <p className="text-primary py-1 px-8 border-[1px] border-primary font-raleway text-lg font-semibold bg-[#FFE7E7] text-center rounded-lg -m-4 relative max-w-[120px] shadow-lg shadow-red-200">
+        <Link href={`?tab=${activeTab}&item=${item.name}`} className="text-primary py-1 px-8 border-[1px] border-primary font-raleway text-lg font-semibold bg-[#FFE7E7] text-center rounded-lg -m-4 relative  shadow-lg shadow-red-200">
           ADD
-        </p>
+        </Link>
       </div>
     </section>
   );
