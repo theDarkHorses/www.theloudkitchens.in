@@ -1,10 +1,8 @@
 "use client";
 
 import {
-  ButtonGroup,
   Checkbox,
   Drawer,
-  IconButton,
   Tab,
   TabPanel,
   Tabs,
@@ -117,6 +115,7 @@ function getRestaurantItem() {
 
 export default function layout({ children, menu }) {
   const { data, subSection } = getRestaurantItem();
+  const [windowHeight] = useState(window.innerHeight);
 
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
@@ -149,7 +148,7 @@ export default function layout({ children, menu }) {
           open={openDrawer}
           onClose={handleDrawer}
           placement="bottom"
-          size={window.innerHeight * 0.8}
+          size={windowHeight * 0.8}
           className="rounded-t-lg overflow-hidden w-full bg-[#F6F6F6]"
         >
           <div className=" bg-white py-1 mx-2 rounded-lg space-y-5 pb-8">

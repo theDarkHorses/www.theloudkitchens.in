@@ -1,54 +1,25 @@
 import RestaurantIcon from "@/app/components/RestaurantIcon";
+import { getHomePageRestaurants } from "@/app/queries/restaurant";
 
-const iconData = [
-  {
-    isActive: true,
-    imgSrc: "https://i.imgur.com/3vjidlG.jpg",
-    name: "Great Indian Thalis",
-  },
-  {
-    isActive: true,
-    imgSrc: "https://i.imgur.com/3vjidlG.jpg",
-    name: "Great Indian Thalis",
-  },
-  {
-    isActive: false,
-    imgSrc: "https://i.imgur.com/3vjidlG.jpg",
-    name: "Great Indian Thalis",
-  },
-  {
-    isActive: false,
-    imgSrc: "https://i.imgur.com/3vjidlG.jpg",
-    name: "Great Indian Thalis",
-  },
-  {
-    isActive: false,
-    imgSrc: "https://i.imgur.com/3vjidlG.jpg",
-    name: "Great Indian Thalis",
-  },
-  {
-    isActive: false,
-    imgSrc: "https://i.imgur.com/3vjidlG.jpg",
-    name: "Great Indian Thalis",
-  },
-];
+async function getRestaurants() {
+  const res = await getHomePageRestaurants();
+  return res.sort((a, b) => (a.isActive < b.isActive ? 1 : -1));
+}
 
-const page = () => {
+export default async function page() {
+  const restaurants = await getRestaurants();
+
   return (
     <main className="py-2 last:pr-5 snap-x snap-mandatory items-start flex space-x-4 overflow-x-scroll no-scrollbar pb-8">
-      {iconData?.map(({ isActive, imgSrc, name }, index) => {
-        return (
-          <RestaurantIcon
-            key={index}
-            isActive={isActive}
-            imgSrc={imgSrc}
-            name={name}
-            id={index}
-          />
-        );
-      })}
+      {restaurants?.map((restaurant) => (
+        <RestaurantIcon
+          key={restaurant._id}
+          isActive={restaurant.isActive}
+          imgSrc={restaurant.imageUrl}
+          name={restaurant.name}
+          id={restaurant._id}
+        />
+      ))}
     </main>
   );
-};
-
-export default page;
+}

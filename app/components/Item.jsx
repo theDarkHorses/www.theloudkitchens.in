@@ -5,6 +5,7 @@ import Link from "next/link";
 
 
 const Item = ({ item, activeTab }) => {
+  console.log(item);
 
   return (
     <section className="flex justify-between py-7 px-5">
