@@ -2,7 +2,6 @@ import Image from "next/image";
 import ToggleString from "./common/ToggleString";
 import Link from "next/link";
 
-
 const Item = ({ item, activeTab }) => {
 
   return (

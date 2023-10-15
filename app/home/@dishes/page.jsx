@@ -75,7 +75,7 @@ const cardData = [
   },
 ];
 
-export default function page() {
+export default async function page() {
   return (
     <main className="py-4 mt-4 last:pr-5 snap-x snap-mandatory items-start flex space-x-4 overflow-x-scroll no-scrollbar pb-8">
       {cardData.map((item, index) => (
