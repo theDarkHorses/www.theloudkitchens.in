@@ -20,7 +20,8 @@ module.exports = withMT({
       colors:{
         primary:"#AC2318",
         text:"#999999",
-        app:"#F4F4F4"
+        app:"#F4F4F4",
+        skeleton:"#cad3dc"
       },
       maxWidth:{
         card:"250px"
