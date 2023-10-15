@@ -1,5 +1,5 @@
 "use client";
-import { Button, ButtonGroup, Drawer } from "@material-tailwind/react";
+import { Button, ButtonGroup, Drawer } from "@/materialConfig";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -30,17 +30,17 @@ export default function AddressDialog() {
     // <div className="left-0 right-0 z-50 absolute flex-col bg-transparent outline-none border-none bottom-2 space-y-4 px-2 flex items-center justify-center">
       
           <Drawer placement="bottom" open={open} onClose={()=>handleOpen(false)} size={196} className=" backdrop-blur w-full bg-transparent rounded-t-lg overflow-hidden">
-            <ButtonGroup className="cursor-pointer w-full  shadow-md bg-white shadow-slate-400 flex flex-col items-center justify-center">
+            <ButtonGroup className="cursor-pointer w-full rounded-lg overflow-hidden  shadow-md bg-white shadow-slate-400 divide-y-[1px] flex flex-col items-center justify-center">
 
               <Button
                 onClick={() => router.push(`/address/${id}`)}
-                className="w-full font-lato py-4 text-lg text-[#007AFF] text-center bg-[#f6f6f6]"
+                className="w-full font-lato py-4 text-lg text-[#007AFF] rounded-b-none text-center bg-[#f6f6f6]"
               >
                 Edit
               </Button>
               <Button
                 onClick={() => handleDelete(open)}
-                className="text-[#FF3B2F] py-4 w-full rounded-b-lg font-lato text-lg text-center bg-[#f6f6f6]"
+                className="text-[#FF3B2F] py-4 w-full rounded-t-none  font-lato text-lg text-center bg-[#f6f6f6]"
               >
                 Delete
               </Button>

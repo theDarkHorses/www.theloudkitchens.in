@@ -4,6 +4,7 @@ import Image from "next/image";
 import endnotes from "../../public/icons/endnote.svg";
 
 export default function Layout({ dishes, carousel, restaurants }) {
+    
   return (
     <>
       <header className="py-4 bg-[#f5f5f5] pt-14  top-0 px-5 flex  items-center justify-between">

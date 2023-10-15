@@ -1,5 +1,6 @@
-"use client";
-import { Drawer } from "@material-tailwind/react";
+'use client';
+
+import { Drawer } from "@/materialConfig";
 import Image from "next/image";
 import { useState, Fragment } from "react";
 
