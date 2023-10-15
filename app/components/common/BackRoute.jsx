@@ -8,7 +8,8 @@ const BackRoute = () => {
   return (
     <ChevronLeft
       size={32}
-      className="absolute top-3 left-3 text-white cursor-pointer"
+      className="absolute top-3 left-3 text-white cursor-pointer z-50"
+      color="white"
       onClick={() => router.back()}
     />
   );

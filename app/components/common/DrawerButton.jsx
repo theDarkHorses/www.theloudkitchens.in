@@ -1,29 +1,28 @@
 "use client";
-import {  Drawer } from "@material-tailwind/react";
-import Image from "next/image"; 
+import { Drawer } from "@material-tailwind/react";
+import Image from "next/image";
 import { useState, Fragment } from "react";
 
-const DrawerButton = ({name, description, imageUrl, bannerUrl}) => {
-  const [openBottom, setOpenBottom] = useState(false);
+const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [windowHeight] = useState(window.innerHeight);
 
-  const openDrawer = () => setOpenBottom(true);
-  const closeDrawer = () => setOpenBottom(false);
 
   return (
     <Fragment>
       <div
-        className="flex cursor-pointer font-lato text-xs text-[#808080] border-b-[1px] border-dashed border-[#808080]  py-1 space-x-2 mt-3 "
-        onClick={openDrawer}
+        className="flex cursor-pointer relative -top-8 font-lato text-xs text-[#808080] border-b-[1px] border-dashed border-[#808080]  py-1 space-x-2 mt-3 "
+        onClick={()=>setOpenDrawer(true)}
       >
         <p>Explore</p>
         <Image src={"/icons/share.svg"} height={9} width={9} alt="img" />
       </div>
       <Drawer
-        size={window.innerHeight*0.8}
+        size={windowHeight * 0.8}
         placement="bottom"
-        open={openBottom}
-        onClose={closeDrawer}
-        className="border-t-0 no-scrollbar border-black  rounded-t-lg shadow-md shadow-red-800  overflow-y-scroll bg-app flex-1 z-[999999]"
+        open={openDrawer}
+        onClose={()=>setOpenDrawer(false)}
+        className=" rounded-t-lg  bg-app overflow-hidden overflow-y-scroll pb-20 no-scrollbar"
       >
         <div className="p-2 bg-white pb-6 z-50">
           <Image
@@ -34,7 +33,7 @@ const DrawerButton = ({name, description, imageUrl, bannerUrl}) => {
             alt="restaurant"
           />
           <div className="flex items-center pl-6 space-x-2 ">
-          <Image
+            <Image
               src={imageUrl}
               height={78}
               width={78}
@@ -43,7 +42,7 @@ const DrawerButton = ({name, description, imageUrl, bannerUrl}) => {
             />
             <div className="relative -top-3">
               <h3 className="font-raleway font-bold text-lg capitalize">
-               {name}
+                {name}
               </h3>
               <h3 className="font-lato font-bold text-xs capitalize text-[#7c7c7c]">
                 271 Followers

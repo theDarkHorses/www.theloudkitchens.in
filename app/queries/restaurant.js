@@ -1,7 +1,7 @@
 const { client } = require("../sanity.config")
 
 export const getHomePageRestaurants = () => {
-    return client.fetch(`*[_type == 'restaurant'] {
+  return client.fetch(`*[_type == 'restaurant'] {
         _id,
         name,
         isActive,
@@ -10,7 +10,7 @@ export const getHomePageRestaurants = () => {
 }
 
 export const getRestaurant = (id) => {
-    return client.fetch(`*[_type == 'restaurant' && _id == $id][0] {
+  return client.fetch(`*[_type == 'restaurant' && _id == $id][0] {
         _id,
         name,
         tags,
@@ -25,7 +25,7 @@ export const getRestaurant = (id) => {
 }
 
 export const getRestaurantSections = (restaurantId) => {
-    return client.fetch(`*[_type == 'restaurant' && _id == $restaurantId][0] {
+  return client.fetch(`*[_type == 'restaurant' && _id == $restaurantId][0] {
         name,
         sections[] {
           'id': _key,
@@ -34,6 +34,12 @@ export const getRestaurantSections = (restaurantId) => {
              'id':_key,
              isVeg,
              name,
+             price,
+             kCal,
+             'imageUrl':image.asset->url,
+             description,
+              mrp,
+              isAvailable,
              categories[]{
              'id':_key,
                isRequired,
@@ -56,4 +62,37 @@ export const getRestaurantSections = (restaurantId) => {
         }
       }      
       `, { restaurantId })
+}
+
+
+export function getCuisine(restaurantId, sectionId, cuisineId) {
+  return client.fetch(`*[_type == 'restaurant' && _id == $restaurantId][0].sections[_key == $sectionId][0].menu[_key == $cuisineId][0] {
+    name,
+    description,
+    price,
+  'imageUrl':image.asset->url,
+    mrp,
+    isAvailable,
+    kCal,
+    isVeg,
+    categories[]{
+      name,
+      isRequired,
+      requiredItems,
+      items[]->{
+        name,
+        price,
+        mrp,
+        quantity,
+        photo,
+        isVeg,
+        preparationTime,
+        servings,
+        nutrition
+      }
+    }
+  }
+  `, { restaurantId, sectionId, cuisineId })
+
+
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import { sliceString } from "@/app/utils/restaurant";
 import { useState } from "react";
 
 const ToggleString = ({ string }) => {
@@ -9,21 +10,19 @@ const ToggleString = ({ string }) => {
     setShowMore(!showMore);
   };
   return (
-    <div className="relative">
-      <div
-        className={`overflow-hidden transition-all text-[#666] text-sm duration-500 ease-in-out font-lato ${
-          showMore ? "max-h-full" : "max-h-[38px]"
-        } `}
+    <div className="relative space-x-1">
+      <span
+        className={`overflow-hidden transition-all text-[#666] text-sm duration-500 ease-in-out font-lato`}
       >
-        {string}
-      </div>
+        {sliceString(string, showMore)}
+      </span>
       {string.length > 50 && (
-        <button
-          className="text-[#666] font-lato text-sm font-bold"
+        <span
+          className="text-[#666] cursor-pointer font-lato text-sm font-bold"
           onClick={toggleShowMore}
         >
-          {showMore ? "less" : "...more"}
-        </button>
+          {showMore ? "less" : "more"}
+        </span>
       )}
     </div>
   );
