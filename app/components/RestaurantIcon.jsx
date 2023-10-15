@@ -15,7 +15,7 @@ const RestaurantIcon = ({ isActive, imgSrc, name,id }) => {
           src={imgSrc}
           height={78}
           width={78}
-          className="border-white border-2 rounded-2xl"
+          className="border-white w-[78px] h-[78px] object-center  object-cover border-2 rounded-2xl"
           alt={name}
         />
       </div>
