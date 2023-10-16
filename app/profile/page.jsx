@@ -5,18 +5,19 @@ import React from "react";
 
 export default function page() {
   return (
-    <section className="px-2  py-10 relative bg-[#F5F5F5] w-full no-scrollbar overflow-hidde overflow-y-scroll z-40">
-      <nav className="absolute top-5 left-3">
+    <section className="px-2  py-5  relative bg-[#F5F5F5] w-full no-scrollbar overflow-hidde overflow-y-scroll z-40">
+      <nav className="">
         <Link href="/">
           <ChevronLeft size={28} color="#1C1C1C" />
         </Link>
       </nav>
-      <div className="mb-2 bg-white shadow-lg shadow-gray-300  my-3 rounded-lg flex items-center py-5 px-2 space-x-2">
+      <div className="bg-white shadow-lg shadow-gray-300  mt-6 mb-12 rounded-lg flex items-center py-5 px-2 space-x-2">
         <div className="">
           <Image
             src="https://i.imgur.com/3vjidlG.jpg"
             height={72}
             width={72}
+            alt="images"
             className="rounded-full"
           />
         </div>
@@ -25,8 +26,8 @@ export default function page() {
           <h3 className="font-raleway text-sm text-primary">View activity </h3>
         </div>
       </div>
-      <main className="space-y-2 my-4">
-        <section className="py-6 shadow shadow-gray-300 bg-white rounded-lg">
+      <main className="space-y-6 my-4">
+        <section className="py-4 shadow shadow-gray-300 bg-white rounded-lg">
           <h2 className="text-lg leading-none pl-4 font-raleway font-bold border-l-4 border-primary">
             Food Orders
           </h2>
@@ -37,6 +38,7 @@ export default function page() {
             >
               <div className="flex space-x-3 items-center flex-1">
                 <Image
+                  alt="images"
                   src={"/icons/pbag.svg"}
                   width={32}
                   height={32}
@@ -52,6 +54,7 @@ export default function page() {
             >
               <div className="flex space-x-3 items-center flex-1">
                 <Image
+                  alt="images"
                   src={"/icons/pcoupon.svg"}
                   width={32}
                   height={32}
@@ -64,7 +67,7 @@ export default function page() {
           </main>
         </section>
 
-        <section className="py-6 shadow shadow-gray-300 bg-white rounded-lg">
+        <section className="py-4 shadow shadow-gray-300 bg-white rounded-lg">
           <h2 className="text-lg leading-none pl-4 font-raleway font-bold border-l-4 border-primary">
             Money
           </h2>
@@ -75,6 +78,7 @@ export default function page() {
             >
               <div className="flex space-x-3 items-center flex-1">
                 <Image
+                  alt="images"
                   src={"/icons/pwallet.svg"}
                   width={32}
                   height={32}
@@ -90,6 +94,7 @@ export default function page() {
             >
               <div className="flex space-x-3 items-center flex-1">
                 <Image
+                  alt="images"
                   src={"/icons/pcredit.svg"}
                   width={32}
                   height={32}
@@ -102,7 +107,7 @@ export default function page() {
           </main>
         </section>
 
-        <section className="py-6 shadow shadow-gray-300 bg-white rounded-lg">
+        <section className="py-4 shadow shadow-gray-300 bg-white rounded-lg">
           <h2 className="text-lg leading-none pl-4 font-raleway font-bold border-l-4 border-primary">
             More
           </h2>
@@ -113,6 +118,7 @@ export default function page() {
             >
               <div className="flex space-x-3 items-center flex-1">
                 <Image
+                  alt="images"
                   src={"/icons/pabout.svg"}
                   width={32}
                   height={32}
@@ -128,6 +134,7 @@ export default function page() {
             >
               <div className="flex space-x-3 items-center flex-1">
                 <Image
+                  alt="images"
                   src={"/icons/plogout.svg"}
                   width={32}
                   height={32}
