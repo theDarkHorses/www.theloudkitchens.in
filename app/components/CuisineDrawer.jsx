@@ -15,7 +15,6 @@ export default function CuisineDrawer() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [cuisine, setCuisine] = useState(null);
-
   const handleDrawer = (val) => {
     if (!val) {
       const newSearchParams = new URLSearchParams(searchParams);
