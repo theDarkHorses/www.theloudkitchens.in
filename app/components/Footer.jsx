@@ -26,7 +26,7 @@ const navLinks = [
 
     },
     {
-        label: "Cart",
+        label: "FoodBasket",
         icon: "/icons/cartOutline.png",
         activeIcon: "/icons/cart.png",
         pathName: "/cart"

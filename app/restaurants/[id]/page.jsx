@@ -4,15 +4,14 @@ import BackRoute from "@/app/components/common/BackRoute";
 import DrawerButton from "@/app/components/common/DrawerButton";
 import Link from "next/link";
 import { getRestaurant } from "@/app/queries/restaurant";
-
+import whatsapp from "../../../public/icons/whatsapp.svg";
 async function getRestaurantData(params) {
   const restaurantId = params.id;
   const restaurant = await getRestaurant(restaurantId);
-  return restaurant
+  return restaurant;
 }
 
-export default async function page({params, searchParams }) {
-
+export default async function page({ params, searchParams }) {
   const restaurant = await getRestaurantData(params);
   const { tab } =  searchParams
   const activeTab = tab || restaurant?.sections[0]?.id
@@ -54,6 +53,4 @@ export default async function page({params, searchParams }) {
       </div>
     </main>
   );
-};
-
-
+}
