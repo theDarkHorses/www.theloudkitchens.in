@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
 
         <html lang="en" className=' overflow-hidden scroll-smooth max-w-sm mx-auto'>
-          <body className={`${lato.variable} ${raleway.variable} h-[calc(100vh_-_62px)] no-scrollbar overflow-x-hidden overflow-y-scroll  bg-app`}>
+          <body className={`${lato.variable} ${raleway.variable} h-[calc(100vh_-_62px)] no-scrollbar overflow-x-hidden overflow-y-scroll  bg-app pb-20`}>
             {children}
             <Footer />
           </body>
