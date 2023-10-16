@@ -31,18 +31,18 @@ const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
               src={bannerUrl}
               width={350}
               height={120}
-              className="rounded-lg"
+              className="rounded-lg object-cover object-center w-full"
               alt="restaurant"
             />
-            <div className="flex items-center pl-6 space-x-2">
+            <div className="flex items-center pl-6 space-x-2 mx-auto relative -top-5 justify-center">
               <Image
                 src={imageUrl}
                 height={78}
                 width={78}
-                className="border-white bg-white relative -top-5 object-cover rounded-full object-center w-[78px] h-[78px] border-2"
+                className="border-white bg-white  object-cover rounded-full object-center w-[78px] h-[78px] border-2"
                 alt="item"
               />
-              <div className="relative -top-3">
+              <div className="relative top-3 ">
                 <h3 className="font-raleway font-bold text-lg capitalize">
                   {name}
                 </h3>

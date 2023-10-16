@@ -7,9 +7,9 @@ export default function Layout({ dishes, carousel, restaurants }) {
     
   return (
     <>
-      <header className="py-4 bg-[#f5f5f5] pt-14  top-0 px-5 flex  items-center justify-between">
+      <header className="py-4 bg-white pt-10  top-0 px-5 flex  items-center justify-between">
         <Link href="/address" className="flex space-x-2">
-          <div className="text-primary bg-[#D9D9D9] p-2 rounded-full">
+          <div className="text-primary bg-[#f2f2f2] p-2 rounded-full">
             <MapPinIcon size={24} />
           </div>
           <div className="flex flex-col justify-center ">
@@ -37,16 +37,18 @@ export default function Layout({ dishes, carousel, restaurants }) {
         </Link>
       </header>
       <main className="">
-        <Link
-          href="/search"
-          className=" mx-5 flex py-2 cursor-pointer px-3 border-[#c2c2c2] rounded-lg border-[1px] items-center space-x-2"
-        >
-          <Search size={20} className="text-primary " />
-          <p className="font-raleway font-semibold text-[#999] text-xs">
-            Search for restaurants, cuisines and more...
-          </p>
-        </Link>
-        <section className="mt-8 space-y-2">
+        <div className="bg-white px-5 pb-6">
+          <Link
+            href="/search"
+            className=" flex py-2 cursor-pointer px-3 border-[#c2c2c2] rounded-lg border-[1px] items-center space-x-2"
+          >
+            <Search size={20} className="text-primary " />
+            <p className="font-raleway font-semibold text-[#999] text-xs">
+              Search for restaurants, cuisines and more...
+            </p>
+          </Link>
+        </div>
+        <section className=" mt-4 space-y-2">
           <header className="flex justify-between mx-5">
             <h2 className="font-raleway font-bold text-[#555]">
               Select Restaurant
@@ -100,7 +102,7 @@ export default function Layout({ dishes, carousel, restaurants }) {
           </header>
           {carousel}
         </section>
-        <section className="px-5 bg-white pt-8">
+        <section className="px-5 bg-white py-8">
           <Image
             src={endnotes}
             height={110}
