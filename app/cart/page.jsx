@@ -23,6 +23,7 @@ const page = () => {
     <div>
       <header className="bg-white rounded-b-lg">
         <div className="pt-16 pb-[2px] ">
+
           <div onClick={() => router.back()} className="flex items-center mb-6">
             <ChevronLeft />
             <h2 className="font-lato text-[22px] font-bold">Your FoodBasket</h2>
@@ -82,10 +83,10 @@ const page = () => {
             >
               <textarea
                 rows={8}
-                className={`${
-                  isConfession ? "p-4 block" : "p-0 hidden"
-                } leading-none font-lato  text-base  border-none outline-none  text-[#A6A6A6] rounded-md border-[#A6A6A6] border-2 w-full`}
-                placeholder="Inscribe your deepest confessions here, like whispers in the night,A long-awaited apology, a wrong set right.Initiate a dialogue, let emotions unfurl,In this sacred space, let your words swirl.Make your message extraordinary, as you embark, On this journey of expression, let your feelings spark."
+                className={` transition-all ease-in-out duration-300 px-4 ${
+                  isConfession ? "h-full " : " h-0"
+                } font-lato  text-base  border-none outline-none  placeholder:text-[#A6A6A6] rounded-md border-[#A6A6A6] border-2 w-full`}
+                placeholder="Inscribe your deepest confessions here, like whispers in the night, A long-awaited apology, a wrong set right.Initiate a dialogue, let emotions unfurl, In this sacred space, let your words swirl.Make your message extraordinary, as you embark, On this journey of expression, let your feelings spark."
               ></textarea>
             </div>
           </div>
@@ -111,7 +112,7 @@ const page = () => {
               </h4>
             </div>
             <div className="flex space-x-4 items-center pr-2">
-              <div className="flex items-center  rounded-lg gap-1 px-2 py-1 space-x-2 ml-3 shadow-xl shadow-gray-300 border-[1px] border-gray-500">
+              <div className="flex items-center  rounded-lg gap-1 px-2 py-1 space-x-2 ml-3 shadow shadow-gray-300 border-[1px] border-gray-500">
                 <Minus size={16} color="#ac2323" className="cursor-pointer" />
                 <p className="font-lato font-normal text-base text-primary">
                   30
