@@ -92,8 +92,8 @@ export default function CuisineDrawer() {
             ))}
           </div>
         </div>
-        <div className="bg-white rounded-lg py-6">
-          <div className="flex justify-between items-center  px-4  py-3 rounded-lg">
+        <div className="bg-white rounded-lg py-6 pb-20">
+          <div className="flex justify-between items-center  px-2  pt-2 pb-5 rounded-lg">
             <p className="font-bold font-raleway text-base">Select up-to 4</p>
             <p className="font-lato text-base">(4/4)</p>
           </div>
@@ -114,25 +114,25 @@ export default function CuisineDrawer() {
                     />
                     <label
                       htmlFor={"checkbox" + index}
-                      className="font-lato font-semibold text-sm text-[#444444]"
+                      className="font-lato font-normal text-sm text-[#444444]"
                     >
                       {item?.name}
                     </label>
                   </div>
                 </div>
                 <div className="bg-[#ac232320] text-sm flex items-center  rounded-lg gap-1 px-2 py-1 space-x-2">
-                  <Plus size={16} color="#ac2323" className="cursor-pointer" />
-                  <p className="font-lato font-normal text-sm text-primary">
+                  <Plus size={14} color="#ac2323" className="cursor-pointer" />
+                  <p className="font-lato font-normal text-xl text-primary">
                     1
                   </p>
-                  <Minus size={16} color="#ac2323" className="cursor-pointer" />
+                  <Minus size={14} color="#ac2323" className="cursor-pointer" />
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="bg-white z-[99999] flex justify-end flex-1 w-full shadow-md shadow-black fixed bottom-0">
+      <div className="bg-white z-[99999] flex justify-end flex-1 w-full shadow-md shadow-black fixed bottom-14">
         <button className="py-3 px-5 bg-red-600 text-white rounded-lg mx-1 my-4">
           Add To Basket ( 169rs)
         </button>
