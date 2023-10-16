@@ -18,7 +18,7 @@ export default async function page({params, searchParams }) {
   const activeTab = tab || restaurant?.sections[0]?.id
 
   return (
-    <main className="w-full relative">
+    <main className="w-full">
       <BackRoute />
       <Image
         src={restaurant?.bannerUrl}
