@@ -13,13 +13,18 @@ export default function Layout({ dishes, carousel, restaurants }) {
           </div>
           <div className="flex flex-col justify-center ">
             <div className="flex  items-center">
-              <span className="font-raleway text-sm font-bold">Nit Srinagar</span>
+              <span className="font-raleway text-sm font-bold">
+                Nit Srinagar
+              </span>
               <ChevronRight size={14} color="#AC2318" />
             </div>
             <p className="text-[#555] font-lato text-xs ">Room- 323 </p>
           </div>
         </Link>
-        <Link href="/orders?tab=2" className="flex rounded-lg border-[#DDD] items-center border-2 h-fit px-2 py-1">
+        <Link
+          href="/orders?tab=2"
+          className="flex rounded-lg border-[#DDD] items-center border-2 h-fit px-2 py-1"
+        >
           <Image
             alt="coin"
             src={"/icons/coin.svg"}
@@ -61,9 +66,9 @@ export default function Layout({ dishes, carousel, restaurants }) {
           </header>
           {restaurants}
         </section>
-        <section className="py-4 bg-[#F9F9F9] mt-4">
-          <header className="flex items-end px-5 space-x-2">
-            <div className="border-t border-[#CCC] flex-1 " />
+        <section className="bg-[#F4F4F4]">
+          <header className="flex items-end px-5 space-x-2 pb-8">
+            <div className="border-t border-[#CCC] flex-1" />
             <span className="flex flex-col items-center">
               <p className="font-medium relative top-2 text-[#888] text-lg font-raleway text-center">
                 🔥
@@ -105,8 +110,7 @@ export default function Layout({ dishes, carousel, restaurants }) {
           <div className="text-[#BDBDBD] items-center py-10 space-x-2 flex">
             <div className=" border-t  border-[#CCC] flex-1 border-dashed" />
             <div className="mx-auto text-center  w-36 flex flex-col leading-tight">
-              Proudly made in
-              NIT Srinagar
+              Proudly made in NIT Srinagar
             </div>
             <div className="relative border-t  border-[#CCC] flex-1 border-dashed" />
           </div>

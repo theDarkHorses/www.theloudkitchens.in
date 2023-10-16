@@ -1,11 +1,10 @@
 "use client";
-import { Drawer } from "@material-tailwind/react";
+import { Drawer } from "../../../material.config";
 import Image from "next/image";
 import { useState, Fragment } from "react";
 
 const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [windowHeight] = useState(window.innerHeight);
 
 
   return (
@@ -18,7 +17,7 @@ const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
         <Image src={"/icons/share.svg"} height={9} width={9} alt="img" />
       </div>
       <Drawer
-        size={windowHeight * 0.8}
+        size={600}
         placement="bottom"
         open={openDrawer}
         onClose={()=>setOpenDrawer(false)}

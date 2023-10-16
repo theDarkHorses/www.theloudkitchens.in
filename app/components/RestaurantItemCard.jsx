@@ -13,7 +13,7 @@ export default function RestaurantItemCard({
   return (
     <Link
       href={`/restaurants/${name}`}
-      className="first-of-type:ml-5 last-of-type:mr-5 shadow-lg relative snap-center shadow-gray-300 my-4 bg-white min-w-[250px] rounded-md max-w-card overflow-hidden"
+      className="first-of-type:ml-5 last-of-type:mr-5 shadow-lg relative snap-center shadow-gray-300 bg-white min-w-[250px] rounded-md max-w-card overflow-hidden"
     >
       <Image
         alt={name}
