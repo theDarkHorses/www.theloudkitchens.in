@@ -15,7 +15,7 @@
     "@sanity/client": "^6.6.0",
     "add": "^2.0.6",
     "autoprefixer": "10.4.16",
-    "firebase": "9",
+    "firebase": "9.17.1",
     "lucide-react": "^0.284.0",
     "next": "13.5.4",
     "postcss": "8.4.31",

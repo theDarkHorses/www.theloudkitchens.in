@@ -3,17 +3,26 @@
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-const options = ["home", "hostel", "work", "other"]
+const options = ["home", "hostel", "work", "other"];
 
 export default function page() {
-  const [activeLocation, setActiveLocation] = useState(options[0])
-  const [orderFor, setOrderFor] = useState(options[0])
-  const router = useRouter()
+  const [activeLocation, setActiveLocation] = useState(options[0]);
+  const [orderFor, setOrderFor] = useState(options[0]);
+  const router = useRouter();
+  const submitHandler = async (e, data) => {
+    e.preventDefault();
+    console.log("submit", e.data());
+  };
 
   return (
     <section className="h-[calc(100vh_-_64px)] no-scrollbar px-4 bg-[#F5F6FB] w-full overflow-hidden overflow-y-scroll py-8">
       <header className="flex items-center space-x-2 mt-5 ">
-        <ChevronLeft onClick={() => router.back()} size={24} color="#AC2323" className="cursor-pointer" />
+        <ChevronLeft
+          onClick={() => router.back()}
+          size={24}
+          color="#AC2323"
+          className="cursor-pointer"
+        />
         <h1 className="font-lato text-xl font-bold text-[#242539]">
           Complete address details
         </h1>
@@ -40,7 +49,6 @@ export default function page() {
               type="radio"
               className=" accent-primary"
               onClick={() => setOrderFor("someoneElse")}
-
             />
             <label htmlFor="someoneElse">Someone Else</label>
           </div>
@@ -52,7 +60,6 @@ export default function page() {
               type="radio"
               className=" accent-primary"
               onClick={() => setOrderFor("someoneSpecial")}
-
             />
             <label htmlFor="someoneSpecial">Someone Special</label>
           </div>
@@ -60,26 +67,64 @@ export default function page() {
         <div className="font-lato text-sm my-10">
           <p className="text-text text-sm">Save address as *</p>
           <div className="w-full mt-2 space-x-2 font-lato text-sm text-[#1C1C1C]">
-            {options.map((label) => <button type="button" key={label} onClick={() => setActiveLocation(label)} className={`px-3 py-1 border capitalize rounded-lg ${label == activeLocation ? "border-primary bg-red-100" : "border-text"}`}>{label}</button>)}
+            {options.map((label) => (
+              <button
+                type="button"
+                key={label}
+                onClick={() => setActiveLocation(label)}
+                className={`px-3 py-1 border capitalize rounded-lg ${
+                  label == activeLocation
+                    ? "border-primary bg-red-100"
+                    : "border-text"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
-          <div className="space-y-3 mt-8 flex flex-col font-lato text-sm">
-            {orderFor == "someoneSpecial" ?
+          <form
+            onSubmit={submitHandler}
+            className="space-y-3 mt-8 flex flex-col font-lato text-sm"
+          >
+            {orderFor == "someoneSpecial" ? (
               <>
-                <input placeholder="Taste Chaser’s Name" className="py-2 px-2 w-full border rounded-lg outline-none" required />
-                <input placeholder="TasteChaser’s Birthday" className="py-2 px-2 w-full border rounded-lg outline-none" required />
-
-              </> :
-              <input placeholder="Recipient’s Name" className="py-2 px-2 w-full border rounded-lg outline-none" required />
-
-            }
-            <input placeholder="Room no. /flat no. / Building no." className="py-2 px-2 w-full border rounded-lg outline-none" required />
-            <input placeholder="Nearby landmark (optional)" className="py-2 px-2 w-full border rounded-lg outline-none" required />
-          </div>
-
+                <input
+                  placeholder="Taste Chaser’s Name"
+                  className="py-2 px-2 w-full border rounded-lg outline-none"
+                  required
+                />
+                <input
+                  placeholder="TasteChaser’s Birthday"
+                  className="py-2 px-2 w-full border rounded-lg outline-none"
+                  required
+                />
+              </>
+            ) : (
+              <input
+                placeholder="Recipient’s Name"
+                className="py-2 px-2 w-full border rounded-lg outline-none"
+                required
+              />
+            )}
+            <input
+              placeholder="Room no. /flat no. / Building no."
+              className="py-2 px-2 w-full border rounded-lg outline-none"
+              required
+            />
+            <input
+              placeholder="Nearby landmark (optional)"
+              className="py-2 px-2 w-full border rounded-lg outline-none"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-primary text-white text-lg font-lato text-center w-full py-2 mt-10 rounded-lg"
+            >
+              Save Address
+            </button>
+          </form>
         </div>
-
       </div>
-      <button className="bg-primary text-white text-lg font-lato text-center w-full py-2 mt-10 rounded-lg">Save Address</button>
     </section>
   );
 }

@@ -25,6 +25,16 @@ export default function AddressDialog() {
     console.log(addressId);
   };
 
+  const handleReq = async ()=>{
+    try{
+      await fetch("/api/address")
+    }catch(err){
+      console.log(err.message)
+    }
+  }
+  
+  handleReq()
+
   return (
     <div onClick={() => handleOpen(false)} className={`left-0 right-0 top-0  z-50 absolute backdrop-brightness-90 duration-300 transition-all backdrop-blur-[1px]  flex-col bg-transparent outline-none border-none bottom-0 space-y-4  flex items-end justify-end ${open?"translate-y-0 bg-opacity-100":"translate-y-full bg-opacity-0"}`}>
       <div onClick={(e) => e.stopPropagation()} className={`shadow-2xl w-full bg-transparent transition-all delay-75 duration-300 rounded-t-lg overflow-hidden ${open?"translate-y-0":"translate-y-full"}`}>
