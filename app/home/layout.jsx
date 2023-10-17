@@ -3,8 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import endnotes from "../../public/icons/endnote.svg";
 
-export default function Layout({ dishes, carousel, restaurants }) {
-    
+export default async function Layout({ dishes, carousel, restaurants }) {
   return (
     <>
       <header className="py-4 bg-white pt-10  top-0 px-5 flex  items-center justify-between">
