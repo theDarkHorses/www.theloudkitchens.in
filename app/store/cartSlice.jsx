@@ -18,46 +18,53 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         toggleItemWithDelta: (state, action) => {
-            const { item, delta, selectedItems } = action.payload;
-            const index = state.items.findIndex((cartItem) => cartItem.id === item.id);
-            if (index === -1) {
-                state.items.push({
-                    id: item.id,
-                    name: item.name,
-                    description: item.description,
-                    imgUrl: item.imgUrl,
-                    categories: item.categories,
-                    isAvailable: item.isAvailable,
-                    quantity: delta,
-                    selectedItems,
-                })
-            }
-            else {
-                if (state.items[index].quantity + delta > 0) {
-                    state.items[index].quantity += delta;
-                } else {
-                    state.items.splice(index, 1);
-                }
-            }
+            const { item, delta, selectedItems, totalCost, restaurantId, tabId, itemId } = action.payload;
+
+            state.items.push({
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                imgUrl: item.imgUrl,
+                categories: item.categories,
+                isAvailable: item.isAvailable,
+                quantity: delta,
+                selectedItems,
+                totalCost,
+                restaurantId, tabId, itemId
+            })
 
             const totalPrice = state.items?.reduce((acc, section) => {
                 console.log(section);
-                return acc + section.quantity * Object.values(section.selectedItems).reduce((acc, item) => {
-                    return acc + Object.values(item).reduce((acc, item) => {
-                        return acc + item.quantity * item.item.price;
-                    }, 0);
-                }, 0);
+                return acc + section.quantity * section.totalCost;
             }, 0);
 
             state.subTotal = totalPrice
         },
+
+        updateItemQuantity: (state, action) => {
+            const { id, delta } = action.payload;
+            const item = state.items.find((item) => item.id === id);
+            if (item.quantity + delta > 0) {
+                item.quantity += delta;
+            } else {
+                state.items = state.items.filter((item) => item.id !== id);
+            }
+
+            const totalPrice = state.items?.reduce((acc, section) => {
+                return acc + section.quantity * section.totalCost;
+            }, 0);
+
+            state.subTotal = totalPrice
+
+
+        }
 
 
     },
 });
 
 
-export const { toggleItemWithDelta, toggleDonation, calculateDeliveryFee, calculateGST, calculatePlatformFee, calculateRestaurantCharges, calculateTotal, addCoupon } = cartSlice.actions;
+export const { toggleItemWithDelta, toggleDonation, updateItemQuantity, calculateDeliveryFee, calculateGST, calculatePlatformFee, calculateRestaurantCharges, calculateTotal, addCoupon } = cartSlice.actions;
 export default cartSlice.reducer;
-
+export const selectCartItems = (state) => state.cart.items;
 
