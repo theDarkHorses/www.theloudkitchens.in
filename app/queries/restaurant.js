@@ -67,6 +67,7 @@ export const getRestaurantSections = (restaurantId) => {
 
 export function getCuisine(restaurantId, sectionId, cuisineId) {
   return client.fetch(`*[_type == 'restaurant' && _id == $restaurantId][0].sections[_key == $sectionId][0].menu[_key == $cuisineId][0] {
+    'id':_key,
     name,
     description,
     price,

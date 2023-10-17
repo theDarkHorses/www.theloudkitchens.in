@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
     items: [],
@@ -7,93 +7,57 @@ const initialState = {
     deliveryFee: 0,
     tax: 0,
     donation: 0,
+    platformFee: 0,
+    restaurantCharges: 0,
+    gst: 0,
     total: 0,
-};
-
-const calculateTotal = (state) => {
-    state.total = state.subTotal + state.deliveryFee + state.tax + state.donation - state.discount;
-};
-
-const updateItemQuantity = (state, item, quantity) => {
-    const existingItemIndex = state.items.findIndex((i) => i.id === item.id);
-    if (existingItemIndex !== -1) {
-        const deltaQuantity = quantity - state.items[existingItemIndex].quantity;
-        state.items[existingItemIndex].quantity = quantity;
-        state.subTotal += item.price * deltaQuantity;
-        calculateTotal(state);
-    }
 };
 
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addItem: (state, action) => {
-            const { item, quantity } = action.payload;
-            const existingItemIndex = state.items.findIndex((i) => i.id === item.id);
-            if (existingItemIndex !== -1) {
-                state.items[existingItemIndex].quantity += quantity;
-            } else {
-                state.items.push({ ...item, quantity });
+        toggleItemWithDelta: (state, action) => {
+            const { item, delta, selectedItems } = action.payload;
+            const index = state.items.findIndex((cartItem) => cartItem.id === item.id);
+            if (index === -1) {
+                state.items.push({
+                    id: item.id,
+                    name: item.name,
+                    description: item.description,
+                    imgUrl: item.imgUrl,
+                    categories: item.categories,
+                    isAvailable: item.isAvailable,
+                    quantity: delta,
+                    selectedItems,
+                })
             }
-            state.subTotal += item.price * quantity;
-            calculateTotal(state);
-        },
-        removeItem: (state, action) => {
-            const { item, quantity } = action.payload;
-            const existingItemIndex = state.items.findIndex((i) => i.id === item.id);
-            if (existingItemIndex !== -1) {
-                const itemQuantity = state.items[existingItemIndex].quantity;
-                if (itemQuantity > quantity) {
-                    state.items[existingItemIndex].quantity -= quantity;
-                    state.subTotal -= item.price * quantity;
+            else {
+                if (state.items[index].quantity + delta > 0) {
+                    state.items[index].quantity += delta;
                 } else {
-                    state.subTotal -= item.price * itemQuantity;
-                    state.items.splice(existingItemIndex, 1);
+                    state.items.splice(index, 1);
                 }
-                calculateTotal(state);
             }
+
+            const totalPrice = state.items?.reduce((acc, section) => {
+                console.log(section);
+                return acc + section.quantity * Object.values(section.selectedItems).reduce((acc, item) => {
+                    return acc + Object.values(item).reduce((acc, item) => {
+                        return acc + item.quantity * item.item.price;
+                    }, 0);
+                }, 0);
+            }, 0);
+
+            state.subTotal = totalPrice
         },
-        updateQuantity: updateItemQuantity,
-        applyCoupon: (state, action) => {
-            const { code, discount } = action.payload;
-            if (code === 'SUMMER2021') {
-                state.discount = state.subTotal * discount;
-                calculateTotal(state);
-            }
-        },
-        toggleDonation: (state, action) => {
-            state.donation = action.payload ? 10 : 0;
-            calculateTotal(state);
-        },
-        calculateDeliveryFee: (state) => {
-            const totalOrderPrice = state.subTotal + state.tax + state.deliveryFee - state.discount + state.donation;
-            if (totalOrderPrice <= 100) {
-                state.deliveryFee = 20;
-            } else if (totalOrderPrice <= 200) {
-                state.deliveryFee = 10;
-            } else {
-                state.deliveryFee = 0;
-            }
-            calculateTotal(state);
-        },
-        calculateTax: (state, action) => {
-            const { taxRate } = action.payload;
-            state.tax = state.subTotal * taxRate;
-            calculateTotal(state);
-        },
+
+
     },
 });
 
-export const {
-    addItem,
-    removeItem,
-    updateQuantity,
-    applyCoupon,
-    toggleDonation,
-    calculateDeliveryFee,
-    calculateTax,
-} = cartSlice.actions;
 
+export const { toggleItemWithDelta, toggleDonation, calculateDeliveryFee, calculateGST, calculatePlatformFee, calculateRestaurantCharges, calculateTotal, addCoupon } = cartSlice.actions;
 export default cartSlice.reducer;
+
 
