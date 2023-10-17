@@ -12,8 +12,9 @@ export default authMiddleware({
     "/address/:id",
     "/orders",
     "/cart",
+    "/api/address",
   ],
-  ignoredRoutes: ["/api/address"],
+  ignoredRoutes: [],
 });
 
 export const config = {

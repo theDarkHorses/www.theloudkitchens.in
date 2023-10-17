@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -8,10 +9,21 @@ const options = ["home", "hostel", "work", "other"];
 export default function page() {
   const [activeLocation, setActiveLocation] = useState(options[0]);
   const [orderFor, setOrderFor] = useState(options[0]);
+  const [simpleFormData, setSimpleFormData] = useState({
+    name: "",
+    address: "",
+    birthday: "",
+    landmark: "",
+  });
   const router = useRouter();
-  const submitHandler = async (e, data) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("submit", e.data());
+    const response = await axios.post(
+      "http://localhost:3000/api/address",
+      simpleFormData
+    );
+
+    console.log("submit", simpleFormData, response);
   };
 
   return (
@@ -89,11 +101,23 @@ export default function page() {
             {orderFor == "someoneSpecial" ? (
               <>
                 <input
+                  onChange={(e) =>
+                    setSimpleFormData({
+                      ...simpleFormData,
+                      name: e.target.value,
+                    })
+                  }
                   placeholder="Taste Chaser’s Name"
                   className="py-2 px-2 w-full border rounded-lg outline-none"
                   required
                 />
                 <input
+                  onChange={(e) =>
+                    setSimpleFormData({
+                      ...simpleFormData,
+                      birthday: e.target.value,
+                    })
+                  }
                   placeholder="TasteChaser’s Birthday"
                   className="py-2 px-2 w-full border rounded-lg outline-none"
                   required
@@ -101,17 +125,32 @@ export default function page() {
               </>
             ) : (
               <input
+                onChange={(e) =>
+                  setSimpleFormData({ ...simpleFormData, name: e.target.value })
+                }
                 placeholder="Recipient’s Name"
                 className="py-2 px-2 w-full border rounded-lg outline-none"
                 required
               />
             )}
             <input
+              onChange={(e) =>
+                setSimpleFormData({
+                  ...simpleFormData,
+                  address: e.target.value,
+                })
+              }
               placeholder="Room no. /flat no. / Building no."
               className="py-2 px-2 w-full border rounded-lg outline-none"
               required
             />
             <input
+              onChange={(e) =>
+                setSimpleFormData({
+                  ...simpleFormData,
+                  landmark: e.target.value,
+                })
+              }
               placeholder="Nearby landmark (optional)"
               className="py-2 px-2 w-full border rounded-lg outline-none"
               required
