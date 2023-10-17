@@ -5,11 +5,10 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { toggleItemWithDelta } from "../store/cartSlice";
 
-export default function DrawerCuisine({ cuisine,setCraftedCuisine,craftedCuisine }) {
+export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisine, restaurantId, tabId, itemId }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const dispatch = useDispatch()
     const activeCategory = cuisine?.categories?.[activeIndex];
-
     const isRequired = useMemo(() => activeCategory?.isRequired, [activeCategory]);
     const requiredItems = useMemo(() => activeCategory?.requiredItems, [activeCategory]);
     const totalItems = useMemo(() => {
@@ -88,7 +87,7 @@ export default function DrawerCuisine({ cuisine,setCraftedCuisine,craftedCuisine
         );
 
         if (canProceed) {
-            dispatch(toggleItemWithDelta({ item: cuisine, delta: 1, selectedItems: craftedCuisine }))
+            dispatch(toggleItemWithDelta({ item: cuisine, delta: 1, selectedItems: craftedCuisine, totalCost: getTotalCost, restaurantId, tabId, itemId }))
             setActiveIndex(0)
             setCraftedCuisine({})
         } else {
