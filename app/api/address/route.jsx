@@ -13,7 +13,5 @@ export async function POST(req) {
   const settingDataToFirebase = await addDoc(addressCollectionRef, payload, {
     merge: true,
   });
-  console.log(settingDataToFirebase);
   return res.json(payload);
 }
-
