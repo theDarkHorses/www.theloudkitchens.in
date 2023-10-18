@@ -13,6 +13,7 @@ export default authMiddleware({
     "/orders",
     "/cart",
     "/api/address",
+    "/coupons"
   ],
   ignoredRoutes: [],
 });
