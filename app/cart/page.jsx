@@ -173,13 +173,12 @@ const page = () => {
             </Link>
             <PlusCircle size={18} className="text-[#444] mr-5" />
           </div>
-          <div className="pb-3">
+          <div className="pb-3" onClick={() => setCookingReq(!cookingReq)}>
             <div className="flex items-center justify-between pl-5 py-4">
               <h3 className="font-lato text-sm font-bold text-[#444]">
                 Add cooking request
               </h3>
               <PlusCircle
-                onClick={() => setCookingReq(!cookingReq)}
                 size={18}
                 className="text-[#444] mr-5"
               />
@@ -234,10 +233,13 @@ const page = () => {
               Apply
             </div>
           </div>
-          <div className="flex justify-center items-center py-2 font-lato text-xs text-[#707070] ">
+          <Link
+            href="/coupons"
+            className="flex justify-center items-center py-2 font-lato text-xs text-[#707070] "
+          >
             View all coupons
             <ChevronRight />
-          </div>
+          </Link>
         </div>
         <div className="pt-[70px]">
           <Image
