@@ -47,12 +47,12 @@ export default async function Layout({ dishes, carousel, restaurants }) {
             </p>
           </Link>
         </div>
-        <section className=" mt-4 space-y-2">
+        <section className=" mt-8 space-y-2">
           <header className="flex justify-between mx-5">
             <h2 className="font-raleway font-bold text-[#555]">
               Select Restaurant
             </h2>
-            <Link
+            {/* <Link
               href="/"
               className="text-[#AC2323] space-x-2 flex font-lato text-sm items-center font-semibold border-l-2 border-[#AC2323]"
             >
@@ -64,7 +64,7 @@ export default async function Layout({ dishes, carousel, restaurants }) {
                 alt="seeall"
                 className=" aspect-square"
               />
-            </Link>
+            </Link> */}
           </header>
           {restaurants}
         </section>

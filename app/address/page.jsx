@@ -1,4 +1,5 @@
-import axios from "axios";
+import { auth } from "@clerk/nextjs";
+import { collection, doc, getDocs } from "firebase/firestore";
 import {
   Briefcase,
   ChevronLeft,
@@ -9,27 +10,24 @@ import {
   Plus,
 } from "lucide-react";
 import Link from "next/link";
+import { userCollectionRef } from "../firebaseConfig";
 
-const ADDRESS = [
-  {
-    type: "home",
-    description:
-      "Faculty block, quarter no 2, near girls hostel, near workshop, near front main block near main gate near main colelge",
-  },
-  {
-    type: "home",
-    description:
-      "Faculty block, quarter no 2, near girls hostel, near workshop, near front main block near main gate near main colelge",
-  },
-];
 
-const Adress = async () => {
-  const getAddress = axios.get("localhost:3000/api/address");
-  console.log(getAddress);
-};
 
-export default function page() {
-  Adress();
+async function getAddresses() {
+  const { userId } = auth();
+  const addressCollectionRef = collection(
+    doc(userCollectionRef, userId),
+    "addresses"
+  );
+  const savedAddresses = await getDocs(addressCollectionRef);
+  return savedAddresses.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+}
+
+
+
+export default async function page() {
+  const addresses = await getAddresses();
   return (
     <section className="h-[calc(100vh_-_64px)] no-scrollbar px-4 bg-[#F5F6FB] w-full overflow-hidden overflow-y-scroll py-8">
       <header className="flex items-center space-x-2 mt-5 ">
@@ -56,29 +54,29 @@ export default function page() {
             Saved Addresses
           </h2>
           <main className="px-4 py-2 rounded-lg divide-y-[1px] shadow shadow-slate-300 bg-white">
-            {ADDRESS.map((address, index) => (
+            {addresses.map((address, index) => (
               <div
                 key={index}
-                className="flex py-6 space-x-4 items-start justify-between"
+                className="flex py-6 space-x-4 items-start "
               >
                 <div className="flex flex-col items-center">
-                  {address.type == "home" ? (
+                  {address.location == "home" ? (
                     <Home size={16} className="text-[#18191B]" />
                   ) : (
                     <Briefcase size={16} className="text-[#18191B]" />
                   )}
                   <p className="capitalize text-xs font-lato mt-1 ">
-                    {address.type}
+                    {address.location}
                   </p>
                 </div>
                 <div className="">
                   <p className="font-lato leading-none text-[#18191B] text-base capitalize">
-                    {address.type}
+                    {address.location}
                   </p>
                   <p className="font-lato mt-1 leading-snug text-xs text-md text-[#777] capitalize">
-                    {address.description}
+                    {`${address.name}, ${address.address}, ${address.landmark}.`}
                   </p>
-                  <Link href={`/address?edit=${index}`} className="w-fit">
+                  <Link href={`/address?edit=${address.id}`} className="w-fit">
                     <div className="p-1 bg-white w-fit rounded-full mt-3 shadow border shadow-slate-100">
                       <MoreHorizontal className="text-primary " size={16} />
                     </div>

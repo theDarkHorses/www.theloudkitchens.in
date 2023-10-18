@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -21,23 +22,22 @@ export default function AddressDialog() {
     setOpen(id);
   }, [id]);
 
-  const handleDelete = (addressId) => {
-    console.log(addressId);
-  };
 
-  const handleReq = async ()=>{
-    try{
-      await fetch("/api/address")
-    }catch(err){
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/api/address?edit=${id}`)
+      router.refresh()
+      setOpen(false)
+    } catch (err) {
       console.log(err.message)
     }
   }
-  
-  handleReq()
+
 
   return (
-    <div onClick={() => handleOpen(false)} className={`left-0 right-0 top-0  z-50 absolute backdrop-brightness-90 duration-300 transition-all backdrop-blur-[1px]  flex-col bg-transparent outline-none border-none bottom-0 space-y-4  flex items-end justify-end ${open?"translate-y-0 bg-opacity-100":"translate-y-full bg-opacity-0"}`}>
-      <div onClick={(e) => e.stopPropagation()} className={`shadow-2xl w-full bg-transparent transition-all delay-75 duration-300 rounded-t-lg overflow-hidden ${open?"translate-y-0":"translate-y-full"}`}>
+    <div onClick={() => handleOpen(false)} className={`left-0 right-0 top-0  z-50 absolute backdrop-brightness-90 duration-300 transition-all backdrop-blur-[1px]  flex-col bg-transparent outline-none border-none bottom-0 space-y-4  flex items-end justify-end ${open ? "translate-y-0 bg-opacity-100" : "translate-y-full bg-opacity-0"}`}>
+      <div onClick={(e) => e.stopPropagation()} className={`shadow-2xl w-full bg-transparent transition-all delay-75 duration-300 rounded-t-lg overflow-hidden ${open ? "translate-y-0" : "translate-y-full"}`}>
         <div className="cursor-pointer w-full rounded-lg overflow-hidden  shadow-md bg-white shadow-slate-400 divide-y-2 flex flex-col items-center justify-center">
 
           <button

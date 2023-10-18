@@ -97,3 +97,11 @@ export function getCuisine(restaurantId, sectionId, cuisineId) {
 
 
 }
+
+
+export const getHomeCarouselImageUrls = () => {
+  return client.fetch(`*[_type == 'carousel'][0]{
+    'imageUrls': images[].asset->url
+  }
+  `)
+}

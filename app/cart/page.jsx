@@ -51,7 +51,7 @@ const page = () => {
       </header>
 
       <main className="bg-[#E0E1E7] min-h-screen mt-3 pt-4 pb-36 shadow-lg">
-        <div className="bg-white rounded-lg shadow-lg shadow-gray-500 mx-2 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
           <div className="flex items-center space-x-2 pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
             <Image
               src={watch}
@@ -95,7 +95,7 @@ const page = () => {
                 onChange={(e) => setConfessionText(e.target.value)}
                 rows={8}
                 className={` px-4 ${
-                  isConfession ? "h-full " : " h-0"
+                  isConfession ? "block " : " hidden"
                 } font-lato  text-sm  border-none outline-none  placeholder:text-[#A6A6A6] rounded-md border-[#A6A6A6] border-2 w-full`}
                 placeholder="Inscribe your deepest confessions here, like whispers in the night, A long-awaited apology, a wrong set right. Initiate a dialogue, let emotions unfurl, In this sacred space, let your words swirl. Make your message extraordinary, as you embark, On this journey of expression, let your feelings spark."
               ></textarea>
@@ -108,7 +108,7 @@ const page = () => {
             Item(s) Added
           </h3>
         </div>
-        <div className="bg-white rounded-lg shadow-lg shadow-gray-500 mx-2 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
           {cartItems?.length ? (
             cartItems?.map((item, index) => (
               <div
@@ -211,7 +211,7 @@ const page = () => {
             Eat More, Save More{" "}
           </h3>
         </div>
-        <div className="bg-white rounded-lg shadow-lg shadow-gray-500 mx-2 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
           <div className="flex items-start justify-between pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
             <div className="flex space-x-2">
               <Image
@@ -252,7 +252,7 @@ const page = () => {
             Total & Bill Value
           </h3>
         </div>
-        <div className="bg-white rounded-lg shadow-lg shadow-gray-500 mx-2 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
           <div className="mx-4 border-[#BABABA] border-dashed border-b-[1px] py-4 space-y-2">
             <div className="flex font-lato font-bold text-sm items-center justify-between">
               <p className="">Item Total</p>
