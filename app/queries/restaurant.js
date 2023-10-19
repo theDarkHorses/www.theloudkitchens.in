@@ -105,3 +105,24 @@ export const getHomeCarouselImageUrls = () => {
   }
   `)
 }
+
+export const searchCusine = (query) => {
+  return client.fetch(`*[_type == 'restaurant']{
+    'id':_id,
+    name,
+    sections[]{
+      'id':_key,
+      menu[_type=='cuisine' && name match $query]{
+        'id':_key,
+        name,
+        'imageUrl':image.asset->url
+      }
+    }
+  }`, { query: `*${query}*` })
+}
+
+
+export const getPopularItems = () => {
+  return client.fetch()
+
+}

@@ -1,15 +1,18 @@
 import { ChevronLeft } from "lucide-react";
 import React from "react";
 import CouponCard from "../components/CouponCard";
+import Link from "next/link";
 
 const layout = () => {
   return (
     <div>
       <header className="bg-white rounded-b-2xl shadow-md flex flex-col px-5">
         <div className="flex items-start space-x-3 pt-12 mb-8">
-          <ChevronLeft size={20} className="mt-1" />
+          <Link href={"/cart"}>
+            <ChevronLeft size={24} />
+          </Link>
           <div className="">
-            <p className="font-lato text-xl font-bold">Coupons</p>
+            <p className="font-lato text-xl font-bold leading-none">Coupons</p>
             <p className="font-lato text-[#888] text-xs font-bold">
               CartValue: ₹440
             </p>
