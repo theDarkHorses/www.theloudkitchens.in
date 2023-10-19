@@ -33,3 +33,34 @@ export function extractDebouncedSearchQuery(restaurants) {
     });
     return data;
 }
+export function extractPopularItems(restaurants) {
+    const data = [];
+    restaurants.forEach((restaurant) => {
+        const restaurantId = restaurant.id;
+        const restaurantName = restaurant.name;
+        restaurant.sections.forEach((section) => {
+            const sectionId = section.id;
+            if (section.menu) {
+                section.menu.forEach((item) => {
+                    data.push({
+                        restaurantId,
+                        sectionId,
+                        restaurantName,
+                        item: {
+                            id: item.id,
+                            name: item.name,
+                            imageUrl: item.imageUrl,
+                            price: item.price,
+                            isVeg: item.isVeg,
+                            kCal: item.kCal,
+                            servings: item.servings,
+                            preparationTime: item.preparationTime,
+                            tags: item.tags,
+                        }
+                    });
+                });
+            }
+        });
+    });
+    return data;
+}
