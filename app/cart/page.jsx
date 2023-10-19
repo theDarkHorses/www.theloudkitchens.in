@@ -178,10 +178,7 @@ const page = () => {
               <h3 className="font-lato text-sm font-bold text-[#444]">
                 Add cooking request
               </h3>
-              <PlusCircle
-                size={18}
-                className="text-[#444] mr-5"
-              />
+              <PlusCircle size={18} className="text-[#444] mr-5" />
             </div>
             <div
               className={`mx-2 ${
@@ -189,6 +186,7 @@ const page = () => {
               } rounded-md`}
             >
               <textarea
+                onClick={(e) => e.stopPropagation()}
                 onChange={(e) => setCookingReqText(e.target.value)}
                 rows={4}
                 className="p-4 leading-none font-lato  text-sm  border-none outline-none  placeholder:text-[#A6A6A6] rounded-md border-[#A6A6A6] border-2 w-full"
