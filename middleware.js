@@ -6,11 +6,7 @@ export default authMiddleware({
     "/home",
     "/search",
     "/whatsnew",
-    "/profile",
-    "/address",
     "/restaurants/:id",
-    "/address/:id",
-    "/orders",
     "/cart",
     "/api/address",
     "/coupons"

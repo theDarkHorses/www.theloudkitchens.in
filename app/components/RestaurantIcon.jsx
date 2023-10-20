@@ -19,7 +19,7 @@ const RestaurantIcon = ({ isActive, imgSrc, name,id }) => {
           alt={name}
         />
       </div>
-      <h2 className="max-w-[75px] font-lato text-xs text-center font-semibold pt-1">
+      <h2 className="max-w-[75px] font-lato text-xs text-center font-semibold pt-1 self-center">
         {name}
       </h2>
     </Link>

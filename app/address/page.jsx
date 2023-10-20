@@ -14,8 +14,7 @@ import { userCollectionRef } from "../firebaseConfig";
 
 
 
-async function getAddresses() {
-  const { userId } = auth();
+async function getAddresses(userId) {
   const addressCollectionRef = collection(
     doc(userCollectionRef, userId),
     "addresses"
@@ -27,7 +26,8 @@ async function getAddresses() {
 
 
 export default async function page() {
-  const addresses = await getAddresses();
+  const { userId } = auth()
+  const addresses = await getAddresses(userId);
   return (
     <section className="h-[calc(100vh_-_64px)] no-scrollbar px-4 bg-[#F5F6FB] w-full overflow-hidden overflow-y-scroll py-8">
       <header className="flex items-center space-x-2 mt-5 ">
