@@ -65,7 +65,7 @@ export default function SearchQuery() {
             {isFocused && (
                 <div className="bg-white divide-y left-0 right-0 p-4 py-2 w-full absolute top-12 shadow-lg rounded-lg border">
                     {searchResults.length ? searchResults.map((item) =>
-                        <Link onClick={(e) => e.stopPropagation()} href={`/restaurants/${item.restaurantId}?tab=${item.sectionId}&item=${item.itemId}`} key={item.itemId} className="flex py-4  gap-2">
+                        <Link onClick={(e) => e.stopPropagation()} href={`/restaurants/${item.restaurantId}?tab=${item.sectionId}&item=${item.itemId}`} key={item.itemId} className="flex py-4 hover:bg-gray-100  gap-2">
                             <Image src={item.itemImageUrl} alt={item.itemName} width={52} height={52}  className="w-12 h-12 rounded-lg overflow-hidden object-cover object-center"/>
                             <div className="flex flex-col items-start justify-center">
                                 <h3 className="text-[#292C35] font-medium text-start font-lato text-lg ">

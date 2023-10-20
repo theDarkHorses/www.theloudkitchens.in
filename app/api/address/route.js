@@ -27,3 +27,15 @@ export async function DELETE(req) {
   await deleteDoc(doc(addressCollectionRef, editAddressId));
   return res.json({ message: "deleted" });
 }
+
+
+export async function GET(req) {
+  const { userId } = auth();
+  const addressCollectionRef = collection(
+    doc(userCollectionRef, userId),
+    "addresses"
+  );
+  const savedAddresses = await getDocs(addressCollectionRef);
+  const addresses = savedAddresses.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  res.json({ addresses }).status(200);
+}

@@ -123,6 +123,23 @@ export const searchCusine = (query) => {
 
 
 export const getPopularItems = () => {
-  return client.fetch()
+  return client.fetch(`*[_type == 'restaurant']{
+    'id':_id,
+    name,
+    sections[]{
+      'id':_key,
+      menu[_type=='cuisine' && isPopular == true]{
+        'id':_key,
+          isVeg,
+          tags,
+          kCal,
+          servings,
+          preparationTime,
+    price,
+        name,
+        'imageUrl':image.asset->url
+      }
+    }
+  }`)
 
 }

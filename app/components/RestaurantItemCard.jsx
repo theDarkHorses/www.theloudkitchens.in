@@ -9,10 +9,11 @@ export default function RestaurantItemCard({
   tags,
   time,
   price,
+  link
 }) {
   return (
     <Link
-      href={`/restaurants/${name}`}
+      href={link}
       className="first-of-type:ml-5 last-of-type:mr-5 shadow-lg relative snap-center shadow-gray-300 bg-white min-w-[250px] rounded-md max-w-card overflow-hidden"
     >
       <Image
@@ -20,7 +21,7 @@ export default function RestaurantItemCard({
         src={photoUrl}
         width={241}
         height={124}
-        className="object-cover object-center min-w-[250px] max-w-card aspect-auto"
+        className="object-cover object-center aspect-[241/124] min-w-[250px] max-w-card"
       />
       <div className="flex items-start p-2 space-x-2 ">
         <Image
@@ -42,15 +43,13 @@ export default function RestaurantItemCard({
             {name}
           </h2>
           <div className="space-x-2">
-            {tags.map((tag, index) => (
-              <span key={index} className="text-text text-xs font-lato ">
-                {tag}
-              </span>
-            ))}
+            <span className="text-text text-xs font-lato ">
+              {tags}
+            </span>
           </div>
           <div className="items-center flex space-x-1 border-b border-dashed border-[#AC231816] pb-2">
             <GaugeCircle size={12} color="#2A70FA" />
-            <span className="text-text text-xs font-lato ">{time}min</span>
+            <span className="text-text text-xs font-lato ">{time}</span>
           </div>
           <p className="font-lato text-xs font-black mt-2 mb-1">₹ {price}</p>
         </div>
