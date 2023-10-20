@@ -1,9 +1,10 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import LogoutButton from "../components/common/LogoutButton";
 
 export default function page() {
+
   return (
     <section className="px-2  py-5  relative bg-[#F5F5F5] w-full no-scrollbar overflow-hidde overflow-y-scroll z-40">
       <nav className="">
@@ -128,22 +129,7 @@ export default function page() {
               </div>
               <ChevronRight size={20} color="#767C8F" />
             </Link>
-            <Link
-              href="/orders#credit?tab=2"
-              className="flex items-center pr-2 py-1 justify-center"
-            >
-              <div className="flex space-x-3 items-center flex-1">
-                <Image
-                  alt="images"
-                  src={"/icons/plogout.svg"}
-                  width={32}
-                  height={32}
-                  className="w-10 h-10"
-                />
-                <p className="font-lato text-lg">Log out</p>
-              </div>
-              <ChevronRight size={20} color="#767C8F" />
-            </Link>
+            <LogoutButton />
           </main>
         </section>
       </main>
