@@ -13,12 +13,12 @@ const CouponCard = () => {
         src={offer}
         height={44}
         width={44}
-        className={`relative -top-6 ${isOpen?"left-2/4":"left-3"}`}
+        className={`relative transition-all duration-300 ease-in-out -top-6 ${isOpen?"left-[calc(50%_-_22px)]":"left-3"}`}
         alt="offer"
       />
       <div className="relative -top-4 space-y-8 px-9">
         <h4 className="font-lato font-bold text-[#1C1C1C]">
-          60% OFF up to ₹69.420{" "}
+          60% OFF up to ₹69.420
         </h4>
         <div className="font-lato text-primary text-xs font-bold flex justify-between items-center ">
           <div className="border rounded px-3 py-1">First5</div>
@@ -30,10 +30,10 @@ const CouponCard = () => {
       {/* Information */}
 
       <div
-        className={`${
+        className={`mx-4 border-t transition-height duration-300 ease-in-out border-dashed overflow-hidden ${
           isOpen
-            ? "mx-4 border-t border-dashed"
-            : "mx-4 border-t border-dashed h-0 hidden"
+            ? "h-20"
+            : "h-0 "
         }`}
       >
         <ul className="py-5 text-[#636989CC] font-lato text-xs font-bold list-disc px-3">
@@ -43,7 +43,7 @@ const CouponCard = () => {
         </ul>
       </div>
       <div
-        className="border-dashed bg-[#ececec] py-2 border-[#9BA1C1] border-t-[1px] flex items-center justify-center rounded-b-2xl"
+        className="border-dashed bg-[#ececec] cursor-pointer py-2 border-[#9BA1C1] border-t-[1px] flex items-center justify-center rounded-b-2xl"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (
@@ -52,7 +52,7 @@ const CouponCard = () => {
             <h4 className="font-lato text-blue-700 font-bold">Applied</h4>
           </div>
         ) : (
-          <h4 className="font-lato text-primary font-bold">Tap to Apply</h4>
+          <h4 className="font-lato text-primary  font-bold">Tap to Apply</h4>
         )}
       </div>
     </div>

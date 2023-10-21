@@ -194,11 +194,11 @@ const page = () => {
                 </h3>
                 <PlusCircle
                   size={18}
-                  className="text-[#444] mr-5"
+                  className="text-[#444] mr-5 cursor-pointer"
                 />
               </div>
               <div
-                className={`mx-2 p-4 transition-all ease-in-out duration-300 rounded-lg border ${cookingReq ? "h-40" : "h-0 p-0 border-0"
+                className={`mx-2 p-4 transition-all ease-in-out duration-300 rounded-lg border ${cookingReq ? "h-40" : "h-0 py-0 border-0"
                   } rounded-md`}
               >
                 <textarea
