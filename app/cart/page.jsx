@@ -20,9 +20,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems, updateItemQuantity } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
+import PaymentDrawer from "../components/PaymentDrawer";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openPaymentDrawer, setOpenPaymentDrawer] = useState(false);
   const cartItems = useSelector(selectCartItems);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -65,7 +67,9 @@ const page = () => {
                 alt="watch"
                 className=""
               />
-              <h3 className="font-lato text-sm font-bold">Delivery in 30 mins</h3>
+              <h3 className="font-lato text-sm font-bold">
+                Delivery in 30 mins
+              </h3>
             </div>
             <div className="pb-3">
               <div className="flex items-center justify-between space-x-2 px-5 py-4">
@@ -74,10 +78,11 @@ const page = () => {
                 </h3>
                 <div
                   onClick={() => setIsConfession(!isConfession)}
-                  className={`flex w-12 h-6 rounded-xl mx-3 ${isConfession
-                    ? "bg-gradient-to-r from-[#C50CA7] to-[#350AAF]  justify-end"
-                    : "bg-[#FFD8D8] justify-start"
-                    }`}
+                  className={`flex w-12 h-6 rounded-xl mx-3 ${
+                    isConfession
+                      ? "bg-gradient-to-r from-[#C50CA7] to-[#350AAF]  justify-end"
+                      : "bg-[#FFD8D8] justify-start"
+                  }`}
                 >
                   <Image
                     src={isConfession ? love : cute}
@@ -89,16 +94,18 @@ const page = () => {
                 </div>
               </div>
               <div
-                className={`mx-2 ${isConfession
-                  ? "border-[#A6A6A6] border-[1px] pt-3"
-                  : "border-0 h-0 pt-0"
-                  } rounded-md `}
+                className={`mx-2 ${
+                  isConfession
+                    ? "border-[#A6A6A6] border-[1px] pt-3"
+                    : "border-0 h-0 pt-0"
+                } rounded-md `}
               >
                 <textarea
                   onChange={(e) => setConfessionText(e.target.value)}
                   rows={8}
-                  className={` px-4 ${isConfession ? "block " : " hidden"
-                    } font-lato  text-sm  border-none outline-none  placeholder:text-[#A6A6A6] rounded-md border-[#A6A6A6] border-2 w-full`}
+                  className={` px-4 ${
+                    isConfession ? "block " : " hidden"
+                  } font-lato  text-sm  border-none outline-none  placeholder:text-[#A6A6A6] rounded-md border-[#A6A6A6] border-2 w-full`}
                   placeholder="Inscribe your deepest confessions here, like whispers in the night, A long-awaited apology, a wrong set right. Initiate a dialogue, let emotions unfurl, In this sacred space, let your words swirl. Make your message extraordinary, as you embark, On this journey of expression, let your feelings spark."
                 ></textarea>
               </div>
@@ -148,7 +155,9 @@ const page = () => {
                       </p>
                       <Plus
                         onClick={() =>
-                          dispatch(updateItemQuantity({ id: item?.id, delta: 1 }))
+                          dispatch(
+                            updateItemQuantity({ id: item?.id, delta: 1 })
+                          )
                         }
                         size={16}
                         color="#ac2323"
@@ -170,7 +179,10 @@ const page = () => {
             )}
 
             <div className="flex items-center justify-between pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
-              <Link href="/" className="font-lato text-sm font-bold text-[#444]">
+              <Link
+                href="/"
+                className="font-lato text-sm font-bold text-[#444]"
+              >
                 Add more items
               </Link>
               <PlusCircle size={18} className="text-[#444] mr-5" />
@@ -180,14 +192,12 @@ const page = () => {
                 <h3 className="font-lato text-sm font-bold text-[#444]">
                   Add cooking request
                 </h3>
-                <PlusCircle
-                  size={18}
-                  className="text-[#444] mr-5"
-                />
+                <PlusCircle size={18} className="text-[#444] mr-5" />
               </div>
               <div
-                className={`mx-2 ${cookingReq ? "border-[#A6A6A6] border-[1px]" : "border-0 h-0"
-                  } rounded-md`}
+                className={`mx-2 ${
+                  cookingReq ? "border-[#A6A6A6] border-[1px]" : "border-0 h-0"
+                } rounded-md`}
               >
                 <textarea
                   onChange={(e) => setCookingReqText(e.target.value)}
@@ -303,26 +313,37 @@ const page = () => {
             </div>
           </div>
         </main>
-        <footer className="bg-white shadow  w-full fixed bottom-0 divide-y left-0 space-y-4 right-0 pt-4  z-50 rounded-t-lg overflow-hidden" style={{ boxShadow: '0px 0px 9px 0px rgba(0, 0, 0, 0.25)' }}>
+        <footer
+          className="bg-white shadow  w-full fixed bottom-0 divide-y left-0 space-y-4 right-0 pt-4  z-50 rounded-t-lg overflow-hidden"
+          style={{ boxShadow: "0px 0px 9px 0px rgba(0, 0, 0, 0.25)" }}
+        >
           <div className="flex items-center px-5 justify-between py-2 pb-0  font-lato w-full">
             <div className="flex items-start space-x-3 justify-between">
               <LocateFixed size={24} className="text-primary" />
               <div>
                 <p className="text-[#444] text-sm">Delivery at Hostel</p>
-                <p className="text-[#999] text-sm">Room 323, Hazratbal, Srinagar</p>
+                <p className="text-[#999] text-sm">
+                  Room 323, Hazratbal, Srinagar
+                </p>
               </div>
             </div>
-            <p onClick={() => setOpenDrawer(true)} className="text-primary text-sm self-start cursor-pointer">
+            <p
+              onClick={() => setOpenDrawer(true)}
+              className="text-primary text-sm self-start cursor-pointer"
+            >
               Change
             </p>
           </div>
           <div className=" py-6  px-5 flex justify-between space-x-2">
             <div className=" space-y-1 flex flex-col justify-center items-start">
               <div className="flex items-center space-x-2">
-                <span className="text-[#999999] text-xs">
-                  Payment Method
-                </span>
-                <Image src={"/icons/triangle.svg"} height={10} width={10} alt="triangle" />
+                <span className="text-[#999999] text-xs">Payment Method</span>
+                <Image
+                  src={"/icons/triangle.svg"}
+                  height={10}
+                  width={10}
+                  alt="triangle"
+                />
               </div>
               <div className="space-x-1 flex items-center">
                 <Image src={"/icons/bank.svg"} width={12} height={12} />
@@ -331,7 +352,10 @@ const page = () => {
                 </span>
               </div>
             </div>
-            <button className="border-primary border space-x-2 max-w-[175px] w-full bg-[#AC232310] rounded-lg py-2  px-4 flex items-center justify-between">
+            <button
+              className="border-primary border space-x-2 max-w-[175px] w-full bg-[#AC232310] rounded-lg py-2  px-4 flex items-center justify-between"
+              onClick={() => setOpenPaymentDrawer(true)}
+            >
               <div className=" flex space-y-1 flex-col items-center">
                 <span className="text-sm truncate  font-lato text-primary font-semibold leading-none">
                   ₹ 182.85
@@ -341,14 +365,25 @@ const page = () => {
                 </span>
               </div>
               <div className="flex items-center space-x-2 ">
-                <p className="text-[#AC2323]  text-xs font-lato truncate leading-none font-semibold">Place Order</p>
-                <Image src={"/icons/horizontalTriangle.svg"} height={6} width={6} alt="chevron" />
+                <p className="text-[#AC2323]  text-xs font-lato truncate leading-none font-semibold">
+                  Place Order
+                </p>
+                <Image
+                  src={"/icons/horizontalTriangle.svg"}
+                  height={6}
+                  width={6}
+                  alt="chevron"
+                />
               </div>
             </button>
           </div>
         </footer>
       </div>
       <AddressOverlay openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+      <PaymentDrawer
+        openDrawer={openPaymentDrawer}
+        setOpenDrawer={setOpenPaymentDrawer}
+      />
     </>
   );
 };
