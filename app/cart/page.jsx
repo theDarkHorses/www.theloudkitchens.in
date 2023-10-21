@@ -22,9 +22,11 @@ import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
 import { selectGSTAndRestaurantCharges, selectPlatformFee, selectSubTotal, selectTotal, selectDeliveryFee } from "../store/cartSlice";
 
+import PaymentDrawer from "../components/PaymentDrawer";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openPaymentDrawer, setOpenPaymentDrawer] = useState(false);
   const cartItems = useSelector(selectCartItems);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -71,7 +73,9 @@ const page = () => {
                 alt="watch"
                 className=""
               />
-              <h3 className="font-lato text-sm font-bold">Delivery in 30 mins</h3>
+              <h3 className="font-lato text-sm font-bold">
+                Delivery in 30 mins
+              </h3>
             </div>
             <div className="pb-3">
               <div className="flex items-center justify-between space-x-2 px-2 pl-5 py-4">
@@ -160,7 +164,9 @@ const page = () => {
                       </p>
                       <Plus
                         onClick={() =>
-                          dispatch(updateItemQuantity({ id: item?.id, delta: 1 }))
+                          dispatch(
+                            updateItemQuantity({ id: item?.id, delta: 1 })
+                          )
                         }
                         size={16}
                         color="#ac2323"
@@ -182,7 +188,10 @@ const page = () => {
             )}
 
             <div className="flex items-center justify-between pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
-              <Link href="/" className="font-lato text-sm font-bold text-[#444]">
+              <Link
+                href="/"
+                className="font-lato text-sm font-bold text-[#444]"
+              >
                 Add more items
               </Link>
               <PlusCircle size={18} className="text-[#444] mr-5" />
@@ -192,10 +201,14 @@ const page = () => {
                 <h3 className="font-lato text-sm font-bold text-[#444]">
                   Add cooking request
                 </h3>
+<<<<<<< HEAD
                 <PlusCircle
                   size={18}
                   className="text-[#444] mr-5 cursor-pointer"
                 />
+=======
+                <PlusCircle size={18} className="text-[#444] mr-5" />
+>>>>>>> 047de4ddc81145626bcb975b7eba7702dc3852b1
               </div>
               <div
                 className={`mx-2 p-4 transition-all ease-in-out duration-300 rounded-lg border ${cookingReq ? "h-40" : "h-0 py-0 border-0"
@@ -322,20 +335,28 @@ const page = () => {
               <LocateFixed size={24} className="text-primary" />
               <div>
                 <p className="text-[#444] text-sm">Delivery at Hostel</p>
-                <p className="text-[#999] text-sm">Room 323, Hazratbal, Srinagar</p>
+                <p className="text-[#999] text-sm">
+                  Room 323, Hazratbal, Srinagar
+                </p>
               </div>
             </div>
-            <p onClick={() => setOpenDrawer(true)} className="text-primary text-sm self-start cursor-pointer">
+            <p
+              onClick={() => setOpenDrawer(true)}
+              className="text-primary text-sm self-start cursor-pointer"
+            >
               Change
             </p>
           </div>
           <div className=" py-6  px-2 flex justify-between space-x-2">
             <div className=" space-y-1 flex flex-col justify-center items-start">
               <div className="flex items-center space-x-2">
-                <span className="text-[#999999] text-xs">
-                  Payment Method
-                </span>
-                <Image src={"/icons/triangle.svg"} height={10} width={10} alt="triangle" />
+                <span className="text-[#999999] text-xs">Payment Method</span>
+                <Image
+                  src={"/icons/triangle.svg"}
+                  height={10}
+                  width={10}
+                  alt="triangle"
+                />
               </div>
               <div className="space-x-1 flex items-center">
                 <Image src={"/icons/bank.svg"} width={12} height={12} alt="bank" />
@@ -344,7 +365,10 @@ const page = () => {
                 </span>
               </div>
             </div>
-            <button className="border-primary border space-x-2 max-w-[175px] w-full bg-[#AC232310] rounded-lg py-2  px-4 flex items-center justify-between">
+            <button
+              className="border-primary border space-x-2 max-w-[175px] w-full bg-[#AC232310] rounded-lg py-2  px-4 flex items-center justify-between"
+              onClick={() => setOpenPaymentDrawer(true)}
+            >
               <div className=" flex space-y-1 flex-col items-center">
                 <span className="text-sm truncate  font-lato text-primary font-semibold leading-none">
                   ₹ {Number(total).toFixed(2)}
@@ -354,14 +378,25 @@ const page = () => {
                 </span>
               </div>
               <div className="flex items-center space-x-2 ">
-                <p className="text-[#AC2323]  text-xs font-lato truncate leading-none font-semibold">Place Order</p>
-                <Image src={"/icons/horizontalTriangle.svg"} height={6} width={6} alt="chevron" />
+                <p className="text-[#AC2323]  text-xs font-lato truncate leading-none font-semibold">
+                  Place Order
+                </p>
+                <Image
+                  src={"/icons/horizontalTriangle.svg"}
+                  height={6}
+                  width={6}
+                  alt="chevron"
+                />
               </div>
             </button>
           </div>
         </footer>
       </div>
       <AddressOverlay openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+      <PaymentDrawer
+        openDrawer={openPaymentDrawer}
+        setOpenDrawer={setOpenPaymentDrawer}
+      />
     </>
   );
 };
