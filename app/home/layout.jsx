@@ -32,7 +32,7 @@ export default async function Layout({ dishes, carousel, restaurants }) {
             height={20}
             className="w-5 h-5 aspect-square"
           />
-          <p className="font-raleway font-semibold text-xs px-1">100</p>
+          <p className="font-raleway font-semibold text-xs px-1">0</p>
         </Link>
       </header>
       <main className="">

@@ -1,9 +1,12 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import LogoutButton from "../components/common/LogoutButton";
+import { currentUser } from "@clerk/nextjs";
 
-export default function page() {
+export default async function page() {
+  const user = await currentUser()
+
   return (
     <section className="px-2  py-5  relative bg-[#F5F5F5] w-full no-scrollbar overflow-hidde overflow-y-scroll z-40">
       <nav className="">
@@ -14,7 +17,7 @@ export default function page() {
       <div className="bg-white shadow-lg shadow-gray-300  mt-6 mb-12 rounded-lg flex items-center py-5 px-2 space-x-2">
         <div className="">
           <Image
-            src="https://i.imgur.com/3vjidlG.jpg"
+            src={user.imageUrl}
             height={72}
             width={72}
             alt="images"
@@ -22,7 +25,7 @@ export default function page() {
           />
         </div>
         <div className="">
-          <h3 className="font-raleway text-2xl font-bold">Rahi Uppal</h3>
+          <h3 className="font-raleway text-2xl font-bold">{user.firstName} {user.lastName}</h3>
           <h3 className="font-raleway text-sm text-primary">View activity </h3>
         </div>
       </div>
@@ -128,22 +131,7 @@ export default function page() {
               </div>
               <ChevronRight size={20} color="#767C8F" />
             </Link>
-            <Link
-              href="/orders#credit?tab=2"
-              className="flex items-center pr-2 py-1 justify-center"
-            >
-              <div className="flex space-x-3 items-center flex-1">
-                <Image
-                  alt="images"
-                  src={"/icons/plogout.svg"}
-                  width={32}
-                  height={32}
-                  className="w-10 h-10"
-                />
-                <p className="font-lato text-lg">Log out</p>
-              </div>
-              <ChevronRight size={20} color="#767C8F" />
-            </Link>
+            <LogoutButton />
           </main>
         </section>
       </main>

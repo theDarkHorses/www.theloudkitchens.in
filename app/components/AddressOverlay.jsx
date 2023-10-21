@@ -1,15 +1,17 @@
 "use client"
 
 import { useAuth } from "@clerk/nextjs";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { Briefcase, ChevronRight, Home, MoreHorizontal, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react"
-import { DB, userCollectionRef } from "../firebaseConfig";
+import { DB } from "../firebaseConfig";
 
 export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
   const [address, setAddress] = useState([]);
   const { userId } = useAuth();
+  const [user, setUser] = useState(null);
+ 
 
   const userCollectionRef = doc(DB, "users", userId);
 
@@ -20,8 +22,26 @@ export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
       setAddress(addresses);
     });
     return unsubscribe;
-  }, [userCollectionRef]);
+  }, []);
 
+  useEffect(() => {
+    const unsubscribe = onSnapshot(userCollectionRef, (snapshot) => {
+      const user = snapshot.data();
+      setUser(user);
+    }
+    );
+    return unsubscribe;
+  }, [address]);
+
+
+  const handleSetSelectedAddress = async (address) => {
+    try {
+      await setDoc(userCollectionRef, { selectedAddress: address }, { merge: true });
+      console.log("Address set successfully");
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
 
   return (
     <div className={`bg-transparent transition-all duration-300  absolute top-0 bottom-0 left-0 right-0 h-screen w-screen z-[999999] ${openDrawer ? "translate-y-0" : "translate-y-full"}`}>
@@ -35,6 +55,7 @@ export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
           {address?.map((address, index) => (
             <div
               key={index}
+              onClick={() => handleSetSelectedAddress(address)}
               className="flex py-6 space-x-4 items-start cursor-pointer "
             >
               <div className="flex flex-col items-center">
@@ -48,17 +69,20 @@ export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
                 </p>
               </div>
               <div className="">
-                <p className="font-lato leading-none text-[#18191B] text-base capitalize">
+                {user?.selectedAddress?.id === address.id  && <p className="font-lato border border-primary mb-4 rounded-lg text-[#AC232390]  inline px-2 py-1 text-sm capitalize">
+                  Selected
+                </p>}
+                <p className="font-lato  text-[#18191B] text-base capitalize">
                   {address.location}
                 </p>
                 <p className="font-lato mt-1 leading-snug text-xs text-md text-[#777] capitalize">
                   {`${address.name}, ${address.address}, ${address.landmark}.`}
                 </p>
-                <Link href={`/ address ? edit = ${address.id} `} className="w-fit">
-                  <div className="p-1 bg-white w-fit rounded-full mt-3 shadow border shadow-slate-100">
-                    <MoreHorizontal className="text-primary " size={16} />
-                  </div>
-                </Link>
+
+                <div className="p-1 bg-white w-fit rounded-full mt-3 shadow border shadow-slate-100">
+                  <MoreHorizontal className="text-primary " size={16} />
+                </div>
+
               </div>
             </div>
           ))}
