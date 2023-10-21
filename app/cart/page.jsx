@@ -107,6 +107,7 @@ const page = () => {
                 <textarea
                   onChange={(e) => setConfessionText(e.target.value)}
                   rows={8}
+                  value={confessionText}
                   className={` border w-full rounded-lg  font-lato p-4  text-sm outline-none resize-none  placeholder:text-[#A6A6A6] transition-height duration-300 ease-in-out overflow-hidden ${isConfession ? "h-40" : "h-0"}`}
                   placeholder="Inscribe your deepest confessions here, like whispers in the night, A long-awaited apology, a wrong set right. Initiate a dialogue, let emotions unfurl, In this sacred space, let your words swirl. Make your message extraordinary, as you embark, On this journey of expression, let your feelings spark."
                 />
@@ -213,6 +214,7 @@ const page = () => {
                 <textarea
                   onChange={(e) => setCookingReqText(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
+                  value={cookingReqText}
                   rows={4}
                   className={`mx-1 resize-none transition-all w-full h-full outline-none border-none ${isConfession ? "translate-x-6" : "translate-x-0"}`}
                   placeholder="Add the cooking instructions ..."
