@@ -9,7 +9,7 @@ export default function page() {
                         Available Balance
                     </p>
                     <p className="font-raleway leading-none text-primary font-bold text-xl">
-                        ₹ 420.69
+                        ₹ 0
                     </p>
                 </div>
                 <div className="flex flex-col items-center justify-start">
@@ -17,7 +17,7 @@ export default function page() {
                         HQ-Points
                     </p>
                     <p className=" flex items-center space-x-1 font-raleway text-start leading-none text-primary font-bold text-xl">
-                        <Image src={"/icons/coin.png"} width={32} height={32} className="w-4 h-4 aspect-square" /> <span>10,050</span>
+                        <Image src={"/icons/coin.png"} width={32} height={32} className="w-4 h-4 aspect-square" /> <span>0</span>
                     </p>
                 </div>
             </div>

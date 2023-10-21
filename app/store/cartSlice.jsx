@@ -1,4 +1,5 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { calculateDeliveryFee, calculateGST } from "@/app/utils/delivery"
 
 const initialState = {
     items: [],
@@ -7,8 +8,8 @@ const initialState = {
     deliveryFee: 0,
     tax: 0,
     donation: 0,
-    platformFee: 0,
-    restaurantCharges: 0,
+    platformFee: 3,
+    restaurantCharges: 20,
     gst: 0,
     total: 0,
 };
@@ -33,12 +34,12 @@ export const cartSlice = createSlice({
                 restaurantId, tabId, itemId
             })
 
-            const totalPrice = state.items?.reduce((acc, section) => {
-                console.log(section);
-                return acc + section.quantity * section.totalCost;
-            }, 0);
+            const totalPrice = state.items?.reduce((acc, section) => acc + section.quantity * section.totalCost, 0);
 
             state.subTotal = totalPrice
+            state.deliveryFee = calculateDeliveryFee(totalPrice)
+            state.gst = calculateGST(totalPrice)
+            state.total = totalPrice + state.deliveryFee + state.gst + state.platformFee + state.restaurantCharges
         },
 
         updateItemQuantity: (state, action) => {
@@ -55,8 +56,10 @@ export const cartSlice = createSlice({
             }, 0);
 
             state.subTotal = totalPrice
-
-
+            state.subTotal = totalPrice
+            state.deliveryFee = calculateDeliveryFee(totalPrice)
+            state.gst = calculateGST(totalPrice)
+            state.total = totalPrice + state.deliveryFee + state.gst + state.platformFee + state.restaurantCharges
         }
 
 
@@ -64,7 +67,14 @@ export const cartSlice = createSlice({
 });
 
 
-export const { toggleItemWithDelta, toggleDonation, updateItemQuantity, calculateDeliveryFee, calculateGST, calculatePlatformFee, calculateRestaurantCharges, calculateTotal, addCoupon } = cartSlice.actions;
+export const { toggleItemWithDelta, updateItemQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
 export const selectCartItems = (state) => state.cart.items;
+export const selectSubTotal = (state) => state.cart.subTotal;
+export const selectTotal = (state) => state.cart.total;
+export const selectPlatformFee = (state) => state.cart.platformFee;
+export const selectGSTAndRestaurantCharges = (state) => state.cart.restaurantCharges + state.cart.gst;
+export const selectDeliveryFee = (state) => state.cart.deliveryFee;
+
+
 

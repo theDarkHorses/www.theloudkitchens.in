@@ -20,6 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems, updateItemQuantity } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
+import { selectGSTAndRestaurantCharges, selectPlatformFee, selectSubTotal, selectTotal, selectDeliveryFee } from "../store/cartSlice";
+
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -30,7 +32,11 @@ const page = () => {
   const [cookingReq, setCookingReq] = useState(false);
   const [cookingReqText, setCookingReqText] = useState("");
   const [confessionText, setConfessionText] = useState("");
-
+  const subTotal = useSelector(selectSubTotal)
+  const platformFee = useSelector(selectPlatformFee)
+  const gstAndRestaurantCharges = useSelector(selectGSTAndRestaurantCharges)
+  const total = useSelector(selectTotal)
+  const deliveryFee = useSelector(selectDeliveryFee)
   return (
     <>
       <div className="bg-[#E0E1E7] relative ">
@@ -38,12 +44,12 @@ const page = () => {
           <div className="pt-10 pb-[2px] ">
             <div
               onClick={() => router.back()}
-              className="flex items-center mb-6 space-x-2 px-5"
+              className="flex items-center mb-6 space-x-2 px-2"
             >
               <ChevronLeft className="cursor-pointer" />
               <h2 className="font-lato text-xl font-bold">Your FoodBasket</h2>
             </div>
-            <div className="bg-[#DFFBEF] flex items-center space-x-1 rounded-b-2xl px-5">
+            <div className="bg-[#DFFBEF] flex items-center space-x-1 rounded-b-2xl px-2">
               <Image src={love} width={22} height={22} alt="love" />
               <h3 className="font-lato text-sm font-bold text-[#379674]">
                 ₹ 420.69 Saved!
@@ -55,7 +61,7 @@ const page = () => {
           </div>
         </header>
 
-        <main className="bg-[#E0E1E7] min-h-screen  pt-10 pb-36 shadow-lg px-5">
+        <main className="bg-[#E0E1E7] min-h-screen  pt-10 pb-36 shadow-lg px-2">
           <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
             <div className="flex items-center space-x-2 pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
               <Image
@@ -68,13 +74,13 @@ const page = () => {
               <h3 className="font-lato text-sm font-bold">Delivery in 30 mins</h3>
             </div>
             <div className="pb-3">
-              <div className="flex items-center justify-between space-x-2 px-5 py-4">
+              <div className="flex items-center justify-between space-x-2 px-2 py-4">
                 <h3 className="font-lato text-sm font-bold">
                   ❤️ Make this order a confession
                 </h3>
                 <div
                   onClick={() => setIsConfession(!isConfession)}
-                  className={`flex w-12 h-6 rounded-xl mx-3 ${isConfession
+                  className={`flex w-12 transition-height duration-300 h-6 transitio rounded-xl mx-3 ${isConfession
                     ? "bg-gradient-to-r from-[#C50CA7] to-[#350AAF]  justify-end"
                     : "bg-[#FFD8D8] justify-start"
                     }`}
@@ -83,22 +89,21 @@ const page = () => {
                     src={isConfession ? love : cute}
                     height={17}
                     width={17}
-                    alt="emogi"
+                    alt="emoji"
                     className="mx-1"
                   />
                 </div>
               </div>
               <div
-                className={`mx-2 ${isConfession
-                  ? "border-[#A6A6A6] border-[1px] pt-3"
+                className={`transition-height duration-300 ease-in-out ${isConfession
+                  ? "border-[#A6A6A6] border-[1px] overflow-hidden h-fit  mx-2"
                   : "border-0 h-0 pt-0"
-                  } rounded-md `}
+                  } rounded-md`}
               >
                 <textarea
                   onChange={(e) => setConfessionText(e.target.value)}
                   rows={8}
-                  className={` px-4 ${isConfession ? "block " : " hidden"
-                    } font-lato  text-sm  border-none outline-none  placeholder:text-[#A6A6A6] rounded-md border-[#A6A6A6] border-2 w-full`}
+                  className={` font-lato p-4  text-sm border-none outline-none resize-none  placeholder:text-[#A6A6A6] w-full transition-height duration-300 ease-in-out overflow-hidden ${isConfession ? "h-fit" : "h-0"}`}
                   placeholder="Inscribe your deepest confessions here, like whispers in the night, A long-awaited apology, a wrong set right. Initiate a dialogue, let emotions unfurl, In this sacred space, let your words swirl. Make your message extraordinary, as you embark, On this journey of expression, let your feelings spark."
                 ></textarea>
               </div>
@@ -156,7 +161,7 @@ const page = () => {
                       />
                     </div>
                     <p className="font-lato text-sm truncate text-[14px] font-bold text-[#444]">
-                      ₹ {item?.totalCost * item?.quantity}
+                      ₹ {(item?.totalCost * item?.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>
@@ -186,13 +191,14 @@ const page = () => {
                 />
               </div>
               <div
-                className={`mx-2 ${cookingReq ? "border-[#A6A6A6] border-[1px]" : "border-0 h-0"
+                className={`mx-2 transition-height ease-linear duration-300 border rounded-lg ${cookingReq ? "border-[#A6A6A6] border-[1px] h-fit" : "border-0 h-0"
                   } rounded-md`}
               >
                 <textarea
                   onChange={(e) => setCookingReqText(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
                   rows={4}
-                  className="p-4 leading-none font-lato  text-sm  border-none outline-none  placeholder:text-[#A6A6A6] rounded-md border-[#A6A6A6] border-2 w-full"
+                  className="p-4 leading-none font-lato  text-sm  border-none outline-none  placeholder:text-[#A6A6A6] resize-none rounded-md w-full"
                   placeholder="Add the cooking instructions ..."
                 ></textarea>
               </div>
@@ -259,7 +265,7 @@ const page = () => {
             <div className="mx-4 border-[#BABABA] border-dashed border-b-[1px] py-4 space-y-2">
               <div className="flex font-lato font-bold text-sm items-center justify-between">
                 <p className="">Item Total</p>
-                <p className="">₹ 200</p>
+                <p className="">₹ {(subTotal).toFixed(2)}</p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-lato text-sm text-[#999]">
@@ -267,7 +273,7 @@ const page = () => {
                 </p>
                 <p className="font-lato text-sm space-x-2">
                   <span className="text-[#444] line-through font-bold">
-                    ₹ 800
+                    ₹ {2 * deliveryFee}
                   </span>
                   <span className="text-primary">FREE</span>
                 </p>
@@ -283,28 +289,28 @@ const page = () => {
                 </p>
                 <p className="font-lato text-sm space-x-2">
                   <span className="text-[#444] line-through font-bold text-xs">
-                    ₹ 5
+                    ₹ {platformFee * 2}
                   </span>
-                  <span className="text-[#444] font-bold ">₹ 3</span>
+                  <span className="text-[#444] font-bold ">₹ {platformFee}</span>
                 </p>
               </div>
               <div className="flex  items-center justify-between">
                 <p className="font-lato text-sm text-[#666]  border-[#BABABA] border-dashed border-b-[1px] ">
                   GST and Restaurant Charges
                 </p>
-                <p className="font-lato text-sm font-bold text-[#444]">₹ 200</p>
+                <p className="font-lato text-sm font-bold text-[#444]">₹ {gstAndRestaurantCharges.toFixed(2)}</p>
               </div>
             </div>
             <div className="mx-4 py-5 space-y-2">
               <div className="flex font-lato font-bold text-sm items-center justify-between">
                 <p className="">To pay</p>
-                <p className="">₹ 200</p>
+                <p className="">₹ {Number(total).toFixed(2)}</p>
               </div>
             </div>
           </div>
         </main>
         <footer className="bg-white shadow  w-full fixed bottom-0 divide-y left-0 space-y-4 right-0 pt-4  z-50 rounded-t-lg overflow-hidden" style={{ boxShadow: '0px 0px 9px 0px rgba(0, 0, 0, 0.25)' }}>
-          <div className="flex items-center px-5 justify-between py-2 pb-0  font-lato w-full">
+          <div className="flex items-center px-2 justify-between py-2 pb-0  font-lato w-full">
             <div className="flex items-start space-x-3 justify-between">
               <LocateFixed size={24} className="text-primary" />
               <div>
@@ -316,7 +322,7 @@ const page = () => {
               Change
             </p>
           </div>
-          <div className=" py-6  px-5 flex justify-between space-x-2">
+          <div className=" py-6  px-2 flex justify-between space-x-2">
             <div className=" space-y-1 flex flex-col justify-center items-start">
               <div className="flex items-center space-x-2">
                 <span className="text-[#999999] text-xs">
@@ -325,7 +331,7 @@ const page = () => {
                 <Image src={"/icons/triangle.svg"} height={10} width={10} alt="triangle" />
               </div>
               <div className="space-x-1 flex items-center">
-                <Image src={"/icons/bank.svg"} width={12} height={12} />
+                <Image src={"/icons/bank.svg"} width={12} height={12} alt="bank" />
                 <span className="font-lato text-[#444] text-xs">
                   Online, UPI
                 </span>
@@ -334,7 +340,7 @@ const page = () => {
             <button className="border-primary border space-x-2 max-w-[175px] w-full bg-[#AC232310] rounded-lg py-2  px-4 flex items-center justify-between">
               <div className=" flex space-y-1 flex-col items-center">
                 <span className="text-sm truncate  font-lato text-primary font-semibold leading-none">
-                  ₹ 182.85
+                  ₹ {Number(total).toFixed(2)}
                 </span>
                 <span className=" text-sm  text-[#C57878] self-start font-semibold leading-none">
                   TOTAL

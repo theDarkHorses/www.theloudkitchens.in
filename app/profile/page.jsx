@@ -2,8 +2,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import LogoutButton from "../components/common/LogoutButton";
+import { currentUser } from "@clerk/nextjs";
 
-export default function page() {
+export default async function page() {
+  const user = await currentUser()
 
   return (
     <section className="px-2  py-5  relative bg-[#F5F5F5] w-full no-scrollbar overflow-hidde overflow-y-scroll z-40">
@@ -15,7 +17,7 @@ export default function page() {
       <div className="bg-white shadow-lg shadow-gray-300  mt-6 mb-12 rounded-lg flex items-center py-5 px-2 space-x-2">
         <div className="">
           <Image
-            src="https://i.imgur.com/3vjidlG.jpg"
+            src={user.imageUrl}
             height={72}
             width={72}
             alt="images"
@@ -23,7 +25,7 @@ export default function page() {
           />
         </div>
         <div className="">
-          <h3 className="font-raleway text-2xl font-bold">Rahi Uppal</h3>
+          <h3 className="font-raleway text-2xl font-bold">{user.firstName} {user.lastName}</h3>
           <h3 className="font-raleway text-sm text-primary">View activity </h3>
         </div>
       </div>
