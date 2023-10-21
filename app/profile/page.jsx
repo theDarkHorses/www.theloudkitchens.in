@@ -26,7 +26,7 @@ export default async function page() {
         </div>
         <div className="">
           <h3 className="font-raleway text-2xl font-bold">{user.firstName} {user.lastName}</h3>
-          <h3 className="font-raleway text-sm text-primary">View activity </h3>
+          <h3 className="font-raleway text-sm text-primary">{user.emailAddresses[0].emailAddress} </h3>
         </div>
       </div>
       <main className="space-y-6 my-4">
