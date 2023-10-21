@@ -79,10 +79,6 @@ export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
                   {`${address.name}, ${address.address}, ${address.landmark}.`}
                 </p>
 
-                <div className="p-1 bg-white w-fit rounded-full mt-3 shadow border shadow-slate-100">
-                  <MoreHorizontal className="text-primary " size={16} />
-                </div>
-
               </div>
             </div>
           ))}

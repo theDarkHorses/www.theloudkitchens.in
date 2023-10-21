@@ -23,6 +23,7 @@ import AddressOverlay from "../components/AddressOverlay";
 import { selectGSTAndRestaurantCharges, selectPlatformFee, selectSubTotal, selectTotal, selectDeliveryFee } from "../store/cartSlice";
 
 import PaymentDrawer from "../components/PaymentDrawer";
+import toast from "react-hot-toast";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -216,7 +217,7 @@ const page = () => {
                   onClick={(e) => e.stopPropagation()}
                   value={cookingReqText}
                   rows={4}
-                  className={`mx-1 resize-none transition-all w-full h-full outline-none border-none ${isConfession ? "translate-x-6" : "translate-x-0"}`}
+                  className="mx-1 resize-none transition-all w-full h-full outline-none border-none"
                   placeholder="Add the cooking instructions ..."
                 />
               </div>

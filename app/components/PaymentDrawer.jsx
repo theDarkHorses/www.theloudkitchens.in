@@ -47,7 +47,7 @@ const PaymentDrawer = ({ openDrawer, setOpenDrawer }) => {
                 </p>
               </div>
             </div>
-            <div className="font-raleway text-xs text-primary font-medium">
+            <div className="font-raleway text-xs text-primary font-medium cursor-pointer">
               Apply
             </div>
           </div>
@@ -65,14 +65,14 @@ const PaymentDrawer = ({ openDrawer, setOpenDrawer }) => {
               />
               <div className="">
                 <h5 className="text-[#1C1C1C] font-raleway text-base font-medium">
-                  Credits{" "}
+                  Credits
                 </h5>
                 <p className="text-[#9BA1C1] font-lato text-xs font-bold">
-                  Balance : ₹100{" "}
+                  Balance : ₹0
                 </p>
               </div>
             </div>
-            <div className="font-raleway text-xs text-primary font-medium">
+            <div className="font-raleway text-xs text-primary font-medium cursor-pointer">
               Apply
             </div>
           </div>
