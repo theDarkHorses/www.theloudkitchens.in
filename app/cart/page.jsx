@@ -201,14 +201,10 @@ const page = () => {
                 <h3 className="font-lato text-sm font-bold text-[#444]">
                   Add cooking request
                 </h3>
-<<<<<<< HEAD
                 <PlusCircle
                   size={18}
                   className="text-[#444] mr-5 cursor-pointer"
                 />
-=======
-                <PlusCircle size={18} className="text-[#444] mr-5" />
->>>>>>> 047de4ddc81145626bcb975b7eba7702dc3852b1
               </div>
               <div
                 className={`mx-2 p-4 transition-all ease-in-out duration-300 rounded-lg border ${cookingReq ? "h-40" : "h-0 py-0 border-0"
