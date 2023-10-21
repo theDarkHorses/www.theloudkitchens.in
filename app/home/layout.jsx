@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import endnotes from "../../public/icons/endnote.svg";
 import { auth } from "@clerk/nextjs";
-import { doc, getDoc, getDocs } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
 
 const getAdress = async () => {
@@ -132,7 +132,7 @@ export default async function Layout({ dishes, carousel, restaurants }) {
             height={110}
             width={204}
             alt="end notes"
-            className="py-8 mx-2 h-[110px] w-[204px]"
+            className="py-8 mx-2"
           />
           <div className="text-[#BDBDBD] items-center py-10 space-x-2 flex">
             <div className=" border-t  border-[#CCC] flex-1 border-dashed" />

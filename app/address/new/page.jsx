@@ -2,11 +2,11 @@
 
 import { userCollectionRef } from "@/app/firebaseConfig";
 import { useAuth } from "@clerk/nextjs";
-import { addDoc, collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuid } from "uuid"
 
 const orderForOptions = ["Myself", "Someone Else", "Someone special"];
