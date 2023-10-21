@@ -74,15 +74,15 @@ const page = () => {
               <h3 className="font-lato text-sm font-bold">Delivery in 30 mins</h3>
             </div>
             <div className="pb-3">
-              <div className="flex items-center justify-between space-x-2 px-2 py-4">
+              <div className="flex items-center justify-between space-x-2 px-2 pl-5 py-4">
                 <h3 className="font-lato text-sm font-bold">
                   ❤️ Make this order a confession
                 </h3>
                 <div
                   onClick={() => setIsConfession(!isConfession)}
-                  className={`flex w-12 transition-height duration-300 h-6 transitio rounded-xl mx-3 ${isConfession
-                    ? "bg-gradient-to-r from-[#C50CA7] to-[#350AAF]  justify-end"
-                    : "bg-[#FFD8D8] justify-start"
+                  className={`flex w-12 transition-colors cursor-pointer duration-300 h-6 rounded-xl mx-3 ${isConfession
+                    ? "bg-gradient-to-r from-[#C50CA7] to-[#350AAF] "
+                    : "bg-[#FFD8D8] "
                     }`}
                 >
                   <Image
@@ -90,26 +90,33 @@ const page = () => {
                     height={17}
                     width={17}
                     alt="emoji"
-                    className="mx-1"
+                    className={`mx-1 transition-all ${isConfession ? "translate-x-6" : "translate-x-0"}`}
                   />
                 </div>
               </div>
               <div
-                className={`transition-height duration-300 ease-in-out ${isConfession
-                  ? "border-[#A6A6A6] border-[1px] overflow-hidden h-fit  mx-2"
-                  : "border-0 h-0 pt-0"
-                  } rounded-md`}
+                className={`transition-height px-2 duration-300 ease-in-out overflow-hidden  ${isConfession
+                  ? " h-40"
+                  : "h-0"
+                  } rounded-md `}
               >
                 <textarea
                   onChange={(e) => setConfessionText(e.target.value)}
                   rows={8}
-                  className={` font-lato p-4  text-sm border-none outline-none resize-none  placeholder:text-[#A6A6A6] w-full transition-height duration-300 ease-in-out overflow-hidden ${isConfession ? "h-fit" : "h-0"}`}
+                  className={` border w-full rounded-lg  font-lato p-4  text-sm outline-none resize-none  placeholder:text-[#A6A6A6] transition-height duration-300 ease-in-out overflow-hidden ${isConfession ? "h-40" : "h-0"}`}
                   placeholder="Inscribe your deepest confessions here, like whispers in the night, A long-awaited apology, a wrong set right. Initiate a dialogue, let emotions unfurl, In this sacred space, let your words swirl. Make your message extraordinary, as you embark, On this journey of expression, let your feelings spark."
-                ></textarea>
+                />
               </div>
             </div>
           </div>
           <div className="pt-10">
+            <Image
+              src={"/icons/pan.png"}
+              height={19}
+              width={19}
+              className="mx-auto mb-3"
+              alt="pan img"
+            />
             <div className="border-[1px] border-[#CCC]"></div>
             <h3 className="font-raleway font-medium text-[#888] mx-auto relative -top-3 bg-[#E0E1E7] w-fit px-3">
               Item(s) Added
@@ -191,16 +198,16 @@ const page = () => {
                 />
               </div>
               <div
-                className={`mx-2 transition-height ease-linear duration-300 border rounded-lg ${cookingReq ? "border-[#A6A6A6] border-[1px] h-fit" : "border-0 h-0"
+                className={`mx-2 p-4 transition-all ease-in-out duration-300 rounded-lg border ${cookingReq ? "h-40" : "h-0 p-0 border-0"
                   } rounded-md`}
               >
                 <textarea
                   onChange={(e) => setCookingReqText(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
                   rows={4}
-                  className="p-4 leading-none font-lato  text-sm  border-none outline-none  placeholder:text-[#A6A6A6] resize-none rounded-md w-full"
+                  className={`mx-1 resize-none transition-all w-full h-full outline-none border-none ${isConfession ? "translate-x-6" : "translate-x-0"}`}
                   placeholder="Add the cooking instructions ..."
-                ></textarea>
+                />
               </div>
             </div>
           </div>
@@ -214,7 +221,7 @@ const page = () => {
             />
             <div className="border-[1px] border-[#CCC]"></div>
             <h3 className="font-raleway font-medium text-[#888] mx-auto relative -top-3 bg-[#E0E1E7] w-fit px-3">
-              Eat More, Save More{" "}
+              Eat More, Save More
             </h3>
           </div>
           <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
@@ -245,7 +252,7 @@ const page = () => {
               className="flex justify-center items-center py-2 font-lato text-xs text-[#707070] "
             >
               View all coupons
-              <ChevronRight />
+              <ChevronRight size={12} className="self-center" />
             </Link>
           </div>
           <div className="pt-10">
