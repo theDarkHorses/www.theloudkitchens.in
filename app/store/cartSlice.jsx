@@ -60,14 +60,28 @@ export const cartSlice = createSlice({
             state.deliveryFee = calculateDeliveryFee(totalPrice)
             state.gst = calculateGST(totalPrice)
             state.total = totalPrice + state.deliveryFee + state.gst + state.platformFee + state.restaurantCharges
+        },
+        clearCart: (state) => {
+            state.items = []
+            state.subTotal = 0
+            state.deliveryFee = 0
+            state.discount = 0
+            state.tax = 0
+            state.donation = 0
+            state.platformFee = 3
+            state.restaurantCharges = 20
+            state.gst = 0
+            state.total = 0
+
         }
+
 
 
     },
 });
 
 
-export const { toggleItemWithDelta, updateItemQuantity } = cartSlice.actions;
+export const { toggleItemWithDelta, updateItemQuantity, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
 export const selectCartItems = (state) => state.cart.items;
 export const selectSubTotal = (state) => state.cart.subTotal;

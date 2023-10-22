@@ -60,7 +60,7 @@ export default async function page({ params, searchParams }) {
         </div>
       </section>
       <div className=" bg-white w-full py-4 mt-4 pb-0 border-b">
-        <header className="flex items-center first:pl-5 last:pr-5  space-x-10 no-scrollbar overflow-hidden overflow-x-scroll">
+        <header className="flex items-center first:pl-5 last:pr-5  space-x-5 no-scrollbar overflow-hidden overflow-x-scroll">
           {restaurant?.sections?.map((item) => (
             <Link
               href={`?tab=${item?.id}`}
