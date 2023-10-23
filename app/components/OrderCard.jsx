@@ -1,95 +1,89 @@
-import { ChevronRight } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 
-export default function OrderCard() {
+import { doc, onSnapshot } from "firebase/firestore";
+import Image from "next/image";
+import { useMemo, useState, useEffect } from "react";
+import { DB } from "../firebaseConfig";
+
+export default function OrderCard({ orderId, address, total, time, cartItems, orderStatus }) {
+    console.log(time)
+    const date = new Date(time);
+    const formattedDate = date.toLocaleString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true
+    });
+    const items = useMemo(() => {
+        return cartItems.map(item => Object.values(item.selectedItems).map(item => Object.values(item)).flat())
+    }, [cartItems])
+
+    const [status, setStatus] = useState(orderStatus);
+
+    useEffect(() => {
+        const orderRef = doc(DB, "orders", orderId);
+
+        const unsubscribe = onSnapshot(orderRef, (doc) => {
+            const data = doc.data();
+            setStatus(data.status);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, [orderId]);
+
     return (
         <div className="shadow-sm rounded-xl shadow-slate-300 w-full overflow-hidden divide-y-[1px]">
             <div className="flex p-4 items-center bg-[#F8F9FD] space-x-2 justify-between">
-                <Image
+                {/* <Image
                     src="https://i.imgur.com/rHQ2DwY.jpg"
                     className=" aspect-square rounded-lg w-16 h-16"
                     width={60}
                     height={60}
                     alt="restaurant"
-                />
+                /> */}
                 <div className="space-y-1 flex flex-col justify-center w-full">
                     <p className=" font-lato text-base leading-tight text-[#2A3143] font-bold">
-                        The Great Indian Thalis...
+                        # {orderId}
                     </p>
                     <p className="font-lato text-xs text-[#757C8F] leading-tight">
-                        Room 323 chenab, NIT Srinagar h..
+                        {address}
                     </p>
                 </div>
-                <button className="border border-primary bg-[#AC232310] text-black rounded-lg text-sm px-4 shadow-lg cursor-pointer shadow-[#AC232320] py-1 ">
+                {/* <button className="border border-primary bg-[#AC232310] text-black rounded-lg text-sm px-4 shadow-lg cursor-pointer shadow-[#AC232320] py-1 ">
                     Rep<span className="text-primary">EAT</span>
-                </button>
+                </button> */}
+                <div className="flex  items-center space-x-2">
+                    <span class="animate-ping  inline-flex h-1 w-1 rounded-full bg-green-600 delay-300 " />
+                    <p className="font-lato text-sm text-[#555]">{status}</p>
+                </div>
             </div>
             <div className="pt-4 space-y-5">
-                <div className="px-4 w-full bg-white space-y-2">
+
+                {items[0].map((item, index) => <div key={index} className="px-4 w-full bg-white space-y-2">
+
                     <div className="flex items-start space-x-3">
-                        <Image src={"/icons/veg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
+                        <Image src={item?.item?.isVeg ? "/icons/veg.png" : "/icons/nonveg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
                         <div className="space-y-1">
-                            <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">1 x</span> Paneer Butter Masala </p>
-                            <p className=" font-lato text-xs text-[#757C8F]">750ml </p>
+                            <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">{item?.quantity} x</span> {item?.item?.name}</p>
+                            <p className=" font-lato text-xs text-[#757C8F]">{item?.item?.quantity}</p>
                         </div>
                     </div>
-                </div>
-                <div className="px-4 w-full bg-white space-y-2">
-                    <div className="flex items-start space-x-3">
-                        <Image src={"/icons/veg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
-                        <div className="space-y-1">
-                            <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">1 x</span> Paneer Butter Masala </p>
-                            <p className=" font-lato text-xs text-[#757C8F]">750ml </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="px-4 w-full bg-white space-y-2">
-                    <div className="flex items-start space-x-3">
-                        <Image src={"/icons/veg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
-                        <div className="space-y-1">
-                            <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">1 x</span> Paneer Butter Masala </p>
-                            <p className=" font-lato text-xs text-[#757C8F]">750ml </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="px-4 w-full bg-white space-y-2">
-                    <div className="flex items-start space-x-3">
-                        <Image src={"/icons/veg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
-                        <div className="space-y-1">
-                            <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">1 x</span> Paneer Butter Masala </p>
-                            <p className=" font-lato text-xs text-[#757C8F]">750ml </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="px-4 w-full bg-white space-y-2">
-                    <div className="flex items-start space-x-3">
-                        <Image src={"/icons/veg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
-                        <div className="space-y-1">
-                            <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">1 x</span> Paneer Butter Masala </p>
-                            <p className=" font-lato text-xs text-[#757C8F]">750ml </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="px-4 w-full bg-white space-y-2">
-                    <div className="flex items-start space-x-3">
-                        <Image src={"/icons/veg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
-                        <div className="space-y-1">
-                            <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">1 x</span> Paneer Butter Masala </p>
-                            <p className=" font-lato text-xs text-[#757C8F]">750ml </p>
-                        </div>
-                    </div>
-                </div>
+                </div>)
+                }
                 <div className="w-full  border-t border-dashed " />
-                <Link href="/orders/1" className="flex justify-between items-cente px-4 text-sm pb-6">
+                <div className="flex justify-between items-cente px-4 text-sm pb-6">
                     <p className="text-[#757C8F]">
-                        20 Oct 2023 at 10:15PM
+                        {formattedDate}
                     </p>
                     <div className="flex items-center space-x-1">
-                        <p className="font-bold">₹ 420.69</p>
-                        <ChevronRight size={20} color="#9096A6" />
+                        <p className="font-bold">₹ {total}</p>
+                        {/* <ChevronRight size={20} color="#9096A6" /> */}
                     </div>
-                </Link>
+                </div>
             </div>
         </div>
     )

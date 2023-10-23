@@ -13,6 +13,7 @@ const initialState = {
     gst: 0,
     total: 0,
     totalWithoutDiscount: 0,
+    selectedAddress: null,
     coupon: {
         id: null,
         discountPercent: 0,
@@ -109,6 +110,7 @@ export const cartSlice = createSlice({
             state.restaurantCharges = 20;
             state.gst = 0;
             state.total = 0;
+            state.totalWithoutDiscount = 0;
         },
         setCouponDetails: (state, action) => {
             state.coupon = action.payload;
@@ -119,10 +121,14 @@ export const cartSlice = createSlice({
             state.total = state.totalWithoutDiscount - state.discount;
 
         },
+        setSelectedAddress: (state, action) => {
+            state.selectedAddress = action.payload;
+        }
+
     },
 });
 
-export const { toggleItemWithDelta, updateItemQuantity, clearCart, setCouponDetails } =
+export const { toggleItemWithDelta, setSelectedAddress, updateItemQuantity, clearCart, setCouponDetails } =
     cartSlice.actions;
 export default cartSlice.reducer;
 export const selectCartItems = (state) => state.cart.items;
@@ -134,4 +140,4 @@ export const selectGSTAndRestaurantCharges = (state) =>
     state.cart.restaurantCharges + state.cart.gst;
 export const selectDeliveryFee = (state) => state.cart.deliveryFee;
 export const selectCoupon = (state) => state.cart.coupon;
-
+export const selectSelectedAddress = (state) => state.cart.selectedAddress;

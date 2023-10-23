@@ -1,14 +1,13 @@
 import Image from "next/image";
-import React from "react";
+import React, { memo } from "react";
 import bank from "../../public/icons/bank.svg";
 import credits from "../../public/icons/credits.svg";
 
 const PaymentDrawer = ({ openDrawer, setOpenDrawer }) => {
   return (
     <div
-      className={`bg-transparent transition-all duration-300  absolute top-0 bottom-0 left-0 right-0 h-screen w-screen z-[999999] ${
-        openDrawer ? "translate-y-0" : "translate-y-full"
-      }`}
+      className={`bg-transparent transition-all duration-300  absolute top-0 bottom-0 left-0 right-0 h-screen w-screen z-[999999] ${openDrawer ? "translate-y-0" : "translate-y-full"
+        }`}
     >
       <div
         className="h-screen w-screen bottom-0 right-0  opacity-[0.77] bg-black fixed top-0 left-0 "
@@ -82,4 +81,4 @@ const PaymentDrawer = ({ openDrawer, setOpenDrawer }) => {
   );
 };
 
-export default PaymentDrawer;
+export default memo(PaymentDrawer);

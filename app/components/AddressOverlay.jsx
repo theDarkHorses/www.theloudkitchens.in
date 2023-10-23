@@ -4,14 +4,17 @@ import { useAuth } from "@clerk/nextjs";
 import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 import { Briefcase, ChevronRight, Home, MoreHorizontal, Plus } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import { DB } from "../firebaseConfig";
+import { useDispatch } from "react-redux";
+import { setSelectedAddress } from "../store/cartSlice";
 
-export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
+function AddressOverlay({ openDrawer, setOpenDrawer }) {
   const [address, setAddress] = useState([]);
   const { userId } = useAuth();
   const [user, setUser] = useState(null);
- 
+  const dispatch = useDispatch()
+
 
   const userCollectionRef = doc(DB, "users", userId);
 
@@ -28,6 +31,7 @@ export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
     const unsubscribe = onSnapshot(userCollectionRef, (snapshot) => {
       const user = snapshot.data();
       setUser(user);
+      dispatch(setSelectedAddress(user?.selectedAddress))
     }
     );
     return unsubscribe;
@@ -37,6 +41,7 @@ export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
   const handleSetSelectedAddress = async (address) => {
     try {
       await setDoc(userCollectionRef, { selectedAddress: address }, { merge: true });
+      dispatch(setSelectedAddress(address))
       console.log("Address set successfully");
     } catch (err) {
       console.log(err.message)
@@ -69,7 +74,7 @@ export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
                 </p>
               </div>
               <div className="">
-                {user?.selectedAddress?.id === address.id  && <p className="font-lato border border-primary mb-4 rounded-lg text-[#AC232390]  inline px-2 py-1 text-sm capitalize">
+                {user?.selectedAddress?.id === address.id && <p className="font-lato border border-primary mb-4 rounded-lg text-[#AC232390]  inline px-2 py-1 text-sm capitalize">
                   Selected
                 </p>}
                 <p className="font-lato  text-[#18191B] text-base capitalize">
@@ -99,3 +104,5 @@ export default function AddressOverlay({ openDrawer, setOpenDrawer }) {
 
   )
 }
+
+export default memo(AddressOverlay)
