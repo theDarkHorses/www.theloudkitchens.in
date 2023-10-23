@@ -4,25 +4,35 @@ import offer from "../../public/icons/offer2.png";
 import tick from "../../public/icons/dtick.svg";
 import React, { useState } from "react";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCoupon, setCoupon } from "../store/cartSlice";
 
-const CouponCard = () => {
+const CouponCard = ({ name, discount, maxDiscount, minValue, date, valid }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const dispatch = useDispatch();
+  const coupon = useSelector(selectCoupon);
   return (
     <div className="bg-white rounded-2xl shadow-md border border-[#ccc]">
       <Image
         src={offer}
         height={44}
         width={44}
-        className={`relative transition-all duration-300 ease-in-out -top-6 ${isOpen?"left-[calc(50%_-_22px)]":"left-3"}`}
+        className={`relative transition-all duration-300 ease-in-out -top-6 ${
+          isOpen ? "left-[calc(50%_-_22px)]" : "left-3"
+        }`}
         alt="offer"
       />
       <div className="relative -top-4 space-y-8 px-9">
         <h4 className="font-lato font-bold text-[#1C1C1C]">
-          60% OFF up to ₹69.420
+          {discount}% OFF up to ₹{maxDiscount}
         </h4>
         <div className="font-lato text-primary text-xs font-bold flex justify-between items-center ">
-          <div className="border rounded px-3 py-1">First5</div>
-          <div className="flex space-x-1 items-center">
+          <div className="border rounded px-3 py-1">{name}</div>
+          <div
+            className="flex space-x-1 items-center"
+            onClick={() => setIsOpen(!isOpen)}
+          >
             More <ChevronRightIcon size={16} className="rotate-90" />
           </div>
         </div>
@@ -31,28 +41,44 @@ const CouponCard = () => {
 
       <div
         className={`mx-4 border-t transition-height duration-300 ease-in-out border-dashed overflow-hidden ${
-          isOpen
-            ? "h-20"
-            : "h-0 "
+          isOpen ? "h-20" : "h-0 "
         }`}
       >
         <ul className="py-5 text-[#636989CC] font-lato text-xs font-bold list-disc px-3">
-          <li className="">offer applicable on min. cart value of ₹69.420 </li>
-          <li className="">offer valid till 18th dec 2023</li>
-          <li className="">Valid once per user</li>
+          <li className="">
+            offer applicable on min. cart value of ₹{minValue}{" "}
+          </li>
+          <li className="">offer valid till {date}</li>
+          <li className="">Valid {valid} per user</li>
         </ul>
       </div>
       <div
+        onClick={() => setIsApplied(!isApplied)}
         className="border-dashed bg-[#ececec] cursor-pointer py-2 border-[#9BA1C1] border-t-[1px] flex items-center justify-center rounded-b-2xl"
-        onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? (
+        {isApplied ? (
           <div className="flex items-center justify-center">
             <Image src={tick} height={14} width={24} alt="tick" className="" />
             <h4 className="font-lato text-blue-700 font-bold">Applied</h4>
           </div>
         ) : (
-          <h4 className="font-lato text-primary  font-bold">Tap to Apply</h4>
+          <h4
+            className="font-lato text-primary  font-bold"
+            onClick={() => {
+              dispatch(
+                setCoupon({
+                  name: name,
+                  discount: discount,
+                  maxDiscount: maxDiscount,
+                  minValue: minValue,
+                  date: date,
+                  valid: valid,
+                })
+              );
+            }}
+          >
+            Tap to Apply
+          </h4>
         )}
       </div>
     </div>

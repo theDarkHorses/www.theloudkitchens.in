@@ -8,7 +8,6 @@ export default authMiddleware({
     "/whatsnew",
     "/restaurants/:id",
     "/cart",
-    "/api/address",
     "/coupons"
   ],
   ignoredRoutes: [],
