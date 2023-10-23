@@ -4,9 +4,12 @@ import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { toggleItemWithDelta } from "../store/cartSlice";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisine, restaurantId, tabId, itemId }) {
     const [activeIndex, setActiveIndex] = useState(0);
+    const router =  useRouter()
     const dispatch = useDispatch()
     const activeCategory = cuisine?.categories?.[activeIndex];
     const isRequired = useMemo(() => activeCategory?.isRequired, [activeCategory]);
@@ -90,8 +93,9 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
             dispatch(toggleItemWithDelta({ item: cuisine, delta: 1, selectedItems: craftedCuisine, totalCost: getTotalCost, restaurantId, tabId, itemId }))
             setActiveIndex(0)
             setCraftedCuisine({})
+            router.push("/cart")
         } else {
-            console.log("cannot proceed");
+            toast.error("Please select all required items of all the required categories.")
         }
 
     };
@@ -126,22 +130,22 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
             </div>
 
             <div className=" py-4 pb-2 w-full items-center ">
-                <div className="w-full flex-1 mx-2 py-2  flex justify-start space-x-4 text-sm items-center space-x-2">
+                <div className="w-full flex-1 mx-2 py-2  flex justify-start text-sm items-center space-x-4">
                     {cuisine?.categories?.map((item, index) => (
                         <div
                             key={index}
                             onClick={() => setActiveIndex(index)}
-                            className={`cursor-pointer font-semibold font-raleway border-primary ${activeIndex == index ? "border-b-2 text-primary" : ""
+                            className={`cursor-pointer text-base font-semibold font-raleway border-primary ${activeIndex == index ? "border-b-2 text-primary" : ""
                                 }`}
                         >
-                            {item.name}
+                            {item.name} {item.isRequired && "(" + item.requiredItems + ")" } {item.isRequired && <span className="text-red-600">*</span>}
                         </div>
                     ))}
                 </div>
             </div>
             <div className="bg-white rounded-lg py-6  flex-1">
                 <div className="flex justify-between items-center  px-2  pt-2 pb-5 rounded-lg">
-                    <p className="font-bold font-raleway text-base">Select up-to 4</p>
+                    <p className="font-bold font-raleway text-base">{isRequired ? "Select up-to " + requiredItems : "Select your favorite items:"}</p>
                     {isRequired && <p className="font-lato text-base">
                         ( {totalItems} / {requiredItems} )
                     </p>}
