@@ -23,3 +23,4 @@ export const DB = getFirestore(app);
 // export const ANALYTICS = getAnalytics(app);
 
 export const userCollectionRef = collection(DB, "users");
+export const couponsCollectionRef = collection(DB, "coupons");
