@@ -9,5 +9,10 @@ export function calculateDeliveryFee(totalAmount) {
 }
 
 export function calculateGST(totalAmount) {
-    return totalAmount * 0.05
+    return roundWithPrecision(totalAmount * 0.05,2)
+}
+
+export function roundWithPrecision(num, precision = 2) {
+    var multiplier = Math.pow(10, precision);
+    return Math.round(num * multiplier) / multiplier;
 }

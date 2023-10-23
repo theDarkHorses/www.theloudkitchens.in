@@ -47,7 +47,7 @@ export default function Footer() {
         <footer className=' bg-white h-16 border fixed bottom-0 left-0 right-0 w-full shadow-lg shadow-slate-600 rounded-t-md'>
             <ul className="flex gap-2 items-center justify-center h-full">
                 {navLinks.map(item =>
-                    <Link href={item.pathName} key={item.pathName} className="flex-1  border-primary gap-2 flex flex-col items-center justify-center">
+                    <Link href={item.pathName} key={item.pathName} className={`flex-1 border-primary gap-2 flex flex-col items-center justify-center h-full ${pathName==item.pathName?"border-t-2":"border-t-0"} `}>
                         <Image alt="navigation items" src={pathName == item.pathName ? item.activeIcon : item.icon} width={20} height={20} className="w-5 h-5 aspect-square" />
                         <p className={`capitalize text-yash  font-raleway ${pathName == item.pathName ? "text-primary font-semibold" : "text-text"}`}>{item.label}</p>
                     </Link>
