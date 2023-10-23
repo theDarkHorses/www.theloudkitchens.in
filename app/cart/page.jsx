@@ -29,9 +29,10 @@ import {
 
 import PaymentDrawer from "../components/PaymentDrawer";
 import toast from "react-hot-toast";
-import { addDoc, collection } from "firebase/firestore";
-import { DB } from "../firebaseConfig";
+import { addDoc, collection, getDoc, limit } from "firebase/firestore";
+import { DB, userCollectionRef } from "../firebaseConfig";
 import { PROCESSING } from "../utils/constants";
+import { useAuth } from "@clerk/nextjs";
 import { roundWithPrecision } from "../utils/delivery";
 import OrderCard from "../components/OrderCard";
 
@@ -44,12 +45,14 @@ const page = () => {
   const [cookingReq, setCookingReq] = useState(false);
   const [cookingReqText, setCookingReqText] = useState("");
   const [confessionText, setConfessionText] = useState("");
-  const subTotal = useSelector(selectSubTotal)
-  const platformFee = useSelector(selectPlatformFee)
-  const gstAndRestaurantCharges = useSelector(selectGSTAndRestaurantCharges)
-  const total = useSelector(selectTotal)
+  const subTotal = useSelector(selectSubTotal);
+  const platformFee = useSelector(selectPlatformFee);
+  const gstAndRestaurantCharges = useSelector(selectGSTAndRestaurantCharges);
+  const total = useSelector(selectTotal);
   const totalWithoutDiscount = useSelector(selectTotalWithoutDiscount)
-  const deliveryFee = useSelector(selectDeliveryFee)
+  const deliveryFee = useSelector(selectDeliveryFee);
+  const {userId} = useAuth();
+  console.log(userId);
   const [showMore, setShowMore] = useState(null)
 
 
@@ -65,24 +68,24 @@ const page = () => {
 
   const handleCheckout = async () => {
     // setOpenPaymentDrawer(true)
-    if (!cartItems?.length) return toast.error("No items added")
-    if (isConfession && !confessionText) return toast.error("Please add a confession")
+    if (!cartItems?.length) return toast.error("No items added");
+    if (isConfession && !confessionText)
+      return toast.error("Please add a confession");
 
     await addDoc(collection(DB, "orders"), {
       items: cartItems,
-      cookingReqText,
-      confessionText,
+      cookingReqText: cookingReqText,
+      confessionText: confessionText,
       total,
       platformFee,
       gstAndRestaurantCharges,
       deliveryFee,
       createdAt: new Date().toISOString(),
-      status: PROCESSING
-    })
-
-    dispatch(clearCart())
-
-  }
+      status: PROCESSING,
+      orderedBy: userId,
+    });
+    dispatch(clearCart());
+  };
 
   const items = useMemo(() => {
     return cartItems.map(item => Object.values(item.selectedItems).map(item => Object.values(item)).flat())
