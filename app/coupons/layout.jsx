@@ -2,8 +2,17 @@ import { ChevronLeft } from "lucide-react";
 import React from "react";
 import CouponCard from "../components/CouponCard";
 import Link from "next/link";
+import { couponsCollectionRef } from "../firebaseConfig";
+import { getDocs } from "firebase/firestore";
 
-const layout = () => {
+const getCoupons = async () => {
+  const allCoupons = await getDocs(couponsCollectionRef);
+  return allCoupons?.docs.map((doc) => ({ name: doc.id, ...doc.data() }));
+};
+
+const layout = async () => {
+  const coupons = await getCoupons();
+  console.log(coupons);
   return (
     <div>
       <header className="bg-white rounded-b-2xl shadow-md flex flex-col px-5">
@@ -30,9 +39,21 @@ const layout = () => {
         </form>
       </header>
       <main className="px-5 py-12 space-y-10">
-        <CouponCard />
-        <CouponCard />
-        <CouponCard />
+        {coupons?.map(
+          ({ name, discount, maxDiscount, minValue, date,valid }, index) => {
+            return (
+              <CouponCard
+                name={name}
+                discount={discount}
+                maxDiscount={maxDiscount}
+                minValue={minValue}
+                date={date}
+                valid={valid}
+                key={index}
+              />
+            );
+          }
+        )}
       </main>
     </div>
   );

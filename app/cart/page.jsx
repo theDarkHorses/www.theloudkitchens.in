@@ -20,7 +20,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCart, selectCartItems, updateItemQuantity } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
-import { selectGSTAndRestaurantCharges, selectPlatformFee, selectSubTotal, selectTotal, selectDeliveryFee } from "../store/cartSlice";
+import {
+  selectGSTAndRestaurantCharges,
+  selectPlatformFee,
+  selectSubTotal,
+  selectTotal,
+  selectDeliveryFee,
+} from "../store/cartSlice";
 
 import PaymentDrawer from "../components/PaymentDrawer";
 import toast from "react-hot-toast";
@@ -90,7 +96,7 @@ const page = () => {
           </div>
         </header>
 
-        <main className="bg-[#E0E1E7] min-h-screen  pt-10 pb-36 shadow-lg px-2">
+        <main className="bg-[#E0E1E7] min-h-screen  pt-10 pb-40 shadow-lg px-2">
           <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
             <div className="flex items-center space-x-2 pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
               <Image
@@ -111,31 +117,35 @@ const page = () => {
                 </h3>
                 <div
                   onClick={() => setIsConfession(!isConfession)}
-                  className={`flex w-12 transition-colors cursor-pointer duration-300 h-6 rounded-xl mx-3 ${isConfession
-                    ? "bg-gradient-to-r from-[#C50CA7] to-[#350AAF] "
-                    : "bg-[#FFD8D8] "
-                    }`}
+                  className={`flex w-12 transition-colors cursor-pointer duration-300 h-6 rounded-xl mx-3 ${
+                    isConfession
+                      ? "bg-gradient-to-r from-[#C50CA7] to-[#350AAF] "
+                      : "bg-[#FFD8D8] "
+                  }`}
                 >
                   <Image
                     src={isConfession ? love : cute}
                     height={17}
                     width={17}
                     alt="emoji"
-                    className={`mx-1 transition-all ${isConfession ? "translate-x-6" : "translate-x-0"}`}
+                    className={`mx-1 transition-all ${
+                      isConfession ? "translate-x-6" : "translate-x-0"
+                    }`}
                   />
                 </div>
               </div>
               <div
-                className={`transition-height px-2 duration-300 ease-in-out overflow-hidden  ${isConfession
-                  ? " h-40"
-                  : "h-0"
-                  } rounded-md `}
+                className={`transition-height px-2 duration-300 ease-in-out overflow-hidden  ${
+                  isConfession ? " h-40" : "h-0"
+                } rounded-md `}
               >
                 <textarea
                   onChange={(e) => setConfessionText(e.target.value)}
                   rows={8}
                   value={confessionText}
-                  className={` border w-full rounded-lg  font-lato p-4  text-sm outline-none resize-none  placeholder:text-[#A6A6A6] transition-height duration-300 ease-in-out overflow-hidden ${isConfession ? "h-40" : "h-0"}`}
+                  className={` border w-full rounded-lg  font-lato p-4  text-sm outline-none resize-none  placeholder:text-[#A6A6A6] transition-height duration-300 ease-in-out overflow-hidden ${
+                    isConfession ? "h-40" : "h-0"
+                  }`}
                   placeholder="Inscribe your deepest confessions here, like whispers in the night, A long-awaited apology, a wrong set right. Initiate a dialogue, let emotions unfurl, In this sacred space, let your words swirl. Make your message extraordinary, as you embark, On this journey of expression, let your feelings spark."
                 />
               </div>
@@ -235,8 +245,9 @@ const page = () => {
                 />
               </div>
               <div
-                className={`mx-2 p-4 transition-all ease-in-out duration-300 rounded-lg border ${cookingReq ? "h-40" : "h-0 py-0 border-0"
-                  } rounded-md`}
+                className={`mx-2 p-4 transition-all ease-in-out duration-300 rounded-lg border ${
+                  cookingReq ? "h-40" : "h-0 py-0 border-0"
+                } rounded-md`}
               >
                 <textarea
                   onChange={(e) => setCookingReqText(e.target.value)}
@@ -310,7 +321,7 @@ const page = () => {
             <div className="mx-4 border-[#BABABA] border-dashed border-b-[1px] py-4 space-y-2">
               <div className="flex font-lato font-bold text-sm items-center justify-between">
                 <p className="">Item Total</p>
-                <p className="">₹ {(subTotal).toFixed(2)}</p>
+                <p className="">₹ {subTotal.toFixed(2)}</p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-lato text-sm text-[#999]">
@@ -336,14 +347,18 @@ const page = () => {
                   <span className="text-[#444] line-through font-bold text-xs">
                     ₹ {platformFee * 2}
                   </span>
-                  <span className="text-[#444] font-bold ">₹ {platformFee}</span>
+                  <span className="text-[#444] font-bold ">
+                    ₹ {platformFee}
+                  </span>
                 </p>
               </div>
               <div className="flex  items-center justify-between">
                 <p className="font-lato text-sm text-[#666]  border-[#BABABA] border-dashed border-b-[1px] ">
                   GST and Restaurant Charges
                 </p>
-                <p className="font-lato text-sm font-bold text-[#444]">₹ {gstAndRestaurantCharges.toFixed(2)}</p>
+                <p className="font-lato text-sm font-bold text-[#444]">
+                  ₹ {gstAndRestaurantCharges.toFixed(2)}
+                </p>
               </div>
             </div>
             <div className="mx-4 py-5 space-y-2">
@@ -354,7 +369,10 @@ const page = () => {
             </div>
           </div>
         </main>
-        <footer className="bg-white shadow  w-full fixed bottom-0 divide-y left-0 space-y-4 right-0 pt-4  z-50 rounded-t-lg overflow-hidden" style={{ boxShadow: '0px 0px 9px 0px rgba(0, 0, 0, 0.25)' }}>
+        <footer
+          className="bg-white shadow  w-full fixed bottom-0 divide-y left-0 space-y-4 right-0 pt-4  z-50 rounded-t-lg overflow-hidden"
+          style={{ boxShadow: "0px 0px 9px 0px rgba(0, 0, 0, 0.25)" }}
+        >
           <div className="flex items-center px-2 justify-between py-2 pb-0  font-lato w-full">
             <div className="flex items-start space-x-3 justify-between">
               <LocateFixed size={24} className="text-primary" />
@@ -384,7 +402,12 @@ const page = () => {
                 />
               </div>
               <div className="space-x-1 flex items-center">
-                <Image src={"/icons/bank.svg"} width={12} height={12} alt="bank" />
+                <Image
+                  src={"/icons/bank.svg"}
+                  width={12}
+                  height={12}
+                  alt="bank"
+                />
                 <span className="font-lato text-[#444] text-xs">
                   Online, UPI
                 </span>

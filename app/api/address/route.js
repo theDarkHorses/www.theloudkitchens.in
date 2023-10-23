@@ -1,7 +1,13 @@
 import { NextResponse as res } from "next/server";
 import { userCollectionRef } from "@/app/firebaseConfig";
 import { auth } from "@clerk/nextjs/server";
-import { addDoc, collection, doc, deleteDoc } from "@firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  deleteDoc,
+  getDocs,
+} from "@firebase/firestore";
 
 export async function POST(req) {
   const { userId } = auth();
@@ -17,8 +23,8 @@ export async function POST(req) {
 }
 
 export async function DELETE(req) {
-  const { url } = await req
-  const editAddressId = new URL(url).searchParams.get("edit")
+  const { url } = await req;
+  const editAddressId = new URL(url).searchParams.get("edit");
   const { userId } = auth();
   const addressCollectionRef = collection(
     doc(userCollectionRef, userId),
@@ -28,7 +34,6 @@ export async function DELETE(req) {
   return res.json({ message: "deleted" });
 }
 
-
 export async function GET(req) {
   const { userId } = auth();
   const addressCollectionRef = collection(
@@ -36,6 +41,9 @@ export async function GET(req) {
     "addresses"
   );
   const savedAddresses = await getDocs(addressCollectionRef);
-  const addresses = savedAddresses.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  res.json({ addresses }).status(200);
+  const addresses = savedAddresses.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return res.json(addresses);
 }
