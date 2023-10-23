@@ -17,7 +17,11 @@ import bill from "../../public/icons/bill.svg";
 
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, selectCartItems, updateItemQuantity } from "../store/cartSlice";
+import {
+  clearCart,
+  selectCartItems,
+  updateItemQuantity,
+} from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
 import {
@@ -30,9 +34,10 @@ import {
 
 import PaymentDrawer from "../components/PaymentDrawer";
 import toast from "react-hot-toast";
-import { addDoc, collection, doc } from "firebase/firestore";
-import { DB } from "../firebaseConfig";
+import { addDoc, collection, doc, getDoc, limit } from "firebase/firestore";
+import { DB, userCollectionRef } from "../firebaseConfig";
 import { PROCESSING } from "../utils/constants";
+import { useAuth } from "@clerk/nextjs";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -44,34 +49,36 @@ const page = () => {
   const [cookingReq, setCookingReq] = useState(false);
   const [cookingReqText, setCookingReqText] = useState("");
   const [confessionText, setConfessionText] = useState("");
-  const subTotal = useSelector(selectSubTotal)
-  const platformFee = useSelector(selectPlatformFee)
-  const gstAndRestaurantCharges = useSelector(selectGSTAndRestaurantCharges)
-  const total = useSelector(selectTotal)
-  const deliveryFee = useSelector(selectDeliveryFee)
+  const subTotal = useSelector(selectSubTotal);
+  const platformFee = useSelector(selectPlatformFee);
+  const gstAndRestaurantCharges = useSelector(selectGSTAndRestaurantCharges);
+  const total = useSelector(selectTotal);
+  const deliveryFee = useSelector(selectDeliveryFee);
+  const {userId} = useAuth();
+  console.log(userId);
 
 
 
   const handleCheckout = async () => {
     // setOpenPaymentDrawer(true)
-    if (!cartItems?.length) return toast.error("No items added")
-    if (isConfession && !confessionText) return toast.error("Please add a confession")
+    if (!cartItems?.length) return toast.error("No items added");
+    if (isConfession && !confessionText)
+      return toast.error("Please add a confession");
 
     await addDoc(collection(DB, "orders"), {
       items: cartItems,
-      cookingReqText,
-      confessionText,
+      cookingReqText: cookingReqText,
+      confessionText: confessionText,
       total,
       platformFee,
       gstAndRestaurantCharges,
       deliveryFee,
       createdAt: new Date().toISOString(),
-      status: PROCESSING
-    })
-
-    dispatch(clearCart())
-
-  }
+      status: PROCESSING,
+      orderedBy: userId,
+    });
+    dispatch(clearCart());
+  };
   return (
     <>
       <div className="bg-[#E0E1E7] relative ">
