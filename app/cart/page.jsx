@@ -17,7 +17,7 @@ import bill from "../../public/icons/bill.svg";
 
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCartItems, updateItemQuantity } from "../store/cartSlice";
+import { clearCart, selectCartItems, updateItemQuantity } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
 import {
@@ -29,6 +29,10 @@ import {
 } from "../store/cartSlice";
 
 import PaymentDrawer from "../components/PaymentDrawer";
+import toast from "react-hot-toast";
+import { addDoc, collection, doc } from "firebase/firestore";
+import { DB } from "../firebaseConfig";
+import { PROCESSING } from "../utils/constants";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -40,11 +44,34 @@ const page = () => {
   const [cookingReq, setCookingReq] = useState(false);
   const [cookingReqText, setCookingReqText] = useState("");
   const [confessionText, setConfessionText] = useState("");
-  const subTotal = useSelector(selectSubTotal);
-  const platformFee = useSelector(selectPlatformFee);
-  const gstAndRestaurantCharges = useSelector(selectGSTAndRestaurantCharges);
-  const total = useSelector(selectTotal);
-  const deliveryFee = useSelector(selectDeliveryFee);
+  const subTotal = useSelector(selectSubTotal)
+  const platformFee = useSelector(selectPlatformFee)
+  const gstAndRestaurantCharges = useSelector(selectGSTAndRestaurantCharges)
+  const total = useSelector(selectTotal)
+  const deliveryFee = useSelector(selectDeliveryFee)
+
+
+
+  const handleCheckout = async () => {
+    // setOpenPaymentDrawer(true)
+    if (!cartItems?.length) return toast.error("No items added")
+    if (isConfession && !confessionText) return toast.error("Please add a confession")
+
+    await addDoc(collection(DB, "orders"), {
+      items: cartItems,
+      cookingReqText,
+      confessionText,
+      total,
+      platformFee,
+      gstAndRestaurantCharges,
+      deliveryFee,
+      createdAt: new Date().toISOString(),
+      status: PROCESSING
+    })
+
+    dispatch(clearCart())
+
+  }
   return (
     <>
       <div className="bg-[#E0E1E7] relative ">
@@ -227,9 +254,7 @@ const page = () => {
                   onClick={(e) => e.stopPropagation()}
                   value={cookingReqText}
                   rows={4}
-                  className={`mx-1 resize-none transition-all w-full h-full outline-none border-none ${
-                    isConfession ? "translate-x-6" : "translate-x-0"
-                  }`}
+                  className="mx-1 resize-none transition-all w-full h-full outline-none border-none"
                   placeholder="Add the cooking instructions ..."
                 />
               </div>
@@ -390,7 +415,7 @@ const page = () => {
             </div>
             <button
               className="border-primary border space-x-2 max-w-[175px] w-full bg-[#AC232310] rounded-lg py-2  px-4 flex items-center justify-between"
-              onClick={() => setOpenPaymentDrawer(true)}
+              onClick={handleCheckout}
             >
               <div className=" flex space-y-1 flex-col items-center">
                 <span className="text-sm truncate  font-lato text-primary font-semibold leading-none">

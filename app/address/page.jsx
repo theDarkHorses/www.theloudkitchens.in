@@ -39,7 +39,7 @@ export default async function page() {
         </h1>
       </header>
       <main className=" mt-10">
-        <section className="border rounded-lg p-3 shadow shadow-slate-300 flex items-center justify-between bg-white">
+        {/* <section className="border rounded-lg p-3 shadow shadow-slate-300 flex items-center justify-between bg-white">
           <main className="flex items-center space-x-4 ">
             <LocateFixed size={24} className="text-primary" />
             <div className=" font-lato text-sm">
@@ -48,7 +48,7 @@ export default async function page() {
             </div>
           </main>
           <ChevronRight size={24} color="gray" className="ml-auto" />
-        </section>
+        </section> */}
         <section className="mt-10 space-y-4">
           <h2 className="font-lato text-lg font-bold text-[#242539]">
             Saved Addresses

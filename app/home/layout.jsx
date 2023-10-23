@@ -2,8 +2,32 @@ import { ChevronRight, MapPinIcon, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import endnotes from "../../public/icons/endnote.svg";
+import { auth } from "@clerk/nextjs";
+import { doc, getDoc } from "firebase/firestore";
+import { DB } from "../firebaseConfig";
+
+const getAdress = async () => {
+  const { userId } = auth()
+  let defaultAddress = null
+  if (!userId) return defaultAddress
+
+  try {
+    const user = await getDoc(doc(DB, "users", userId))
+    if (user.exists()) {
+      const userData = { id: user.id, ...user.data() }
+      if (user.get("selectedAddress")) defaultAddress = userData?.selectedAddress
+    } else {
+      console.log("user not found")
+    }
+  } catch (error) {
+    console.log("something went wrong",error.message)
+  }
+  return defaultAddress
+}
 
 export default async function Layout({ dishes, carousel, restaurants }) {
+  const defaultAddress = await getAdress()
+
   return (
     <>
       <header className="py-4 bg-white pt-10  top-0 px-5 flex  items-center justify-between">
@@ -14,11 +38,11 @@ export default async function Layout({ dishes, carousel, restaurants }) {
           <div className="flex flex-col justify-center ">
             <div className="flex  items-center">
               <span className="font-raleway text-sm font-bold">
-                Nit Srinagar
+                {defaultAddress ? defaultAddress?.landmark: "Add Address"}
               </span>
               <ChevronRight size={14} color="#AC2318" />
             </div>
-            <p className="text-[#555] font-lato text-xs ">Room- 323 </p>
+            <p className="text-[#555] font-lato text-xs ">{defaultAddress ? defaultAddress?.address : "---"} </p>
           </div>
         </Link>
         <Link
@@ -92,8 +116,9 @@ export default async function Layout({ dishes, carousel, restaurants }) {
                 src={"/icons/off.png"}
                 width={24}
                 height={24}
+                className="w-6 h-6"
               />
-              <p className="font-medium relative top-2 text-[#888] text-lg font-raleway text-center">
+              <p className="font-medium  relative top-2 text-[#888] text-lg font-raleway text-center">
                 Offers & Updates
               </p>
             </span>

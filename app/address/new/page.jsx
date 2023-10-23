@@ -2,12 +2,12 @@
 
 import { userCollectionRef } from "@/app/firebaseConfig";
 import { useAuth } from "@clerk/nextjs";
-import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { v4 as uuid } from "uuid"
 
 const orderForOptions = ["Myself", "Someone Else", "Someone special"];
 const locationOptions = ["home", "hostel", "work", "other"];
@@ -15,7 +15,6 @@ const locationOptions = ["home", "hostel", "work", "other"];
 
 
 export default function page() {
-  const params = useParams()
   const router = useRouter()
   const { userId } = useAuth()
   const [orderFor, setOrderFor] = useState(orderForOptions[0]);
@@ -25,7 +24,16 @@ export default function page() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await addDoc(collection(doc(userCollectionRef, userId), "addresses"), { ...address, orderFor, location })
+      const userDocRef = doc(userCollectionRef, userId)
+      const userAddressCollectionRef = collection(userDocRef, "addresses")
+      const newUserId = uuid()
+      const newAddress = { id: newUserId, ...address, location, orderFor }
+      await setDoc(doc(userAddressCollectionRef, newUserId), newAddress)
+      const user = await getDoc(userDocRef)
+      if (user.exists() && !user.get("selectedAddress")) {
+        await setDoc(userDocRef, { selectedAddress: newAddress }, { merge: true })
+      }
+
     } catch (err) {
       console.log(err.message)
     }

@@ -125,8 +125,8 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
                 </div>
             </div>
 
-            <div className=" py-4 w-full mt-2 items-center ">
-                <div className="w-full flex-1 mx-2 py-2  flex justify-start text-sm items-center space-x-2">
+            <div className=" py-4 pb-2 w-full items-center ">
+                <div className="w-full flex-1 mx-2 py-2  flex justify-start space-x-4 text-sm items-center space-x-2">
                     {cuisine?.categories?.map((item, index) => (
                         <div
                             key={index}

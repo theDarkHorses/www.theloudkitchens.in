@@ -7,7 +7,7 @@ export default function AddressDialog() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("edit");
-  const [open, setOpen] = useState(Boolean(id)); // Initialize with a boolean value
+  const [open, setOpen] = useState(Boolean(id));
 
   const handleOpen = (val) => {
     if (!val) {

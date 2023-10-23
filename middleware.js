@@ -7,8 +7,6 @@ export default authMiddleware({
     "/search",
     "/whatsnew",
     "/restaurants/:id",
-    "/cart",
-    "/coupons"
   ],
   ignoredRoutes: [],
 });

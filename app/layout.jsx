@@ -3,6 +3,8 @@ import './globals.css'
 import { Lato, Raleway } from "next/font/google";
 import Footer from './components/Footer';
 import ReduxProvider from './store/provider';
+import ToastProvider from './components/ToastProvider';
+
 
 const lato = Lato({
   variable: "--lato",
@@ -28,12 +30,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-        <html lang="en" className=' overflow-hidden scroll-smooth'>
-          <body className={`${lato.variable} ${raleway.variable} h-[calc(100vh_-_62px)] no-scrollbar overflow-x-hidden overflow-y-scroll  bg-app pb-16`}>
-            <ReduxProvider>{children}</ReduxProvider>
-            <Footer />
-          </body>
-        </html>
+      <html lang="en" className=' overflow-hidden scroll-smooth'>
+        <body className={`${lato.variable} ${raleway.variable} h-[calc(100vh_-_62px)] no-scrollbar overflow-x-hidden overflow-y-scroll  bg-app pb-`}>
+          <ReduxProvider>
+            <ToastProvider >
+              {children}
+              <Footer />
+            </ToastProvider>
+          </ReduxProvider>
+        </body>
+      </html>
 
     </ClerkProvider>
   )
