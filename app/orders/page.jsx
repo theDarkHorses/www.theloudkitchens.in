@@ -1,6 +1,8 @@
 import Image from "next/image";
 import BackRoute from "../components/common/BackRoute";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs";
+
 
 export const ORDER_MENU = [
   "Order History",
@@ -8,10 +10,10 @@ export const ORDER_MENU = [
   "Wallet Balance"
 ]
 
-export default function page({ searchParams }) {
+export default async function page({ searchParams }) {
   const { tab } = searchParams
   const activeTab = tab || 0
-
+  const user = await currentUser()
   return (
     <section className="">
       <BackRoute />
@@ -27,14 +29,14 @@ export default function page({ searchParams }) {
           <div className="flex flex-col items-center -mt-8">
             <div className="h-[82px] w-[82px] bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-2xl shadow-lg shadow-gray-300 flex items-center justify-center">
               <Image
-                src="https://i.imgur.com/3vjidlG.jpg"
+                src={user.imageUrl}
                 height={78}
                 width={78}
                 className="border-white border-2 rounded-2xl"
               />
             </div>
             <h2 className="font-lato font-medium text-lg text-center mt-3">
-              Great Indian Thalis
+              {user.firstName} {user.lastName}
             </h2>
             <p className="font-lato text-xs text-[#999]">
               O Followers &bull; 0 Following
