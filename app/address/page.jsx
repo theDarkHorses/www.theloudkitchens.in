@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Home,
-  LocateFixed,
   MoreHorizontal,
   Plus,
 } from "lucide-react";

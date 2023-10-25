@@ -1,13 +1,17 @@
 "use client";
-import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+import { deleteDoc, doc } from "firebase/firestore";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { DB } from "../firebaseConfig";
+import toast from "react-hot-toast";
 
 export default function AddressDialog() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const id = searchParams.get("edit");
   const [open, setOpen] = useState(Boolean(id));
+  const { user } = useUser()
 
   const handleOpen = (val) => {
     if (!val) {
@@ -25,12 +29,15 @@ export default function AddressDialog() {
 
 
   const handleDelete = async () => {
+    toast.loading("Deleting address...", {id: "delete"})
     try {
-      await axios.delete(`http://localhost:3000/api/address?edit=${id}`)
+      await deleteDoc(doc(DB, "users", user.id, "addresses", id));
+      toast.success("Address deleted successfully", {id: "delete"})
       router.refresh()
       setOpen(false)
     } catch (err) {
       console.log(err.message)
+      toast.error("Something went wrong", {id: "delete"})
     }
   }
 
@@ -47,7 +54,7 @@ export default function AddressDialog() {
             Edit
           </button>
           <button
-            onClick={() => handleDelete(open)}
+            onClick={() => handleDelete()}
             className="text-[#FF3B2F] py-4 w-full rounded-t-none  font-lato text-lg text-center bg-[#f6f6f6]"
           >
             Delete

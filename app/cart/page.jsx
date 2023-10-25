@@ -81,7 +81,7 @@ const page = () => {
 
   return (
     <>
-      <div className="bg-[#E0E1E7] relative ">
+      <div className="bg-[#E0E1E7] relative pb-60 ">
         <header className="bg-white rounded-b-2xl overflow-hidden sticky top-0 z-[9999] ">
           <div className="pt-10 pb-[2px] ">
             <Link href="/"
@@ -102,7 +102,7 @@ const page = () => {
           </div>
         </header>
 
-        <main className="bg-[#E0E1E7] min-h-screen  pt-10 pb-40 shadow-lg px-2">
+        <main className="bg-[#E0E1E7] min-h-screen  pt-10   px-2">
           <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
             <div className="flex items-center space-x-2 pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
               <Image

@@ -7,6 +7,7 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { v4 as uuid } from "uuid"
 
 const orderForOptions = ["Myself", "Someone Else", "Someone special"];
@@ -23,6 +24,7 @@ export default function page() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    toast.loading("Saving address...", { id: "address" })
     try {
       const userDocRef = doc(userCollectionRef, userId)
       const userAddressCollectionRef = collection(userDocRef, "addresses")
@@ -33,13 +35,12 @@ export default function page() {
       if (user.exists() && !user.get("selectedAddress")) {
         await setDoc(userDocRef, { selectedAddress: newAddress }, { merge: true })
       }
-
+      toast.success("Address saved successfully", { id: "address" })
     } catch (err) {
       console.log(err.message)
+      toast.error("Something went wrong", { id: "address" })
     }
     router.push("/address")
-    router.refresh()
-
   }
   return (
     <section className="h-[calc(100vh_-_64px)] no-scrollbar px-4 bg-[#F5F6FB] w-full overflow-hidden overflow-y-scroll py-8">
@@ -80,7 +81,7 @@ export default function page() {
           <p className="text-text text-sm">Save address as *</p>
           <div className="w-full flex mt-2 space-x-2 font-lato text-sm text-[#1C1C1C]">
             {locationOptions.map((label) => (
-              <div key={label} onClick={() => setLocation(label)} className={`flex space-x-1 text-sm items-center font-lato px-2 py-1 border rounded-lg text-[#1C1C1C] ${location == label ? "border-primary bg-[#AC23231A]" : "border-[#999]"}`}>
+              <div key={label} onClick={() => setLocation(label)} className={`flex space-x-1 text-sm items-center cursor-pointer font-lato px-2 py-1 border rounded-lg text-[#1C1C1C] ${location == label ? "border-primary bg-[#AC23231A]" : "border-[#999]"}`}>
                 {label}
               </div>
             ))}

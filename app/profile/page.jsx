@@ -8,12 +8,13 @@ export default async function page() {
   const user = await currentUser()
 
   return (
-    <section className="px-2  py-5  relative bg-[#F5F5F5] w-full no-scrollbar overflow-hidde overflow-y-scroll z-40">
-      <nav className="">
-        <Link href="/">
-          <ChevronLeft size={28} color="#1C1C1C" />
+    <section className="py-5 px-5 bg-[#F5F5F5] w-full no-scrollbar overflow-hidden overflow-y-scroll z-40 pb-20 ">
+      <div className="flex items-center py-3  ">
+        <Link href={"/cart"}>
+          <ChevronLeft size={24} className="text-[#292C35] cursor-pointer" />
         </Link>
-      </nav>
+        <h1 className="font-lato font-bold text-[#292C35] text-2xl ml-2">Profile</h1>
+      </div>
       <div className="bg-white shadow-lg shadow-gray-300  mt-6 mb-12 rounded-lg flex items-center py-5 px-2 space-x-2">
         <div className="">
           <Image
