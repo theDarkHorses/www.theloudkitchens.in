@@ -5,7 +5,8 @@ const RestaurantIcon = ({ isActive, imgSrc, name,id }) => {
   return (
     <Link href={`/restaurants/${id}`} className="flex first-of-type:ml-5 flex-col mt-1 ml-2">
       <div
-        className={`h-[82px] w-[82px] ${
+      style={{boxShadow:"0px 0px 18px 0px rgba(172, 35, 35, 0.37)"}}
+        className={`h-[82px] w-[82px]  ${
           isActive
             ? "bg-primary"
             : "bg-[#DEDEDE]"
