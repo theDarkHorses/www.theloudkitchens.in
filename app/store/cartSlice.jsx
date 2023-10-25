@@ -22,6 +22,8 @@ const initialState = {
         validTill: null,
         validity: 0,
     },
+    cookingReqText: "",
+    confessionText: "",
 };
 
 export const cartSlice = createSlice({
@@ -38,12 +40,12 @@ export const cartSlice = createSlice({
                 tabId,
                 itemId,
             } = action.payload;
-
             state.items.push({
                 id: item.id,
                 name: item.name,
+                isVeg: item.isVeg,
                 description: item.description,
-                imgUrl: item.imgUrl,
+                imageUrl: item.imageUrl,
                 categories: item.categories,
                 isAvailable: item.isAvailable,
                 quantity: delta,
@@ -111,6 +113,8 @@ export const cartSlice = createSlice({
             state.gst = 0;
             state.total = 0;
             state.totalWithoutDiscount = 0;
+            state.confessionText = "";  
+            state.cookingReqText = "";
         },
         setCouponDetails: (state, action) => {
             state.coupon = action.payload;
@@ -123,12 +127,18 @@ export const cartSlice = createSlice({
         },
         setSelectedAddress: (state, action) => {
             state.selectedAddress = action.payload;
+        },
+        setConfessionText: (state, action) => {
+            state.confessionText = action.payload;
+        },
+        setCookingReqText: (state, action) => {
+            state.cookingReqText = action.payload;
         }
 
     },
 });
 
-export const { toggleItemWithDelta, setSelectedAddress, updateItemQuantity, clearCart, setCouponDetails } =
+export const { toggleItemWithDelta, setConfessionText, setCookingReqText, setSelectedAddress, updateItemQuantity, clearCart, setCouponDetails } =
     cartSlice.actions;
 export default cartSlice.reducer;
 export const selectCartItems = (state) => state.cart.items;
@@ -141,3 +151,5 @@ export const selectGSTAndRestaurantCharges = (state) =>
 export const selectDeliveryFee = (state) => state.cart.deliveryFee;
 export const selectCoupon = (state) => state.cart.coupon;
 export const selectSelectedAddress = (state) => state.cart.selectedAddress;
+export const selectCookingReqText = (state) => state.cart.cookingReqText;
+export const selectConfessionText = (state) => state.cart.confessionText;

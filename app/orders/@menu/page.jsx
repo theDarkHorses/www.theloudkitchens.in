@@ -17,9 +17,10 @@ export default async function page() {
     const orders = await getOrders()
     return (
         <div className='bg-white px-3 py-10 space-y-5'>
-            {orders.map((order) =>
+            {orders.map((order, index) =>
                 <OrderCard
-                    key={order.id} orderId={order.id}
+                    key={index}
+                    orderId={order.id}
                     address={`${order.selectedAddress.name}, ${order.selectedAddress.address}, ${order.selectedAddress.landmark}`}
                     total={order.total}
                     status={order.status}

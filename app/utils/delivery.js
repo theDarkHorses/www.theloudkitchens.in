@@ -1,3 +1,5 @@
+import { CANCELLED, COOKING, DELIVERED, OUTFORDELIVERY, PENDING } from "./constants";
+
 export function calculateDeliveryFee(totalAmount) {
     if (totalAmount < 150) {
         return 15
@@ -9,10 +11,27 @@ export function calculateDeliveryFee(totalAmount) {
 }
 
 export function calculateGST(totalAmount) {
-    return roundWithPrecision(totalAmount * 0.05,2)
+    return roundWithPrecision(totalAmount * 0.05, 2)
 }
 
 export function roundWithPrecision(num, precision = 2) {
     var multiplier = Math.pow(10, precision);
     return Math.round(num * multiplier) / multiplier;
+}
+
+export function deliveryStatusColor(status) {
+    switch (status) {
+        case PENDING:
+            return 'bg-yellow-500'
+        case COOKING:
+            return 'bg-yellow-500'
+        case OUTFORDELIVERY:
+            return 'bg-yellow-500'
+        case DELIVERED:
+            return 'bg-green-500'
+        case CANCELLED:
+            return 'bg-red-500'
+        default:
+            return 'bg-yellow-500'
+    }
 }

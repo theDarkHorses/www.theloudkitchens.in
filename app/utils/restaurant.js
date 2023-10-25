@@ -64,3 +64,9 @@ export function extractPopularItems(restaurants) {
     });
     return data;
 }
+
+
+export function generateUPIPaymentUrl(amount) {
+    const upiId = "yashakshat.ay@oksbi"
+    return `upi://pay?pa=${upiId}&pn=The Loud Kitchens&cu=INR&am=${amount}`
+}

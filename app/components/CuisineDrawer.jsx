@@ -1,11 +1,11 @@
 "use client";
 
 import { useSearchParams, useRouter, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { getCuisine } from "@/app/queries/restaurant";
 import DrawerCuisine from "./DrawerCuisine";
 
-export default function CuisineDrawer() {
+function CuisineDrawer() {
   const [windowHeight] = useState(window.innerHeight);
   const params = useParams();
   const searchParams = useSearchParams();
@@ -54,3 +54,5 @@ export default function CuisineDrawer() {
     </div>
   );
 }
+
+export default memo(CuisineDrawer)

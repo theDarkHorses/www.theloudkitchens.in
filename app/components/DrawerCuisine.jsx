@@ -88,7 +88,6 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
             }
         }
         );
-
         if (canProceed) {
             dispatch(toggleItemWithDelta({ item: cuisine, delta: 1, selectedItems: craftedCuisine, totalCost: getTotalCost, restaurantId, tabId, itemId }))
             setActiveIndex(0)

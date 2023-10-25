@@ -15,7 +15,7 @@ export default async function page() {
         <div className="mt-4 ">
           {extractedPopularItems?.map((item, index) =>
             <Link href={`/restaurants/${item.restaurantId}?tab=${item.sectionId}&item=${item.item.id}`} key={index} className="flex p-2 gap-2">
-              <Image src={item.item.imageUrl} alt={item.name} width={52} height={52} className="rounded-lg overflow-hidden aspect-square object-cover object-center" />
+              <Image src={item.item.imageUrl} alt={item.name || "restaurant item"} width={52} height={52} className="rounded-lg overflow-hidden aspect-square object-cover object-center" />
               <div className="flex flex-col items-start justify-center">
                 <h3 className="text-[#292C35] font-medium text-start font-lato text-lg ">
                   {item.item.name}

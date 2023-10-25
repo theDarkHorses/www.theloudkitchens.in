@@ -17,20 +17,20 @@ export default function page() {
                         HQ-Points
                     </p>
                     <p className=" flex items-center space-x-1 font-raleway text-start leading-none text-primary font-bold text-xl">
-                        <Image src={"/icons/coin.png"} width={32} height={32} className="w-4 h-4 aspect-square" /> <span>0</span>
+                        <Image src={"/icons/coin.png"} width={32} height={32} className="w-4 h-4 aspect-square" alt="coin" /> <span>0</span>
                     </p>
                 </div>
             </div>
             <p className="font-raleway font-bold text-lg mt-10">Convert points to money</p>
             <div className="p-6 mx-auto shadow shadow-slate-400 rounded-lg mt-5 py-10">
                 <div className="flex space-x-1 rounded-lg border-primary border items-center shadow-sm shadow-gray-300 px-2">
-                    <Image src={"/icons/coin.png"} width={32} height={32} className="w-4 h-4 aspect-square" />
-                    <input placeholder="100" className="w-full p-2  border-text outline-none" />
+                    <Image src={"/icons/coin.png"} width={32} height={32} className="w-4 h-4 aspect-square" alt="coin" />
+                    <input placeholder="100" className="w-full p-2  border-text outline-none appearance-none" type="number" min={1} />
                 </div>
-                <Image src={"/icons/convert.svg"} width={32} height={32} className="w-4 h-4 mx-auto aspect-square my-2" />
+                <Image src={"/icons/convert.svg"} width={32} height={32} className="w-4 h-4 mx-auto aspect-square my-2" alt="convert" />
                 <div className="flex space-x-1  rounded-lg border-text border items-center shadow-sm shadow-gray-300 px-2">
-                    <Image src={"/icons/rupee.svg"} width={32} height={32} className="w-4 h-4 aspect-square" />
-                    <input placeholder="10" className="w-full p-2  border-text outline-none" />
+                    <Image src={"/icons/rupee.svg"} width={32} height={32} className="w-4 h-4 aspect-square" alt="rupee symbol" />
+                    <input placeholder="10" className="w-full p-2  border-text outline-none appearance-none" type="number" min={1} />
                 </div>
                 <button className="text-center mt-7 text-primary px-4 py-2 border border-primary rounded-lg w-full shadow-lg shadow-[#AC232320] bg-[#AC232310]">
                     Convert
@@ -38,6 +38,8 @@ export default function page() {
             </div>
             <p className="font-raleway font-bold text-lg mt-10" id="credit">Credits History</p>
             <div className="space-y-4 divide-y-[1px] mt-5 pb-5">
+
+{/* 
                 <div className="flex items-center justify-between py-4">
                     <div className="font-lato">
                         <p className="text-[#777777] text-sm">
@@ -49,55 +51,9 @@ export default function page() {
                         <p className="text-[#777777] text-base">Expires on Nov 02, 2023</p>
                     </div>
                     <p className="text-[#00A863] text-lg">+ ₹149</p>
-                </div>
-                <div className="flex items-center justify-between py-4">
-                    <div className="font-lato">
-                        <p className="text-[#777777] text-sm">
-                            Oct 11, 2023
-                        </p>
-                        <p className="text-[#444444] text-lg">
-                            Redeemed coupon code
-                        </p>
-                        <p className="text-[#777777] text-base">Expires on Nov 02, 2023</p>
-                    </div>
-                    <p className="text-[#00A863] text-lg">+ ₹149</p>
-                </div>
-                <div className="flex items-center justify-between py-4">
-                    <div className="font-lato">
-                        <p className="text-[#777777] text-sm">
-                            Oct 11, 2023
-                        </p>
-                        <p className="text-[#444444] text-lg">
-                            Redeemed coupon code
-                        </p>
-                        <p className="text-[#777777] text-base">Expires on Nov 02, 2023</p>
-                    </div>
-                    <p className="text-[#00A863] text-lg">+ ₹149</p>
-                </div>
-                <div className="flex items-center justify-between py-4">
-                    <div className="font-lato">
-                        <p className="text-[#777777] text-sm">
-                            Oct 11, 2023
-                        </p>
-                        <p className="text-[#444444] text-lg">
-                            Redeemed coupon code
-                        </p>
-                        <p className="text-[#777777] text-base">Expires on Nov 02, 2023</p>
-                    </div>
-                    <p className="text-[#00A863] text-lg">+ ₹149</p>
-                </div>
-                <div className="flex items-center justify-between py-4">
-                    <div className="font-lato">
-                        <p className="text-[#777777] text-sm">
-                            Oct 11, 2023
-                        </p>
-                        <p className="text-[#444444] text-lg">
-                            Redeemed coupon code
-                        </p>
-                        <p className="text-[#777777] text-base">Expires on Nov 02, 2023</p>
-                    </div>
-                    <p className="text-[#00A863] text-lg">+ ₹149</p>
-                </div>
+                </div> */}
+
+
             </div>
         </div>
     )

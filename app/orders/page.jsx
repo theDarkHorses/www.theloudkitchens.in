@@ -33,6 +33,7 @@ export default async function page({ searchParams }) {
                 height={78}
                 width={78}
                 className="border-white border-2 rounded-2xl"
+                alt={user.firstName || "user"}
               />
             </div>
             <h2 className="font-lato font-medium text-lg text-center mt-3">
