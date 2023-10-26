@@ -134,7 +134,7 @@ export default async function Layout({ dishes, carousel, restaurants }) {
             alt="end notes"
             className="py-8 mx-2"
           />
-          <div className="text-[#BDBDBD] items-center py-10 space-x-2 flex">
+          <div className="text-[#BDBDBD] items-center pt-10 space-x-2 flex">
             <div className=" border-t  border-[#CCC] flex-1 border-dashed" />
             <div className="mx-auto text-center font-lato  w-36 flex flex-col leading-tight">
               Proudly made in NIT Srinagar
