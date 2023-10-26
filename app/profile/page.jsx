@@ -2,34 +2,20 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import LogoutButton from "../components/common/LogoutButton";
-import { currentUser } from "@clerk/nextjs";
+import UserProfile from "./UserProfile";
 
-export default async function page() {
-  const user = await currentUser()
+
+export default function page() {
 
   return (
-    <section className="py-5 px-5 bg-[#F5F5F5] w-full no-scrollbar overflow-hidden overflow-y-scroll z-40 pb-20 ">
+    <section className="py-5 px-5 bg-[#F5F5F5] w-full no-scrollbar overflow-hidden overflow-y-scroll z-40">
       <div className="flex items-center py-3  ">
         <Link href={"/cart"}>
           <ChevronLeft size={24} className="text-[#292C35] cursor-pointer" />
         </Link>
         <h1 className="font-lato font-bold text-[#292C35] text-2xl ml-2">Profile</h1>
       </div>
-      <div className="bg-white shadow-lg shadow-gray-300  mt-6 mb-12 rounded-lg flex items-center py-5 px-2 space-x-2">
-        <div className="">
-          <Image
-            src={user.imageUrl}
-            height={72}
-            width={72}
-            alt="images"
-            className="rounded-full"
-          />
-        </div>
-        <div className="">
-          <h3 className="font-raleway text-2xl font-bold">{user.firstName} {user.lastName}</h3>
-          <h3 className="font-raleway text-sm text-primary">{user.emailAddresses[0].emailAddress} </h3>
-        </div>
-      </div>
+      <UserProfile />
       <main className="space-y-6 my-4">
         <section className="py-4 shadow shadow-gray-300 bg-white rounded-lg">
           <h2 className="text-lg leading-none pl-4 font-raleway font-bold border-l-4 border-primary">

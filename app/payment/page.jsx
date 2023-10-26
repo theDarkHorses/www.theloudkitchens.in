@@ -126,6 +126,10 @@ export default function page() {
         }
     }
 
+    const handleUPIPaymentClick = () => {
+        window.location.href = generateUPIPaymentUrl(total);
+      };
+
 
     return (
         <section className="min-h-[calc(100vh_-_60px)] bg-[#F6F7FA] pb-20">
@@ -146,10 +150,10 @@ export default function page() {
                     ⛳  Step (1/2)
                 </h2>
 
-                <Link href={generateUPIPaymentUrl(total)} className="mt-16 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-2 rounded-lg border">
+                <div onClick={ handleUPIPaymentClick} className="mt-16 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-2 rounded-lg border">
                     <p className=" text-primary font-lato text-base">Pay ( Rs {total}) using UPI</p>
                     <Image src={"/icons/rightTriangle.svg"} width={8} height={8} alt="go" />
-                </Link>
+                </div>
 
                 <div className="mx-auto my-8 flex items-center text-gray-500 space-x-2 ">
                     <div className=" border-b border-[#AAA] flex-1" />
@@ -187,7 +191,6 @@ export default function page() {
                 <input
                     type="file"
                     accept="image/*"
-                    capture="camera"
                     ref={fileInputRef}
                     onChange={handleFileChange}
                     className="hidden"

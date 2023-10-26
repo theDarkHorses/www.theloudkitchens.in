@@ -81,7 +81,7 @@ const page = () => {
 
   return (
     <>
-      <div className="bg-[#E0E1E7] relative pb-60 ">
+      <div className="bg-[#E0E1E7] relative pb-40 ">
         <header className="bg-white rounded-b-2xl overflow-hidden sticky top-0 z-[9999] ">
           <div className="pt-10 pb-[2px] ">
             <Link href="/"

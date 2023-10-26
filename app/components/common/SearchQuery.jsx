@@ -17,9 +17,9 @@ export default function SearchQuery() {
     const [searchResults, setSearchResults] = useState([])
     const debouncedQuery = useDebounce(query, 200)
 
-    useEffect(() => {
-        searchRef.current?.focus()
-    }, [])
+    // useEffect(() => {
+    //     searchRef.current?.focus()
+    // }, [])
 
     const handleFocus = () => {
         setTimeout(() => {
