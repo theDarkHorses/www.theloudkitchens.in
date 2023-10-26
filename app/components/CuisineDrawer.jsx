@@ -41,7 +41,7 @@ function CuisineDrawer() {
       className=" relative"
     >
       <div onClick={() => handleDrawer(false)}
-        className={`flex top-0 items-end fixed justify-center bottom-0 z-0 left-0 right-0 h-screen  transition-all backdrop-blur-sm no-scrollbar ${openDrawer ? " translate-y-0" : " translate-y-full"
+        className={`flex top-0 items-end fixed justify-center bottom-0 z-0 left-0 right-0 h-screen  transition-all opacity-[0.77] bg-black no-scrollbar ${openDrawer ? " translate-y-0" : " translate-y-full"
           }`} />
       <div
         onClick={(e) => e.stopPropagation()}

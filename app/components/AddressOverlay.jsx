@@ -16,30 +16,38 @@ function AddressOverlay({ openDrawer, setOpenDrawer }) {
   const dispatch = useDispatch()
 
 
-  const userCollectionRef = doc(DB, "users", userId);
 
   useEffect(() => {
-    const addressCollectionRef = collection(userCollectionRef, "addresses");
-    const unsubscribe = onSnapshot(addressCollectionRef, (snapshot) => {
-      const addresses = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setAddress(addresses);
-    });
-    return unsubscribe;
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(userCollectionRef, (snapshot) => {
-      const user = snapshot.data();
-      setUser(user);
-      dispatch(setSelectedAddress(user?.selectedAddress))
+    try {
+      const userCollectionRef = doc(DB, "users", userId);
+      const addressCollectionRef = collection(userCollectionRef, "addresses");
+      const unsubscribe = onSnapshot(addressCollectionRef, (snapshot) => {
+        const addresses = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setAddress(addresses);
+      });
+      return unsubscribe;
+    } catch (error) {
+      console.error("Error fetching addresses:", error);
     }
-    );
-    return unsubscribe;
+  }, []);
+  
+  useEffect(() => {
+    try {
+      const userCollectionRef = doc(DB, "users", userId);
+      const unsubscribe = onSnapshot(userCollectionRef, (snapshot) => {
+        const user = snapshot.data();
+        setUser(user);
+        dispatch(setSelectedAddress(user?.selectedAddress))
+      });
+      return unsubscribe;
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   }, [address]);
-
 
   const handleSetSelectedAddress = async (address) => {
     try {
+      const userCollectionRef = doc(DB, "users", userId);
       await setDoc(userCollectionRef, { selectedAddress: address }, { merge: true });
       dispatch(setSelectedAddress(address))
       console.log("Address set successfully");

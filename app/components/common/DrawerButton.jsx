@@ -17,7 +17,7 @@ const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
       </div>
       <div
         onClick={() => setOpenDrawer(false)}
-        className={`fixed top-0 left-0 right-0 bottom-0 flex items-end z-50 backdrop-blur-md transition-all duration-300 ease-in-out ${openDrawer ? " translate-y-0" : " translate-y-full"
+        className={`fixed top-0 left-0 right-0 bottom-0 flex items-end z-50 bg-[#00000077] transition-all duration-300 ease-in-out ${openDrawer ? " translate-y-0" : " translate-y-full"
           }`}
       >
         <div

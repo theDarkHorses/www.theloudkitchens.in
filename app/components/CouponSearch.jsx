@@ -34,7 +34,7 @@ export default function CouponSearch() {
         }
 
         try {
-            const fetchedCoupon = await getDoc(doc(DB, "coupons", coupon))
+            const fetchedCoupon = await getDoc(doc(DB, "coupons", coupon.toLowerCase().trim()))
             if (!(fetchedCoupon).exists()) {
                 return toast.error("Invalid Coupon", { id: "coupon" })
             }
