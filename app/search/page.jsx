@@ -8,7 +8,7 @@ export default async function page() {
   const popularItems = await getPopularItems();
   const extractedPopularItems = extractPopularItems(popularItems);
   return (
-    <section className="px-5 h-[calc(100vh_-_64px)] bg-white  w-full overflow-hidden z-40">
+    <section className="px-5 h-full bg-white  w-full overflow-hidden z-40">
       <SearchQuery />
       <main className="mt-3">
         <h1 className="uppercase  font-semibold pl-4 mt-10 font-lato  text-[#565D67] text-base">POPULAR ITEMS</h1>

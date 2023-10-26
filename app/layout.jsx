@@ -34,16 +34,16 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en" className=' overflow-hidden scroll-smooth'>
-        <body className={`${lato.variable} ${raleway.variable} h-[calc(100vh_-_62px)] no-scrollbar overflow-x-hidden overflow-y-scroll  bg-app`}>
+        <body className={`${lato.variable} ${raleway.variable} h-[calc(100vh_-_62px)] pb-[58px] no-scrollbar overflow-x-hidden overflow-y-scroll  bg-app`}>
           <NextTopLoader color="#ac2323"
             initialPosition={0.08}
             crawlSpeed={200}
-            height={3}
+            height={4}
             crawl={true}
             showSpinner={false}
             easing="ease"
             speed={200}
-            shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+            shadow="0 0 10px #ac2323,0 0 5px #ac2323"
           />
           <ReduxProvider>
             <ToastProvider >

@@ -33,3 +33,13 @@
 .cl-internal-b3fm6y {
   display: none;
 }
+
+
+html {
+  touch-action: pan-x pan-y;
+  touch-zooming: none;
+  user-zoom: fixed;
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+}
