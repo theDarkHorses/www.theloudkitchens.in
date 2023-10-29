@@ -6,14 +6,18 @@ import { useDispatch } from "react-redux";
 import { toggleItemWithDelta } from "../store/cartSlice";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { v4 as uuid } from "uuid"
+
 
 export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisine, restaurantId, tabId, itemId }) {
     const [activeIndex, setActiveIndex] = useState(0);
-    const router =  useRouter()
+    const [uid] = useState(uuid())
+    const router = useRouter()
     const dispatch = useDispatch()
     const activeCategory = cuisine?.categories?.[activeIndex];
     const isRequired = useMemo(() => activeCategory?.isRequired, [activeCategory]);
     const requiredItems = useMemo(() => activeCategory?.requiredItems, [activeCategory]);
+
     const totalItems = useMemo(() => {
         return Object.values(craftedCuisine?.[activeIndex] || {}).reduce((total, item) => total + item.quantity, 0);
     }, [craftedCuisine, activeIndex]);
@@ -89,7 +93,7 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
         }
         );
         if (canProceed) {
-            dispatch(toggleItemWithDelta({ item: cuisine, delta: 1, selectedItems: craftedCuisine, totalCost: getTotalCost, restaurantId, tabId, itemId }))
+            dispatch(toggleItemWithDelta({ id: uid, item: cuisine, delta: 1, selectedItems: craftedCuisine, totalCost: getTotalCost, restaurantId, tabId, itemId }))
             setActiveIndex(0)
             setCraftedCuisine({})
             router.push("/cart")
@@ -137,7 +141,7 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
                             className={`cursor-pointer text-base font-semibold font-raleway border-primary ${activeIndex == index ? "border-b-2 text-primary" : ""
                                 }`}
                         >
-                            {item.name} {item.isRequired && "(" + item.requiredItems + ")" } {item.isRequired && <span className="text-red-600">*</span>}
+                            {item.name} {item.isRequired && "(" + item.requiredItems + ")"} {item.isRequired && <span className="text-red-600">*</span>}
                         </div>
                     ))}
                 </div>

@@ -34,6 +34,7 @@ export const cartSlice = createSlice({
             const {
                 item,
                 delta,
+                id,
                 selectedItems,
                 totalCost,
                 restaurantId,
@@ -41,7 +42,7 @@ export const cartSlice = createSlice({
                 itemId,
             } = action.payload;
             state.items.push({
-                id: item.id,
+                id: id,
                 name: item.name,
                 isVeg: item.isVeg,
                 description: item.description,
@@ -113,7 +114,7 @@ export const cartSlice = createSlice({
             state.gst = 0;
             state.total = 0;
             state.totalWithoutDiscount = 0;
-            state.confessionText = "";  
+            state.confessionText = "";
             state.cookingReqText = "";
         },
         setCouponDetails: (state, action) => {

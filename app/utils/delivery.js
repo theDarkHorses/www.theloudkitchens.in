@@ -28,9 +28,9 @@ export function deliveryStatusColor(status) {
         case OUTFORDELIVERY:
             return 'bg-yellow-500'
         case DELIVERED:
-            return 'bg-green-500'
+            return 'bg-green-500 animate-none'
         case CANCELLED:
-            return 'bg-red-500'
+            return 'bg-red-500 animate-none'
         default:
             return 'bg-yellow-500'
     }

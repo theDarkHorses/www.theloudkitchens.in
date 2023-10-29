@@ -1,12 +1,10 @@
-import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
 import { Lato, Raleway } from "next/font/google";
 import Footer from './components/Footer';
 import ReduxProvider from './store/provider';
 import ToastProvider from './components/ToastProvider';
 import NextTopLoader from 'nextjs-toploader';
-
-
 
 const lato = Lato({
   variable: "--lato",
@@ -27,10 +25,7 @@ export const metadata = {
   description: 'The Loud Kitchens is a cloud kitchens startup initiated by the students of nit srinagar.',
 }
 
-
-
 export default function RootLayout({ children }) {
-
   return (
     <ClerkProvider>
       <html lang="en" className=' overflow-hidden scroll-smooth'>
@@ -38,7 +33,7 @@ export default function RootLayout({ children }) {
           <NextTopLoader color="#ac2323"
             initialPosition={0.08}
             crawlSpeed={200}
-            height={4}
+            height={3}
             crawl={true}
             showSpinner={false}
             easing="ease"
@@ -53,7 +48,6 @@ export default function RootLayout({ children }) {
           </ReduxProvider>
         </body>
       </html>
-
     </ClerkProvider>
   )
 }
