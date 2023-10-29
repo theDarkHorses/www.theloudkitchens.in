@@ -3,6 +3,7 @@ import DrawerButton from "@/app/components/common/DrawerButton";
 import Link from "next/link";
 import { getRestaurant } from "@/app/queries/restaurant";
 import { ChevronLeft } from "lucide-react";
+import RestaurantHeader from "@/app/components/RestaurantHeader";
 
 
 async function getRestaurantData(params) {
@@ -60,21 +61,7 @@ export default async function page({ params, searchParams }) {
         </div>
       </section>
       <div className=" bg-white w-full py-4 mt-4 pb-0 border-b">
-        <header className="flex items-center first:pl-5 last:pr-5  space-x-5 no-scrollbar overflow-hidden overflow-x-scroll">
-          {restaurant?.sections?.map((item) => (
-            <Link
-              href={`?tab=${item?.id}`}
-              className={` font-raleway py-4 leading-none text-center font-semibold border-primary text-sm ${
-                item.id == activeTab
-                  ? "text-primary border-b"
-                  : "text-[#969696]"
-              }`}
-              key={item.id}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </header>
+        <RestaurantHeader restaurant={restaurant} activeTab={activeTab} />
       </div>
     </main>
   );
