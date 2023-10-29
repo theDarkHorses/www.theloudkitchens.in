@@ -2,9 +2,9 @@ import { CANCELLED, COOKING, DELIVERED, OUTFORDELIVERY, PENDING } from "./consta
 
 export function calculateDeliveryFee(totalAmount) {
     if (totalAmount < 150) {
-        return 15
+        return 19
     } else if (totalAmount < 200) {
-        return 10
+        return 9
     } else {
         return 0
     }

@@ -16,7 +16,7 @@ import bill from "../../public/icons/bill.svg";
 
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import {  selectCartItems, selectConfessionText, setCookingReqText,  selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity } from "../store/cartSlice";
+import { selectCartItems, selectConfessionText, setCookingReqText, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
 import {
@@ -93,11 +93,11 @@ const page = () => {
             <div className="bg-[#DFFBEF] flex items-center space-x-1 rounded-b-2xl px-2">
               <Image src={love} width={22} height={22} alt="love" />
               <h3 className="font-lato text-sm font-bold text-[#379674]">
-                ₹ {roundWithPrecision(totalWithoutDiscount - total, 2)} Saved!
+                ₹ {roundWithPrecision(totalWithoutDiscount - total + 40-deliveryFee, 2)} Saved!
               </h3>
-              <p className="font-lato text-xs text-[#379674]">
+              {!deliveryFee && <p className="font-lato text-xs text-[#379674]">
                 With Free Delivery
-              </p>
+              </p>}
             </div>
           </div>
         </header>
@@ -113,7 +113,7 @@ const page = () => {
                 className=""
               />
               <h3 className="font-lato text-sm font-bold">
-                Delivery in 30 mins
+                Delivery in 45 mins
               </h3>
             </div>
             <div className="pb-3">
@@ -342,18 +342,18 @@ const page = () => {
               </div>
               <div className="flex items-center justify-between">
                 <p className="font-lato text-sm text-[#999]">
-                  Delivery Fee | 0.2 kms
+                  Delivery Fee
                 </p>
                 <p className="font-lato text-sm space-x-2">
                   <span className="text-[#444] line-through font-bold">
-                    ₹ {2 * deliveryFee}
+                    ₹ 40
                   </span>
-                  <span className="text-primary">FREE</span>
+                  <span className="text-primary">{!deliveryFee ? "FREE" : `₹ ${deliveryFee}`}</span>
                 </p>
               </div>
-              <p className="font-lato text-xs text-[#999] ">
+              {!deliveryFee && <p className="font-lato text-xs text-[#999] ">
                 FREE Delivery on your order!
-              </p>
+              </p>}
             </div>
             <div className="mx-4 border-[#BABABA] border-dashed border-b-[1px] py-5 space-y-2">
               <div className="flex items-center justify-between">

@@ -6,7 +6,7 @@ export const getHomePageRestaurants = () => {
         name,
         isActive,
        'imageUrl':image.asset->url
-      }`)
+      }`, {}, { cache: "no-store" })
 }
 
 export const getRestaurant = (id) => {
@@ -21,7 +21,7 @@ export const getRestaurant = (id) => {
           'id': _key,
           name
         }
-      }`, { id })
+      }`, { id }, { cache: "no-store" })
 }
 
 export const getRestaurantSections = (restaurantId) => {
@@ -61,7 +61,7 @@ export const getRestaurantSections = (restaurantId) => {
           }
         }
       }      
-      `, { restaurantId })
+      `, { restaurantId }, { cache: "no-store" })
 }
 
 
@@ -93,7 +93,7 @@ export function getCuisine(restaurantId, sectionId, cuisineId) {
       }
     }
   }
-  `, { restaurantId, sectionId, cuisineId })
+  `, { restaurantId, sectionId, cuisineId },)
 
 
 }
@@ -103,7 +103,7 @@ export const getHomeCarouselImageUrls = () => {
   return client.fetch(`*[_type == 'carousel'][0]{
     'imageUrls': images[].asset->url
   }
-  `)
+  `, {}, { cache: "no-store" })
 }
 
 export const searchCusine = (query) => {
@@ -118,7 +118,7 @@ export const searchCusine = (query) => {
         'imageUrl':image.asset->url
       }
     }
-  }`, { query: `*${query}*` })
+  }`, { query: `*${query}*` }, { cache: "no-store" })
 }
 
 
@@ -140,6 +140,6 @@ export const getPopularItems = () => {
         'imageUrl':image.asset->url
       }
     }
-  }`)
+  }`, {}, { cache: "no-store" })
 
 }

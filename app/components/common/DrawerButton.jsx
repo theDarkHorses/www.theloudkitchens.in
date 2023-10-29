@@ -26,7 +26,7 @@ const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
           className={`rounded-t-lg pb-20 transition-all z-auto ease-in-out bg-app overflow-hidden overflow-y-scroll duration-300 delay-75 no-scrollbar ${openDrawer ? "h-screen" : "h-0"
             }`}
         >
-          <div className="p-2 bg-white pb-6 z-50">
+          <div className="p-2 bg-white pb-2 z-50">
             <Image
               src={bannerUrl}
               width={350}
@@ -34,7 +34,7 @@ const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
               className="rounded-lg object-cover object-center w-full"
               alt="restaurant"
             />
-            <div className="flex items-center pl-6 space-x-2 mx-auto relative -top-5 justify-center">
+            <div className="flex items-center space-x-2 mx-auto relative -top-5 justify-center">
               <Image
                 src={imageUrl}
                 height={78}
@@ -42,7 +42,7 @@ const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
                 className="border-white bg-white  object-cover rounded-full object-center w-[78px] h-[78px] border-2"
                 alt="item"
               />
-              <div className="relative top-3 ">
+              <div className="relative top-2 ">
                 <h3 className="font-raleway font-bold text-lg capitalize">
                   {name}
                 </h3>
