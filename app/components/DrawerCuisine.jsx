@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, useState, useMemo } from "react";
+import React, { Fragment, useState, useMemo, useEffect } from "react";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
@@ -102,6 +102,15 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
         }
 
     };
+
+    useEffect(() => {
+
+        
+
+        return () => {
+            setCraftedCuisine({})
+        }
+    }, [])
 
     return (
         <Fragment>

@@ -16,7 +16,7 @@ import bill from "../../public/icons/bill.svg";
 
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCartItems, selectConfessionText, setCookingReqText, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity } from "../store/cartSlice";
+import { selectCartItems, selectConfessionText, setCookingReqText, selectDonation, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity, toggleDonation } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
 import {
@@ -32,6 +32,7 @@ import toast from "react-hot-toast";
 
 import { roundWithPrecision } from "../utils/delivery";
 import { useRouter } from "next/navigation";
+import { DELIVERYFEE } from "../utils/constants";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -51,7 +52,7 @@ const page = () => {
   const router = useRouter()
   const confessionText = useSelector(selectConfessionText)
   const cookingReqText = useSelector(selectCookingReqText)
-
+  const donation = useSelector(selectDonation)
 
 
   const handleShowMore = (index) => {
@@ -93,7 +94,7 @@ const page = () => {
             <div className="bg-[#DFFBEF] flex items-center space-x-1 rounded-b-2xl px-2">
               <Image src={love} width={22} height={22} alt="love" />
               <h3 className="font-lato text-sm font-bold text-[#379674]">
-                ₹ {roundWithPrecision(totalWithoutDiscount - total + 40-deliveryFee, 2)} Saved!
+                ₹ {roundWithPrecision(totalWithoutDiscount - total + DELIVERYFEE - deliveryFee, 2)} Saved!
               </h3>
               {!deliveryFee && <p className="font-lato text-xs text-[#379674]">
                 With Free Delivery
@@ -243,15 +244,15 @@ const page = () => {
                 </h3>
               </div>
             )}
-            <div className="flex items-center justify-between pl-5 py-4 ">
-              <Link
-                href="/"
+            <Link href="/" className="flex items-center justify-between pl-5 py-4 ">
+              <div
+                
                 className="font-lato text-sm font-bold text-[#444]"
               >
                 Add more items
-              </Link>
+              </div>
               <PlusCircle size={18} className="text-[#444] mr-5" />
-            </div>
+            </Link>
             <div className="pb-3" onClick={() => setCookingReq(!cookingReq)}>
               <div className="flex items-center justify-between pl-5 py-4">
                 <h3 className="font-lato text-sm font-bold text-[#444]">
@@ -321,6 +322,20 @@ const page = () => {
               <ChevronRight size={12} className="self-center" />
             </Link>
           </div>
+          <div className="relative rounded-2xl overflow-hidden mx-2 mt-16 ">
+            <Image src={"/banner/ind.webp"} width={358} height={129.74} className="rounded-2xl brightness-75 w-full absolute object-cover object-center" alt="banner" />
+            <div className="flex items-start relative z-50 text-white px-3 py-4 justify-between gap-2">
+              <div className="">
+                <h1 className="font-bold text-lg drop-shadow-2xl leading-none"><span className="drop-shadow-2xl">Support  #</span><span className="text-[#ff6400] drop-shadow-2xl inline">Bharat</span>Ke<span className="text-[#00d400] drop-shadow-2xl inline">Veer</span> with us</h1>
+                <p className="font-medium text-sm drop-shadow-2xl mt-2">We will match your contribution to our bharat ke veer</p>
+                <p className="font-medium mt-5 text-sm underline flex items-center">Learn More <ChevronRight size={16} /></p>
+              </div>
+              <div className="flex flex-col">
+                <input className="accent-primary" type="checkbox" checked={donation} onChange={(e) => dispatch(toggleDonation(e.target.checked))} size={20} />
+                <p className="font-lato text-base font-semibold mt-1">₹5</p>
+              </div>
+            </div>
+          </div>
           <div className="pt-10">
             <Image
               src={bill}
@@ -346,7 +361,7 @@ const page = () => {
                 </p>
                 <p className="font-lato text-sm space-x-2">
                   <span className="text-[#444] line-through font-bold">
-                    ₹ 40
+                    ₹ {DELIVERYFEE}
                   </span>
                   <span className="text-primary">{!deliveryFee ? "FREE" : `₹ ${deliveryFee}`}</span>
                 </p>

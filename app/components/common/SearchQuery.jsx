@@ -62,11 +62,11 @@ export default function SearchQuery() {
                 onFocus={handleFocus}
                 onBlur={handleBlur}
             />
-            {isFocused && (
-                <div className="bg-white divide-y left-0 right-0  w-full absolute top-12 shadow-lg rounded-lg border">
+            {/* {isFocused && ( */}
+                <div className="bg-white divide-y left-0 overflow-y-scroll no-scrollbar right-0 max-h-[600px] transition-height  w-full absolute top-12 shadow-lg rounded-lg border">
                     {searchResults.length ? searchResults.map((item) =>
                         <Link onClick={(e) => e.stopPropagation()} href={`/restaurants/${item.restaurantId}?tab=${item.sectionId}&item=${item.itemId}`} key={item.itemId} className="flex px-4 py-4 hover:bg-gray-100  gap-2">
-                            <Image src={item.itemImageUrl} alt={item.itemName} width={52} height={52}  className="w-12 h-12 rounded-lg overflow-hidden object-cover object-center"/>
+                            <Image src={item.itemImageUrl} alt={item.itemName} width={52} height={52} className="w-12 h-12 rounded-lg overflow-hidden object-cover object-center" />
                             <div className="flex flex-col items-start justify-center">
                                 <h3 className="text-[#292C35] font-medium text-start font-lato text-lg ">
                                     {item.itemName}
@@ -76,11 +76,11 @@ export default function SearchQuery() {
                                 </p>
                             </div>
                         </Link>
-                    ) : <p className="text-center text-text py-2">{!query.trim().length?"Search Something...":"No results found"}</p>
+                    ) : <p className="text-center text-text py-2">{!query.trim().length ? "Search Something..." : "No results found"}</p>
 
                     }
                 </div>
-            )}
+            {/* )} */}
         </header>
     )
 }

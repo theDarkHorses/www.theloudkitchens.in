@@ -4,3 +4,5 @@ export const DELIVERED = 'Delivered';
 export const CANCELLED = 'Cancelled';
 export const PENDING = 'Pending';
 export const ACCEPTED = 'Accepted';
+
+export const DELIVERYFEE = 40

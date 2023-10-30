@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronLeft, Upload } from "lucide-react"
+import { ChevronLeft, Upload, Image as Photo, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import QRCode from "qrcode.react";
@@ -24,6 +24,7 @@ export default function page() {
     const { imageUrl, uploadImage } = useFirebaseStorage();
     const fileInputRef = useRef(null);
     const [uid] = useState(uuid());
+    const [fileName, setFileName] = useState("");
     const dispatch = useDispatch()
     const { user } = useUser()
     const cartItems = useSelector(selectCartItems);
@@ -35,6 +36,8 @@ export default function page() {
     const confessionText = useSelector(selectConfessionText)
     const cookingReqText = useSelector(selectCookingReqText)
     const router = useRouter()
+    const [activeTab, setActiveTab] = useState(0)
+    const [activeStep, setActiveStep] = useState(0)
 
 
 
@@ -53,18 +56,6 @@ export default function page() {
     }, []);
 
 
-    useEffect(() => {
-        if (imageUrl) {
-            try {
-                handleCheckout(imageUrl)
-            } catch (error) {
-                console.log(error.message)
-            }
-        }
-    }, [imageUrl])
-
-
-
     const handleUp = () => {
         fileInputRef.current.click();
     };
@@ -80,6 +71,7 @@ export default function page() {
         }
         try {
             await uploadImage(renamedFile, "orders");
+            setFileName(newFile.name);
         } catch (err) {
             toast.error("Error uploading image. Please try again.");
         }
@@ -128,12 +120,30 @@ export default function page() {
 
     const handleUPIPaymentClick = () => {
         window.location.href = generateUPIPaymentUrl(total);
-      };
+    };
 
+    const handleCancelFile = () => setFileName("");
+
+    const handlePlaceOrder = async () => {
+        try {
+            if (imageUrl && fileName) {
+                try {
+                    handleCheckout(imageUrl)
+                } catch (error) {
+                    console.log(error.message)
+                }
+            } else {
+                toast.error("Please upload the payment proof", { id: "order" })
+            }
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     return (
         <section className="min-h-[calc(100vh_-_60px)] bg-[#F6F7FA] pb-20">
-            <header className="bg-white rounded-b-2xl overflow-hidden shadow-lg p-1 sticky top-0"  >
+            <header className="bg-white rounded-b-2xl overflow-hidden shadow-lg p-1 sticky top-0" style={{ boxShadow: "0px 1px 13px 0px #0000002B" }} >
                 <div className="flex items-center px-5 py-3 pt-16 ">
                     <Link href={"/cart"}>
                         <ChevronLeft size={24} className="text-[#292C35] cursor-pointer" />
@@ -145,57 +155,102 @@ export default function page() {
                     <p className="font-lato  text-[#379674] text-sm">Your are just 2 steps away from placing order </p>
                 </div>
             </header>
-            <main className="px-5 w-full">
-                <h2 className=" border border-[#CECECE] bg-white mt-10 font-lato text-base rounded-2xl py-3 px-5" style={{ boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.14)" }}>
-                    ⛳  Step (1/2)
-                </h2>
+            <main className="w-full pr-8 pl-6 ">
+                <div className="mt-16 border-l  border-[#999999] relative ">
+                    <div className="absolute -top-2 -left-4 p-2 flex items-center outline outline-4 outline-[#F6F7FA] justify-center border-primary border rounded-full bg-[#EFE2E5] aspect-square w-8 h-8 text-primary">
+                        <p> 1</p>
+                    </div>
+                    <div className="relative -top-1 left-6 pr-3">
+                        <div className="flex items-center justify-between">
+                            <p className="font-raleway text-base font-semibold "> Make Payment </p>
+                            <div onClick={() => setActiveStep(0)} className="flex items-center space-x-2 cursor-pointer">
+                                <p className="text-primary underline text-xs truncate">Show payment details</p>
+                                <Image src={"/icons/horizontalTriangle.svg"} className="-rotate-90" alt="triangle" width={6} height={6} />
+                            </div>
+                        </div>
+                        <div className={` transition-all duration-300 ease-linear overflow-hidden ${activeStep == 0 ? "h-fit" : "h-0 "}`}>
+                            <div className="border-b cursor-pointer flex justify-between font-lato font-bold items-center text-sm mt-10 ">
+                                <p onClick={() => setActiveTab(0)} className={` py-2 cursor-pointer   ${activeTab == 0 ? "text-primary border-b border-primary" : ""}`}>Pay using UPI</p>
+                                <p onClick={() => setActiveTab(1)} className={` py-2 ${activeTab == 1 ? "text-primary border-primary border-b" : ""}`}>Pay Using QR Code</p>
+                            </div>
+                            <div onClick={handleUPIPaymentClick} className={`mt-12 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-4 rounded-lg border ${activeTab == 0 ? "block" : "hidden"}`}>
+                                <p className=" text-primary font-lato text-base">Pay ( Rs {total}) using UPI</p>
+                                <Image src={"/icons/rightTriangle.svg"} width={8} height={8} alt="go" />
+                            </div>
+                            <div className={`mx-auto space-y-5 mt-8 pb-4 ${activeTab == 1 ? "block" : "hidden"}`}>
+                                <p className=" text-primary font-lato text-base text-center">Pay ( Rs {total}) using UPI</p>
+                                <QRCode
+                                    className="mx-auto rounded-lg"
+                                    value={generateUPIPaymentUrl(total)}
+                                    size={192}
+                                    level="H"
+                                    renderAs={"png"}
+                                    bgColor="#F6F7FA"
+                                    imageSettings={{
+                                        src: "/icons/tlk.png",
+                                        height: 60,
+                                        width: 60,
+                                        excavate: true,
+                                    }}
+                                />
+                            </div>
+                            <button onClick={() => setActiveStep(1)} className="text-primary text-base flex items-center space-x-1 mt-10">
+                                <p>  Continue</p>
+                                <Image src={"/icons/horizontalTriangle.svg"} alt="triangle" width={6} height={6} />
 
-                <div onClick={ handleUPIPaymentClick} className="mt-16 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-2 rounded-lg border">
-                    <p className=" text-primary font-lato text-base">Pay ( Rs {total}) using UPI</p>
-                    <Image src={"/icons/rightTriangle.svg"} width={8} height={8} alt="go" />
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                <div className="py-5 pb-6 border-l border-[#999999] relative ">
+                    <div className="absolute top-10 -left-4 p-2 flex items-center outline outline-4 outline-[#F6F7FA] justify-center border-primary border rounded-full bg-[#EFE2E5] aspect-square w-8 h-8 text-primary">
+                        <p> 2</p>
+                    </div>
+                    <div className="relative top-6 left-6 pr-3">
+                        <div className="flex items-center justify-between">
+                            <p className="font-raleway text-base font-semibold "> Upload Screenshot </p>
+                        </div>
+                        <div className={`overflow-hidden  ${activeStep == 1 ? "h-full" : "h-0"}`}>
+                            {!fileName ? <>
+                                <button
+                                    style={{ boxShadow: "0px 0px 40px 0px #00000021" }}
+                                    onClick={handleUp}
+                                    className="flex border items-center py-2 rounded-md mx-auto my-8 px-5 bg-white space-x-2"
+                                >
+                                    <Upload size={24} className="text-primary font-lato " />
+                                    <p className="text-primary">Upload payment proof</p>
+                                </button>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={fileInputRef}
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                />
+                            </> : <div
+                                className="flex border items-center py-2 rounded-md mx-auto w-fit my-8 px-5 bg-white space-x-2"
+                            >
+                                <Photo size={24} className="text-primary font-lato " />
+                                <div className="flex items-center space-x-2 divide-x-[0.5px] divide-[#555555]">
+                                    <p className="text-primary capitalize max-w-[100px] overflow-hidden overflow-ellipsis">{fileName}</p>
+                                    <div className="pl-2" onClick={handleCancelFile}>
+                                        <X size={20} className="text-[#555555] cursor-pointer " />
+                                    </div>
 
-                <div className="mx-auto my-8 flex items-center text-gray-500 space-x-2 ">
-                    <div className=" border-b border-[#AAA] flex-1" />
-                    <p className="font-lato text-base text-[#AAA]">OR</p>
-                    <div className="border-b border-[#AAA] flex-1" />
-                </div>
-                <div className=" mx-auto space-y-5">
-                    <p className=" text-primary font-lato text-base text-center">Pay ( Rs {total}) using UPI</p>
-                    <QRCode
-                        className="mx-auto rounded-lg"
-                        value={generateUPIPaymentUrl(total)}
-                        size={192}
-                        level="H"
-                        renderAs={"png"}
-                        bgColor="#F6F7FA"
-                        imageSettings={{
-                            src: "/icons/tlk.png",
-                            height: 60,
-                            width: 60,
-                            excavate: true,
-                        }}
-                    />
+                                </div>
 
+                            </div>}
+
+                        </div>
+
+
+                    </div>
                 </div>
-                <h2 className="mt-16 border border-[#CECECE] bg-white  font-lato text-base rounded-2xl py-3 px-5" style={{ boxShadow: "0px 0px 14px 0px rgba(0, 0, 0, 0.14)" }}>
-                    ⛳  Step (2/2)
-                </h2>
-                <button
-                    onClick={handleUp}
-                    className="flex items-center py-2 rounded-md mx-auto mt-16 px-5 bg-[#2A70FA] space-x-2"
-                >
-                    <Upload size={24} className="text-white" />
-                    <p className="text-white">Upload</p>
-                </button>
-                <input
-                    type="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                    className="hidden"
-                />
             </main>
+            <footer>
+                <button onClick={handlePlaceOrder} className="fixed bottom-0 left-0 right-0 rounded-t-xl z-50 bg-primary text-white w-full py-5 font-lato text-lg">Place My order</button>
+            </footer>
         </section>
     )
 }
+

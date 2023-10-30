@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { calculateDeliveryFee, calculateGST, roundWithPrecision } from "@/app/utils/delivery";
+import { DELIVERYFEE } from "../utils/constants";
 
 const initialState = {
     items: [],
     subTotal: 0,
     discount: 0,
-    deliveryFee: 0,
+    deliveryFee: DELIVERYFEE,
     tax: 0,
-    donation: 0,
+    donation: 5,
     platformFee: 3,
     restaurantCharges: 20,
     gst: 0,
@@ -105,7 +106,7 @@ export const cartSlice = createSlice({
         clearCart: (state) => {
             state.items = [];
             state.subTotal = 0;
-            state.deliveryFee = 0;
+            state.deliveryFee = DELIVERYFEE;
             state.discount = 0;
             state.tax = 0;
             state.donation = 0;
@@ -134,12 +135,21 @@ export const cartSlice = createSlice({
         },
         setCookingReqText: (state, action) => {
             state.cookingReqText = action.payload;
+        },
+        toggleDonation: (state) => {
+            if (state.donation) {
+                state.donation = 0;
+            } else {
+                state.donation = 5;
+            }
+            state.total = state.totalWithoutDiscount - state.discount + state.donation;
+
         }
 
     },
 });
 
-export const { toggleItemWithDelta, setConfessionText, setCookingReqText, setSelectedAddress, updateItemQuantity, clearCart, setCouponDetails } =
+export const { toggleItemWithDelta, toggleDonation, setConfessionText, setCookingReqText, setSelectedAddress, updateItemQuantity, clearCart, setCouponDetails } =
     cartSlice.actions;
 export default cartSlice.reducer;
 export const selectCartItems = (state) => state.cart.items;
@@ -154,3 +164,4 @@ export const selectCoupon = (state) => state.cart.coupon;
 export const selectSelectedAddress = (state) => state.cart.selectedAddress;
 export const selectCookingReqText = (state) => state.cart.cookingReqText;
 export const selectConfessionText = (state) => state.cart.confessionText;
+export const selectDonation = (state) => state.cart.donation;
