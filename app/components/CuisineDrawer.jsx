@@ -33,6 +33,8 @@ function CuisineDrawer() {
     if (tab && item) {
       getItem();
       setOpenDrawer(true);
+    } else {
+      setCraftedCuisine({});
     }
   }, [tab, item]);
 
@@ -49,7 +51,7 @@ function CuisineDrawer() {
         className={`rounded-t-lg bottom-0 fixed overflow-hidden z-[99999] self-end h-full w-full flex flex-col flex-1 bg-[#F6F6F6] overflow-y-scroll no-scrollbar  transition-all  ${openDrawer ? " translate-y-0" : " translate-y-full"
           }`}
       >
-        <DrawerCuisine cuisine={cuisine} craftedCuisine={craftedCuisine} setCraftedCuisine={setCraftedCuisine} restaurantId={params.id} tabId={tab} itemId={item} />
+        <DrawerCuisine cuisine={cuisine} craftedCuisine={craftedCuisine} setCraftedCuisine={setCraftedCuisine} restaurantId={params.id} tabId={tab} itemId={item} drawerStatus={openDrawer} />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import {
   Plus,
   PlusCircle,
 } from "lucide-react";
-import { memo, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import love from "../../public/icons/love.svg";
 import watch from "../../public/icons/watch.svg";
 import cute from "../../public/icons/cute.svg";
@@ -27,7 +27,7 @@ import {
   selectDeliveryFee,
 } from "../store/cartSlice";
 
-import PaymentDrawer from "../components/PaymentDrawer";
+// import PaymentDrawer from "../components/PaymentDrawer";
 import toast from "react-hot-toast";
 
 import { roundWithPrecision } from "../utils/delivery";
@@ -72,7 +72,6 @@ const page = () => {
 
   const handleCheckout = async () => {
     toast.loading("Processing...", { id: "order" })
-    // setOpenPaymentDrawer(true)
     if (!cartItems?.length) return toast.error("No items added", { id: "order" })
     if (isConfession && !confessionText) return toast.error("Please add a confession", { id: "order" })
     if (!selectedAddress) return toast.error("Please select an address", { id: 'order' })
@@ -87,7 +86,6 @@ const page = () => {
 
   useEffect(() => {
     const getCoupons = async () => {
-      //get coupons with same userId or if userId is null or empty string or undefined of serverside field then get coupons with userId as null from firebase v9 collection name coupons
       const couponsRef = collection(DB, "coupons")
       const q = query(couponsRef, where("userId", "in", [userId, ""]));
       const querySnapshot = await getDocs(q)
@@ -518,10 +516,10 @@ const page = () => {
         </footer>
       </div>
       <AddressOverlay openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
-      <PaymentDrawer
+      {/* <PaymentDrawer
         openDrawer={openPaymentDrawer}
         setOpenDrawer={setOpenPaymentDrawer}
-      />
+      /> */}
     </>
   );
 };

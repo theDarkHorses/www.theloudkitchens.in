@@ -17,6 +17,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
 import { PENDING } from "../utils/constants";
 import { useRouter } from "next/navigation";
+import { roundWithPrecision } from "../utils/delivery";
 
 
 export default function page() {
@@ -174,11 +175,11 @@ export default function page() {
                                 <p onClick={() => setActiveTab(1)} className={` py-2 ${activeTab == 1 ? "text-primary border-primary border-b" : ""}`}>Pay Using QR Code</p>
                             </div>
                             <div onClick={handleUPIPaymentClick} className={`mt-12 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-4 rounded-lg border ${activeTab == 0 ? "block" : "hidden"}`}>
-                                <p className=" text-primary font-lato text-base">Pay ( Rs {total}) using UPI</p>
+                                <p className=" text-primary font-lato text-base">Pay ( Rs {roundWithPrecision(total)}) using UPI</p>
                                 <Image src={"/icons/rightTriangle.svg"} width={8} height={8} alt="go" />
                             </div>
                             <div className={`mx-auto space-y-5 mt-8 pb-4 ${activeTab == 1 ? "block" : "hidden"}`}>
-                                <p className=" text-primary font-lato text-base text-center">Pay ( Rs {total}) using UPI</p>
+                                <p className=" text-primary font-lato text-base text-center">Pay ( Rs {roundWithPrecision(total)}) using UPI</p>
                                 <QRCode
                                     className="mx-auto rounded-lg"
                                     value={generateUPIPaymentUrl(total)}

@@ -7,9 +7,10 @@ import { toggleItemWithDelta } from "../store/cartSlice";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { v4 as uuid } from "uuid"
+import { createArray } from "../utils/restaurant";
 
 
-export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisine, restaurantId, tabId, itemId }) {
+export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisine, restaurantId, tabId, itemId, drawerStatus }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [uid] = useState(uuid())
     const router = useRouter()
@@ -104,13 +105,34 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
     };
 
     useEffect(() => {
+        if (drawerStatus) {
+            // using a loop set the craftedCuisine if the category of the cusiine is required and the craftedCuisine is empty
+            const newCraftedCuisine = {}
+            cuisine?.categories?.forEach((category, categoryIndex) => {
+                if (category.isRequired) {
+                    // create a circular loop of the required items if while traversing the category the no of items is less than the required items then start from the beginning and increment the quantity of the items
+                    const items = createArray(category.requiredItems)
+                    newCraftedCuisine[categoryIndex] = {}
+                    items.forEach((item, itemIndex) => {
+                        const circularIndex = (itemIndex + category?.items?.length) % category?.items?.length
+                        if (itemIndex < category?.items?.length) {
+                            newCraftedCuisine[categoryIndex][circularIndex] = { quantity: 1, item: cuisine?.categories?.[categoryIndex]?.items?.[circularIndex] }
+                        } else {
+                            const againItem = newCraftedCuisine[categoryIndex][circularIndex]
+                            newCraftedCuisine[categoryIndex][circularIndex] = { quantity: againItem.quantity + 1, item: againItem.item }
 
-        
+                        }
+                    }
 
-        return () => {
-            setCraftedCuisine({})
+                    );
+                }
+            }
+            );
+            setCraftedCuisine({ ...craftedCuisine, ...newCraftedCuisine })
         }
-    }, [])
+
+    }, [drawerStatus, cuisine])
+
 
     return (
         <Fragment>
