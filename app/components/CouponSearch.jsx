@@ -9,11 +9,14 @@ import Link from "next/link"
 import { doc, getDoc } from "firebase/firestore"
 import { DB } from "../firebaseConfig"
 import { useState } from "react"
+import { useAuth } from "@clerk/nextjs"
+import { times } from "lodash"
 
 export default function CouponSearch() {
     const totalWithoutDiscount = useSelector(selectTotalWithoutDiscount)
     const [coupon, setCoupon] = useState("")
     const router = useRouter()
+    const { userId: idOfUser } = useAuth()
     const dispatch = useDispatch()
 
     if (!totalWithoutDiscount) {
@@ -38,10 +41,27 @@ export default function CouponSearch() {
             if (!(fetchedCoupon).exists()) {
                 return toast.error("Invalid Coupon", { id: "coupon" })
             }
-            const { discountPercent, maxDiscountValue, minCartValue, validTill, validity } = fetchedCoupon.data()
-            dispatch(setCouponDetails({ id: coupon, discountPercent, maxDiscountValue, minCartValue, validTill, validity }))
-            toast.success("Coupon applied successfully", { id: "coupon" })
-            return router.push("/cart")
+            const { discountPercent, maxDiscountValue, minCartValue, validTill, validity, userId } = fetchedCoupon.data()
+
+
+            if (userId && userId !== idOfUser) {
+                return toast.error("Coupon not applicable for this user", { id: "coupon" })
+            }
+
+            if (!validity) {
+                return toast.error("Coupon expired", { id: "coupon" })
+            }
+
+            if(validTill && validTill.toMillis() < Date.now()) {
+                return toast.error("Coupon expired", { id: "coupon" })
+            }
+            if (totalWithoutDiscount < minCartValue) {
+                return toast.error("Coupon not applicable to cart value less than ₹" + minCartValue, { id: "coupon" })
+            }
+            dispatch(setCouponDetails({ id: coupon, discountPercent, maxDiscountValue, minCartValue, validTill, validity, userId }))
+            toast.success("Coupon applied", { id: "coupon" })
+            router.push("/cart")
+
         }
         catch (error) {
             console.log(error.message)

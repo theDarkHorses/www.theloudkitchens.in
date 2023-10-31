@@ -29,3 +29,17 @@ export default function Page() {
     </div>
   );
 }
+
+{/* <div className="min-h-[calc(100vh_-_62px)] px-5 bg-white">
+      <div className="flex">
+        <div className=" flex-[calc(1/3)]">
+          dsalfja
+        </div>
+        <div className=" flex-[calc(1/3)]">
+          aslkdfjls
+        </div>
+        <div className="flex-[calc(1/3)]">
+          laksdjfl
+        </div>
+      </div>
+    </div> */}

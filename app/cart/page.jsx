@@ -7,7 +7,7 @@ import {
   Plus,
   PlusCircle,
 } from "lucide-react";
-import { memo, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import love from "../../public/icons/love.svg";
 import watch from "../../public/icons/watch.svg";
 import cute from "../../public/icons/cute.svg";
@@ -16,7 +16,7 @@ import bill from "../../public/icons/bill.svg";
 
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCartItems, selectConfessionText, setCookingReqText, selectDonation, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity, toggleDonation } from "../store/cartSlice";
+import { selectCartItems, selectConfessionText, setCookingReqText, selectDonation, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity, toggleDonation, selectCoupon, setCouponDetails } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
 import {
@@ -33,6 +33,9 @@ import toast from "react-hot-toast";
 import { roundWithPrecision } from "../utils/delivery";
 import { useRouter } from "next/navigation";
 import { DELIVERYFEE } from "../utils/constants";
+import { useAuth } from "@clerk/nextjs";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { DB } from "../firebaseConfig";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -53,6 +56,8 @@ const page = () => {
   const confessionText = useSelector(selectConfessionText)
   const cookingReqText = useSelector(selectCookingReqText)
   const donation = useSelector(selectDonation)
+  const { userId } = useAuth()
+  const [coupons, setCoupons] = useState([])
 
 
   const handleShowMore = (index) => {
@@ -79,6 +84,41 @@ const page = () => {
     return cartItems.map(item => Object.values(item.selectedItems).map(item => Object.values(item)).flat())
   }, [cartItems])
 
+
+  useEffect(() => {
+    const getCoupons = async () => {
+      //get coupons with same userId or if userId is null or empty string or undefined of serverside field then get coupons with userId as null from firebase v9 collection name coupons
+      const couponsRef = collection(DB, "coupons")
+      const q = query(couponsRef, where("userId", "in", [userId, ""]));
+      const querySnapshot = await getDocs(q)
+      setCoupons(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+    }
+
+    getCoupons()
+  }, [])
+
+
+  const handleApplyCoupon = (couponId) => {
+    try {
+      toast.loading("Applying coupon...", { id: "coupon" })
+      const coupon = coupons.find(coupon => coupon.id === couponId)
+      if (!coupon.validity) {
+        return toast.error("Coupon expired", { id: "coupon" })
+      }
+
+      if (coupon.validTill && coupon.validTill.toMillis() < Date.now()) {
+        return toast.error("Coupon expired", { id: "coupon" })
+      }
+      if (totalWithoutDiscount < coupon.minCartValue) {
+        return toast.error("Coupon not applicable to cart value less than ₹" + minCartValue, { id: "coupon" })
+      }
+      dispatch(setCouponDetails({ ...coupon, userId }))
+      toast.success("Coupon applied", { id: "coupon" })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -246,7 +286,7 @@ const page = () => {
             )}
             <Link href="/" className="flex items-center justify-between pl-5 py-4 ">
               <div
-                
+
                 className="font-lato text-sm font-bold text-[#444]"
               >
                 Add more items
@@ -292,7 +332,11 @@ const page = () => {
             </h3>
           </div>
           <div className="bg-white rounded-lg shadow-lg shadow-gray-300 mx-2 overflow-hidden">
-            <div className="flex items-start justify-between pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
+            {!coupons ? <div className="py-4 border-[#BABABA] border-dashed border-b-[1px]">
+              <h3 className="font-lato text-sm font-bold text-[#444] text-center ">
+                No coupons available
+              </h3>
+            </div> : coupons.map(coupon => <div key={coupon.id} className="flex items-start justify-between pl-5 py-4 border-[#BABABA] border-dashed border-b-[1px] ">
               <div className="flex space-x-2">
                 <Image
                   src={offer}
@@ -303,17 +347,18 @@ const page = () => {
                 />
                 <div className="flex flex-col">
                   <h3 className="font-lato text-sm font-bold text-[#444]">
-                    Add more items
+                    {coupon.discountPercent}% off on min order value of ₹{coupon.minCartValue}
                   </h3>
                   <p className="text-[#9BA1C1] font-raleway text-xs font-medium">
-                    Code: PKMKB
+                    Code: {coupon.id}
                   </p>
                 </div>
               </div>
-              <div className="text-primary font-raleway text-xs font-medium mr-6">
+              <div className="text-primary font-raleway text-xs font-medium mr-6 cursor-pointer" onClick={() => handleApplyCoupon(coupon.id)}>
                 Apply
               </div>
-            </div>
+            </div>)}
+
             <Link
               href="/coupons"
               className="flex justify-center items-center py-2 font-lato text-xs text-[#707070] "
