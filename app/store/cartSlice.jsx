@@ -159,7 +159,7 @@ export const cartSlice = createSlice({
                 state.donation = 5;
             }
             state.total = state.totalWithoutDiscount - state.discount + state.donation;
-
+            if (state.items.length === 0) state.total = 0;
         }
 
     },
