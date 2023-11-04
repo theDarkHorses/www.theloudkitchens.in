@@ -41,28 +41,30 @@ export default function page() {
     const [activeStep, setActiveStep] = useState(0)
 
 
+    const canPay = fileName && imageUrl &&
 
-    useEffect(() => {
-        toast.loading("Processing...", { id: "order" });
 
-        const verifyPayment = () => {
-            if (!cartItems?.length) {
-                toast.error("No items added", { id: "order" })
-                return router.replace("/cart")
-            }
-            if (!selectedAddress) {
-                toast.error("Please select an address", { id: 'order' })
-                return router.replace("/cart")
-            }
-            if (totalWithoutDiscount < MINORDERVALUE) {
-                toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
-                return router.replace("/cart")
-            }
-        }
-        verifyPayment()
+        useEffect(() => {
+            toast.loading("Processing...", { id: "order" });
 
-        return () => toast.dismiss("order");
-    }, []);
+            const verifyPayment = () => {
+                if (!cartItems?.length) {
+                    toast.error("No items added", { id: "order" })
+                    return router.replace("/cart")
+                }
+                if (!selectedAddress) {
+                    toast.error("Please select an address", { id: 'order' })
+                    return router.replace("/cart")
+                }
+                if (totalWithoutDiscount < MINORDERVALUE) {
+                    toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
+                    return router.replace("/cart")
+                }
+            }
+            verifyPayment()
+
+            return () => toast.dismiss("order");
+        }, []);
 
 
     const handleUp = () => {
@@ -182,7 +184,7 @@ export default function page() {
                                 <p onClick={() => setActiveTab(0)} className={` py-2 cursor-pointer   ${activeTab == 0 ? "text-primary border-b border-primary" : ""}`}>Pay using UPI</p>
                                 <p onClick={() => setActiveTab(1)} className={` py-2 ${activeTab == 1 ? "text-primary border-primary border-b" : ""}`}>Pay Using QR Code</p>
                             </div>
-                            <div onClick={handleUPIPaymentClick} className={`mt-12 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-4 rounded-lg border ${activeTab == 0 ? "block" : "hidden"}`}>
+                            <div onClick={handleUPIPaymentClick} style={{ boxShadow: "0px 0px 20px 0px #AC232340" }} className={`mt-12 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-4 rounded-lg border ${activeTab == 0 ? "block" : "hidden"}`}>
                                 <p className=" text-primary font-lato text-base">Pay ( Rs {roundWithPrecision(total)}) using UPI</p>
                                 <Image src={"/icons/rightTriangle.svg"} width={8} height={8} alt="go" />
                             </div>
@@ -257,7 +259,7 @@ export default function page() {
                 </div>
             </main>
             <footer>
-                <button onClick={handlePlaceOrder} className="fixed bottom-0 left-0 right-0 rounded-t-xl z-50 bg-primary text-white w-full py-5 font-lato text-lg">Place My order</button>
+                <button onClick={handlePlaceOrder} className={`fixed bottom-0 left-0 right-0 rounded-t-xl z-50  ${canPay ? "bg-primary" : "bg-[#757575]"} text-white w-full py-5 font-lato text-lg`}>Place My order</button>
             </footer>
         </section>
     )
