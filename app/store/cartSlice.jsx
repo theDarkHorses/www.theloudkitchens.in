@@ -22,6 +22,7 @@ const initialState = {
         minCartValue: 0,
         validTill: null,
         validity: 0,
+        userId: "",
     },
     cookingReqText: "",
     confessionText: "",
@@ -117,6 +118,15 @@ export const cartSlice = createSlice({
             state.totalWithoutDiscount = 0;
             state.confessionText = "";
             state.cookingReqText = "";
+            state.coupon = {
+                id: null,
+                discountPercent: 0,
+                maxDiscountValue: 0,
+                minCartValue: 0,
+                validTill: null,
+                validity: 0,
+                userId: "",
+            };
         },
         setCouponDetails: (state, action) => {
             state.coupon = action.payload;

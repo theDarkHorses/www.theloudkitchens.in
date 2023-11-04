@@ -8,6 +8,7 @@ import { memo, useEffect, useState } from "react"
 import { DB } from "../firebaseConfig";
 import { useDispatch } from "react-redux";
 import { setSelectedAddress } from "../store/cartSlice";
+import toast from "react-hot-toast";
 
 function AddressOverlay({ openDrawer, setOpenDrawer }) {
   const [address, setAddress] = useState([]);
@@ -30,7 +31,7 @@ function AddressOverlay({ openDrawer, setOpenDrawer }) {
       console.error("Error fetching addresses:", error);
     }
   }, []);
-  
+
   useEffect(() => {
     try {
       const userCollectionRef = doc(DB, "users", userId);
@@ -47,12 +48,16 @@ function AddressOverlay({ openDrawer, setOpenDrawer }) {
 
   const handleSetSelectedAddress = async (address) => {
     try {
+      toast.loading("Setting address...", { id: "set-address" })
       const userCollectionRef = doc(DB, "users", userId);
       await setDoc(userCollectionRef, { selectedAddress: address }, { merge: true });
       dispatch(setSelectedAddress(address))
       console.log("Address set successfully");
+      toast.success("Address set successfully", { id: "set-address" })
+      setOpenDrawer(false)
     } catch (err) {
       console.log(err.message)
+      toast.error("Something went wrong", { id: "set-address" })
     }
   }
 
@@ -96,7 +101,7 @@ function AddressOverlay({ openDrawer, setOpenDrawer }) {
             </div>
           ))}
           <Link
-            href="/address/new"
+            href="/address/new?from=cart"
             className="flex items-center  pb-4 pt-6 justify-between"
           >
             <div className="items-center flex space-x-2">

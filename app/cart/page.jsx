@@ -32,7 +32,7 @@ import toast from "react-hot-toast";
 
 import { roundWithPrecision } from "../utils/delivery";
 import { useRouter } from "next/navigation";
-import { DELIVERYFEE } from "../utils/constants";
+import { DELIVERYFEE, MINORDERVALUE } from "../utils/constants";
 import { useAuth } from "@clerk/nextjs";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
@@ -58,6 +58,7 @@ const page = () => {
   const donation = useSelector(selectDonation)
   const { userId } = useAuth()
   const [coupons, setCoupons] = useState([])
+  const appliedCoupon = useSelector(selectCoupon)
 
 
   const handleShowMore = (index) => {
@@ -75,7 +76,7 @@ const page = () => {
     if (!cartItems?.length) return toast.error("No items added", { id: "order" })
     if (isConfession && !confessionText) return toast.error("Please add a confession", { id: "order" })
     if (!selectedAddress) return toast.error("Please select an address", { id: 'order' })
-    if (totalWithoutDiscount < 200) return toast.error("Minimum order value is ₹200", { id: "order" })
+    if (totalWithoutDiscount < MINORDERVALUE) return toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
     router.push("/payment")
   }
 
@@ -117,6 +118,7 @@ const page = () => {
       console.log(error)
     }
   }
+
 
   return (
     <>
@@ -353,7 +355,7 @@ const page = () => {
                 </div>
               </div>
               <div className="text-primary font-raleway text-xs font-medium mr-6 cursor-pointer" onClick={() => handleApplyCoupon(coupon.id)}>
-                Apply
+                {appliedCoupon.id != coupon.id ? "Apply" : "Applied"}
               </div>
             </div>)}
 
@@ -365,16 +367,18 @@ const page = () => {
               <ChevronRight size={12} className="self-center" />
             </Link>
           </div>
-          <div className="relative rounded-2xl overflow-hidden mx-2 mt-16 ">
+          <div className="relative rounded-2xl overflow-hidden mx-2 mt-16 " >
             <Image src={"/banner/ind.webp"} width={358} height={129.74} className="rounded-2xl brightness-75 w-full absolute object-cover object-center" alt="banner" />
-            <div className="flex items-start relative z-50 text-white px-3 py-4 justify-between gap-2">
+            <div onClick={(e) => {
+              dispatch(toggleDonation())
+            }} className="flex items-start relative z-50 text-white px-3 py-4 justify-between gap-2">
               <div className="">
                 <h1 className="font-bold text-lg drop-shadow-2xl leading-none"><span className="drop-shadow-2xl">Support  #</span><span className="text-[#ff6400] drop-shadow-2xl inline">Bharat</span>Ke<span className="text-[#00d400] drop-shadow-2xl inline">Veer</span> with us</h1>
                 <p className="font-medium text-sm drop-shadow-2xl mt-2">We will match your contribution to our bharat ke veer</p>
                 <p className="font-medium mt-5 text-sm underline flex items-center">Learn More <ChevronRight size={16} /></p>
               </div>
               <div className="flex flex-col">
-                <input className="accent-primary" type="checkbox" checked={donation} onChange={(e) => dispatch(toggleDonation(e.target.checked))} size={20} />
+                <input className="accent-primary" type="checkbox" checked={donation} onChange={(e) => null} size={20} />
                 <p className="font-lato text-base font-semibold mt-1">₹5</p>
               </div>
             </div>

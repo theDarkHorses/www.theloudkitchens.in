@@ -83,6 +83,7 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
     }, [craftedCuisine]);
 
     const handleAddToBasket = () => {
+        toast.loading("Adding to basket...", { id: "add-to-basket" })
         let canProceed = true;
         cuisine?.categories?.forEach((category, categoryIndex) => {
             if (category.isRequired) {
@@ -97,9 +98,10 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
             dispatch(toggleItemWithDelta({ id: uid, item: cuisine, delta: 1, selectedItems: craftedCuisine, totalCost: getTotalCost, restaurantId, tabId, itemId }))
             setActiveIndex(0)
             setCraftedCuisine({})
+            toast.success("Added to basket", { id: "add-to-basket" })
             router.push("/cart")
         } else {
-            toast.error("Please select all required items of all the required categories.")
+            toast.error("Please select min no. of items indicated in the brackets.", { id: "add-to-basket" })
         }
 
     };
@@ -209,7 +211,14 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
                                     </label>
                                 </div>
                             </div>
-                            <div className={`${craftedCuisine?.[activeIndex]?.[index] ? "bg-[#ac232320] text-primary" : "bg-[#F8F8F8] text-gray-600"} text-sm flex items-center  rounded-lg gap-1 px-2 py-1 space-x-2`}>
+                            <div
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    if (!craftedCuisine?.[activeIndex]?.[index]?.quantity) {
+                                        handleCheckbox(true, activeIndex, index, item)
+                                    }
+                                }}
+                                className={`${craftedCuisine?.[activeIndex]?.[index] ? "bg-[#ac232320] text-primary" : "bg-[#F8F8F8] text-gray-600"} text-sm flex items-center  rounded-lg gap-1 px-2 py-1 space-x-2`}>
                                 <Minus size={14} className="cursor-pointer" onClick={() => handleQuantity(activeIndex, index, -1)} />
                                 <p className="font-lato font-normal text-xl ">
                                     {craftedCuisine[activeIndex]?.[index]?.quantity || 0}

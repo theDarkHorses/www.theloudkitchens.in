@@ -5,7 +5,7 @@ import { useAuth } from "@clerk/nextjs";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { v4 as uuid } from "uuid"
@@ -16,11 +16,14 @@ const locationOptions = ["home", "hostel", "work", "other"];
 
 
 export default function page() {
+  const searchParams = useSearchParams()
+  const from = searchParams.get("from")
   const router = useRouter()
   const { userId } = useAuth()
   const [orderFor, setOrderFor] = useState(orderForOptions[0]);
   const [location, setLocation] = useState(locationOptions[0]);
   const [address, setAddress] = useState({ name: "", address: "", landmark: "", birthday: "", orderFor: "", location: "" });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -40,7 +43,11 @@ export default function page() {
       console.log(err.message)
       toast.error("Something went wrong", { id: "address" })
     }
-    router.push("/address")
+    if (from == "cart") {
+      router.push("/cart")
+    } else {
+      router.push("/address")
+    }
   }
   return (
     <section className="h-[calc(100vh_-_64px)] no-scrollbar px-4 bg-[#F5F6FB] w-full overflow-hidden overflow-y-scroll py-8">

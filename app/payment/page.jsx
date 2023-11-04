@@ -15,7 +15,7 @@ import { clearCart } from "../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux"
 import { addDoc, collection } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
-import { PENDING } from "../utils/constants";
+import { MINORDERVALUE, PENDING } from "../utils/constants";
 import { useRouter } from "next/navigation";
 import { roundWithPrecision } from "../utils/delivery";
 
@@ -46,8 +46,16 @@ export default function page() {
         toast.loading("Processing...", { id: "order" });
 
         const verifyPayment = () => {
-            if (!cartItems?.length || totalWithoutDiscount < 200 || !selectedAddress) {
+            if (!cartItems?.length) {
                 toast.error("No items added", { id: "order" })
+                return router.replace("/cart")
+            }
+            if (!selectedAddress) {
+                toast.error("Please select an address", { id: 'order' })
+                return router.replace("/cart")
+            }
+            if (totalWithoutDiscount < MINORDERVALUE) {
+                toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
                 return router.replace("/cart")
             }
         }
@@ -254,4 +262,3 @@ export default function page() {
         </section>
     )
 }
-
