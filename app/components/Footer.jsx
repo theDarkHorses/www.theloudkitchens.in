@@ -53,7 +53,7 @@ export default function Footer() {
                 {navLinks.map(item =>
                     <Link href={item.pathName} key={item.pathName} className={`flex-1 border-primary gap-2 flex flex-col relative items-center justify-center h-full ${pathName == item.pathName ? "border-t-2" : "border-t-0"} `}>
                         {/* <span class="inline-block w-2 h-2 absolute right-0 top-0 bg-red-600 rounded-full" /> */}
-                        {items.length > 0 && item.pathName == "/cart" && <span className="absolute top-0 right-0 w-4 h-4 bg-red-600 rounded-full text-xs text-white flex items-center justify-center">{items.length}</span>}
+                        {items.length > 0 && item.pathName == "/cart" && <span className="absolute top-1 right-3 w-4 h-4 bg-red-600 rounded-full text-xs text-white flex items-center justify-center">{items.length}</span>}
                         <Image alt="navigation items" src={pathName == item.pathName ? item.activeIcon : item.icon} width={20} height={20} className="w-5 h-5 aspect-square" />
                         <p className={`capitalize text-yash  font-raleway ${pathName == item.pathName ? "text-primary font-semibold" : "text-text"}`}>{item.label}</p>
                     </Link>

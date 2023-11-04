@@ -41,30 +41,30 @@ export default function page() {
     const [activeStep, setActiveStep] = useState(0)
 
 
-    const canPay = fileName && imageUrl &&
+    const canPay = fileName && imageUrl
 
 
-        useEffect(() => {
-            toast.loading("Processing...", { id: "order" });
+    useEffect(() => {
+        toast.loading("Processing...", { id: "order" });
 
-            const verifyPayment = () => {
-                if (!cartItems?.length) {
-                    toast.error("No items added", { id: "order" })
-                    return router.replace("/cart")
-                }
-                if (!selectedAddress) {
-                    toast.error("Please select an address", { id: 'order' })
-                    return router.replace("/cart")
-                }
-                if (totalWithoutDiscount < MINORDERVALUE) {
-                    toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
-                    return router.replace("/cart")
-                }
+        const verifyPayment = () => {
+            if (!cartItems?.length) {
+                toast.error("No items added", { id: "order" })
+                return router.replace("/cart")
             }
-            verifyPayment()
+            if (!selectedAddress) {
+                toast.error("Please select an address", { id: 'order' })
+                return router.replace("/cart")
+            }
+            if (totalWithoutDiscount < MINORDERVALUE) {
+                toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
+                return router.replace("/cart")
+            }
+        }
+        verifyPayment()
 
-            return () => toast.dismiss("order");
-        }, []);
+        return () => toast.dismiss("order");
+    }, []);
 
 
     const handleUp = () => {
@@ -94,6 +94,8 @@ export default function page() {
         if (totalWithoutDiscount < 200) return toast.error("Minimum order value is ₹200", { id: "order" })
         if (!paymentProofUrl) return toast.error("Please upload the payment proof", { id: "order" })
         try {
+            const controller = new AbortController();
+            const { signal } = controller;
             await addDoc(collection(DB, "orders"), {
                 items: cartItems,
                 cookingReqText: cookingReqText,
@@ -117,10 +119,11 @@ export default function page() {
                 },
                 paymentProofUrl
             })
+            signal.aborted && controller.abort();
 
-            dispatch(clearCart())
             toast.success("Order placed successfully", { id: "order" })
             router.replace("/orders")
+            dispatch(clearCart())
 
         }
         catch (error) {
@@ -185,7 +188,7 @@ export default function page() {
                                 <p onClick={() => setActiveTab(1)} className={` py-2 ${activeTab == 1 ? "text-primary border-primary border-b" : ""}`}>Pay Using QR Code</p>
                             </div>
                             <div onClick={handleUPIPaymentClick} style={{ boxShadow: "0px 0px 20px 0px #AC232340" }} className={`mt-12 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-4 rounded-lg border ${activeTab == 0 ? "block" : "hidden"}`}>
-                                <p className=" text-primary font-lato text-base">Pay ( Rs {roundWithPrecision(total)}) using UPI</p>
+                                <p className=" text-primary font-lato text-base font-bold">Pay ( Rs {roundWithPrecision(total)}) using UPI</p>
                                 <Image src={"/icons/rightTriangle.svg"} width={8} height={8} alt="go" />
                             </div>
                             <div className={`mx-auto space-y-5 mt-8 pb-4 ${activeTab == 1 ? "block" : "hidden"}`}>
