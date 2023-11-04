@@ -181,3 +181,5 @@ export const selectSelectedAddress = (state) => state.cart.selectedAddress;
 export const selectCookingReqText = (state) => state.cart.cookingReqText;
 export const selectConfessionText = (state) => state.cart.confessionText;
 export const selectDonation = (state) => state.cart.donation;
+export const selectGST = (state) => state.cart.gst;
+export const selectRestaurantCharges = (state) => state.cart.restaurantCharges;

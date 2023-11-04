@@ -16,7 +16,7 @@ import bill from "../../public/icons/bill.svg";
 
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCartItems, selectConfessionText, setCookingReqText, selectDonation, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity, toggleDonation, selectCoupon, setCouponDetails } from "../store/cartSlice";
+import { selectCartItems, selectConfessionText, setCookingReqText, selectDonation, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity, toggleDonation, selectCoupon, setCouponDetails, selectGST, selectRestaurantCharges } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
 import {
@@ -59,6 +59,10 @@ const page = () => {
   const { userId } = useAuth()
   const [coupons, setCoupons] = useState([])
   const appliedCoupon = useSelector(selectCoupon)
+  const [hoverPlatformfee, setHoverPlatformfee] = useState(false);
+  const [hoverRestaurantCharges, setHoverRestaurantCharges] = useState(false);
+  const gst = useSelector(selectGST)
+  const restaurantCharges = useSelector(selectRestaurantCharges)
 
 
   const handleShowMore = (index) => {
@@ -417,9 +421,15 @@ const page = () => {
                 FREE Delivery on your order!
               </p>}
             </div>
-            <div className="mx-4 border-[#BABABA] border-dashed border-b-[1px] py-5 space-y-2">
-              <div className="flex items-center justify-between">
-                <p className="font-lato text-sm text-[#666]  border-[#BABABA] border-dashed border-b-[1px] ">
+            <div className="mx-4 border-[#BABABA] border-dashed border-b-[1px] py-5 space-y-2 ">
+              <div className="flex items-center justify-between relative">
+                {hoverPlatformfee && <div className="p-2 shadow-lg rounded-lg absolute left-0 -top-24 bg-white" style={{ boxShadow: "0px 3.13869px 21.9708px 0px rgba(0, 0, 0, 0.25)" }}>
+                  <h2 className="font-lato text-sm text-[#666]">Platform fee</h2>
+                  <p className="font-lato text-xs text-[#999]">
+                    Ye humare gareeb aur berozgar developers ki dihadi hai. placements vaise hi kam hai electrical ke bande coding kr rahe hai. jindgai hi jhand hai.
+                  </p>
+                </div>}
+                <p className="font-lato text-sm text-[#666] cursor-pointer border-[#BABABA] border-dashed border-b-[1px]" onClick={() => setHoverPlatformfee(!hoverPlatformfee)}>
                   Platform fee
                 </p>
                 <p className="font-lato text-sm space-x-2">
@@ -431,8 +441,26 @@ const page = () => {
                   </span>
                 </p>
               </div>
-              <div className="flex  items-center justify-between">
-                <p className="font-lato text-sm text-[#666]  border-[#BABABA] border-dashed border-b-[1px] ">
+              <div className="flex  items-center  justify-between relative">
+                {hoverRestaurantCharges && <div className="p-2 shadow-lg rounded-lg absolute left-0 -top-[100px] space-y-1 bg-white w-full" style={{ boxShadow: "0px 3.13869px 21.9708px 0px rgba(0, 0, 0, 0.25)" }}>
+                  <h2 className="font-lato text-sm text-[#666]">GST and Restaurant Charges</h2>
+                  <p className="font-lato text-xs text-[#999] flex items-start justify-between">
+                    <span>Restaurant Packaging</span>
+                    ₹ {roundWithPrecision(restaurantCharges, 2)}
+                  </p>
+                  <p className="font-lato text-xs text-[#999] flex items-start justify-between ">
+                    <span className="flex flex-col">
+                      <p>Restaurant GST</p>
+                      <p className="text-[#B1B1B1] text-[9px] leading-tight max-w-[200px]">
+                        This tax is implemented by the
+                        Indian govt. hum isme kuch ni kr
+                        sakte.
+                      </p>
+                    </span>
+                    <p className="truncate" >₹ {roundWithPrecision(gst, 2)}</p>
+                  </p>
+                </div>}
+                <p className="font-lato text-sm text-[#666]  border-[#BABABA] border-dashed border-b-[1px] cursor-pointer " onClick={() => setHoverRestaurantCharges(!hoverRestaurantCharges)}>
                   GST and Restaurant Charges
                 </p>
                 <p className="font-lato text-sm font-bold text-[#444]">
