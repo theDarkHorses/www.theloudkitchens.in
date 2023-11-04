@@ -39,6 +39,7 @@ export default function page() {
     const router = useRouter()
     const [activeTab, setActiveTab] = useState(0)
     const [activeStep, setActiveStep] = useState(0)
+    const abortController = useRef()
 
 
     const canPay = fileName && imageUrl
@@ -89,13 +90,19 @@ export default function page() {
     };
 
     const handleCheckout = async (paymentProofUrl) => {
+
         if (!cartItems?.length) return toast.error("No items added", { id: "order" })
         if (!selectedAddress) return toast.error("Please select an address", { id: 'order' })
         if (totalWithoutDiscount < 200) return toast.error("Minimum order value is ₹200", { id: "order" })
         if (!paymentProofUrl) return toast.error("Please upload the payment proof", { id: "order" })
+
+        if (abortController.current) {
+            abortController.current.abort();
+        }
+
+        abortController.current = new AbortController();
+
         try {
-            const controller = new AbortController();
-            const { signal } = controller;
             await addDoc(collection(DB, "orders"), {
                 items: cartItems,
                 cookingReqText: cookingReqText,
@@ -118,8 +125,7 @@ export default function page() {
                     username: user?.username || ""
                 },
                 paymentProofUrl
-            })
-            signal.aborted && controller.abort();
+            }, { signal: abortController.current.signal })
 
             toast.success("Order placed successfully", { id: "order" })
             router.replace("/orders")

@@ -224,7 +224,16 @@ const page = () => {
                         {item?.name}
                       </h3>
                       <span className="font-lato self-start font-medium sm:self-center inline text-xs text-[#777]">
-                        ( customised )
+                        {
+                          items.map((cuisine, index) => <p key={index} className=" font-lato text-xs text-[#757C8F] space-x-1">
+                            {cuisine.map((subItem, index) => (
+                              <span key={index}>
+                                {subItem.quantity * item.quantity} x{subItem.item.name} {cuisine.length - 1 == index ? "" : " ·"}
+                              </span>
+                            ))}
+                          </p>
+                          )}
+
                       </span>
                     </div>
                     <div
@@ -267,13 +276,13 @@ const page = () => {
                 </div>
                   <div className={`py-4 space-y-5 overflow-hidden transition-height duration-300 ease-in-out ${index === showMore ? "block" : "hidden"}`}>
 
-                    {items[index].map((item, index) => <div key={index} className="px-4 w-full bg-white space-y-2">
+                    {items[index].map((subItem, index) => <div key={index} className="px-4 w-full bg-white space-y-2">
 
                       <div className="flex items-start space-x-3">
-                        <Image src={item?.item?.isVeg ? "/icons/veg.png" : "/icons/nonveg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
+                        <Image src={subItem?.item?.isVeg ? "/icons/veg.png" : "/icons/nonveg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
                         <div className="space-y-1">
-                          <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">{item?.quantity} x</span> {item?.item?.name}</p>
-                          <p className=" font-lato text-xs text-[#757C8F]">{item?.item?.quantity}</p>
+                          <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">{subItem?.quantity * item.quantity} x</span> {subItem?.item?.name}</p>
+                          <p className=" font-lato text-xs text-[#757C8F]">{subItem?.item?.quantity}</p>
                         </div>
                       </div>
                     </div>)

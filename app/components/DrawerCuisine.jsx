@@ -23,6 +23,8 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
         return Object.values(craftedCuisine?.[activeIndex] || {}).reduce((total, item) => total + item.quantity, 0);
     }, [craftedCuisine, activeIndex]);
 
+
+
     const handleCheckbox = (checked, categoryIndex, itemIndex, item) => {
         if (checked) {
             if (isRequired && totalItems + 1 > requiredItems) return;
@@ -139,13 +141,13 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
     return (
         <Fragment>
             <div className=" bg-white py-1 mx-2 rounded-lg space-y-5 pb-8">
-                {cuisine?.imageUrl && <Image
+                <Image
                     src={cuisine?.imageUrl}
                     width={300}
                     height={250}
-                    className="rounded-lg  mx-auto w-full object-cover object-center"
+                    className="rounded-lg aspect-video  mx-auto w-full object-cover object-center"
                     alt="banner"
-                />}
+                />
                 <div className="px-2 flex space-x-2 pl-4">
                     <Image
                         alt={cuisine?.isVeg ? "veg" : "nonveg"}
@@ -230,7 +232,7 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
                 </div>
             </div>
             <div className="bg-white sticky bottom-0 z-[99999] flex justify-end  w-full shadow-md shadow-black ">
-                <button className="py-3 px-5 bg-red-600 text-white rounded-lg mx-1 my-4" onClick={handleAddToBasket}>
+                <button className={`py-3 px-5  text-white rounded-lg mx-1 my-4 ${totalItems ? "bg-primary" : "bg-[#757575]"}`} onClick={totalItems ? handleAddToBasket : null}>
                     Add To Basket ( {getTotalCost}rs)
                 </button>
             </div>
