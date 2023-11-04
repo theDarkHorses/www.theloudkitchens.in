@@ -62,9 +62,9 @@ function AddressOverlay({ openDrawer, setOpenDrawer }) {
   }
 
   return (
-    <div className={`bg-transparent transition-all duration-300  absolute top-0 bottom-0 left-0 right-0 h-screen w-screen z-[999999] ${openDrawer ? "translate-y-0" : "translate-y-full"}`}>
+    <div className={`bg-transparent transition-all duration-300  fixed top-0 bottom-0  left-0 right-0 h-screen w-screen z-[999999] ${openDrawer ? "translate-y-0" : "translate-y-full "}`}>
       <div className="h-screen w-screen bottom-0 right-0  opacity-[0.77] bg-black fixed top-0 left-0 " onClick={() => setOpenDrawer(false)} />
-      <div style={{ height: window.innerHeight * 0.7, boxShadow: " 0px 0px 9px 0px rgba(0, 0, 0, 0.25)" }} onClick={(e) => e.stopPropagation()} className="fixed bg-[#F6F6F6] mt-10   bottom-0 right-0 left-0  w-screen p-4 pt-10  rounded-t-2xl overflow-hidden overflow-y-scroll no-scrollbar">
+      <div style={{ height: window.innerHeight * 0.7, boxShadow: " 0px 0px 9px 0px rgba(0, 0, 0, 0.25)" }} onClick={(e) => e.stopPropagation()} className="fixed bg-[#F6F6F6] mt-10   bottom-0 pb-28 right-0 left-0  w-screen p-4 pt-10  rounded-t-2xl overflow-hidden overflow-y-scroll no-scrollbar">
 
         <h2 className="font-lato text-xl font-bold text-[#242539]">
           Saved Addresses
