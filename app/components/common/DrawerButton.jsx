@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image";
+import Link from "next/link";
 import { useState, Fragment } from "react";
 
 const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
@@ -57,9 +58,9 @@ const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
             {description}
           </h4>
           <div className="bg-white z-[99999] flex justify-end flex-1 w-full shadow-md shadow-black fixed bottom-0">
-            <button className="py-3 px-5 bg-red-600 text-white rounded-lg mx-1 my-4">
+            <Link href="https://chat.whatsapp.com/JxfpwCGgg0r2pv7C3pB6yp" className="py-3 px-5 bg-red-600 text-white rounded-lg mx-1 my-4">
               Follow Our Journey
-            </button>
+            </Link>
           </div>
         </div>
       </div>

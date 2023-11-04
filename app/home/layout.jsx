@@ -6,6 +6,33 @@ import { auth } from "@clerk/nextjs";
 import { doc, getDoc } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
 
+
+export const metadata = {
+  title: "TheLoudKitchens",
+  description:
+    "The Loud Kitchens is a cloud kitchens startup initiated by the students of nit srinagar.",
+  openGraph: {
+    type: "website",
+    locale: "en_IE",
+    url: "https://www-theloudkitchens-in.vercel.app/icons/tlk.png",
+    site_name: "TheLoudKitchens",
+    images: [
+      {
+        url: "https://www-theloudkitchens-in.vercel.app/icons/tlk.png",
+        width: 1200,
+        height: 630,
+        alt: "TheLoudKitchens",
+      },
+    ],
+  },
+  twitter: {
+    handle: "@theLoudKitchens",
+    site: "@site",
+    cardType:
+      "The Loud Kitchens is a cloud kitchens startup initiated by the students of nit srinagar.",
+  },
+};
+
 const getAdress = async () => {
   const { userId } = auth()
   let defaultAddress = null
@@ -20,7 +47,7 @@ const getAdress = async () => {
       console.log("user not found")
     }
   } catch (error) {
-    console.log("something went wrong",error.message)
+    console.log("something went wrong", error.message)
   }
   return defaultAddress
 }
@@ -38,7 +65,7 @@ export default async function Layout({ dishes, carousel, restaurants }) {
           <div className="flex flex-col justify-center ">
             <div className="flex  items-center">
               <span className="font-raleway text-sm font-bold">
-                {defaultAddress ? defaultAddress?.landmark: "Add Address"}
+                {defaultAddress ? defaultAddress?.landmark : "Add Address"}
               </span>
               <ChevronRight size={14} color="#AC2318" />
             </div>

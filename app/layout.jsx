@@ -23,6 +23,26 @@ const raleway = Raleway({
 export const metadata = {
   title: 'TheLoudKitchens',
   description: 'The Loud Kitchens is a cloud kitchens startup initiated by the students of nit srinagar.',
+  openGraph: {
+    type: 'website',
+    locale: 'en_IE',
+    url: 'https://www-theloudkitchens-in.vercel.app/icons/tlk.png',
+    site_name: 'TheLoudKitchens',
+    images: [
+      {
+        url: 'https://www-theloudkitchens-in.vercel.app/icons/tlk.png',
+        width: 1200,
+        height: 630,
+        alt: 'TheLoudKitchens',
+      }
+    ],
+  },
+  twitter: {
+    handle: '@theLoudKitchens',
+    site: '@site',
+    cardType: 'The Loud Kitchens is a cloud kitchens startup initiated by the students of nit srinagar.',
+  },
+
 }
 
 export default function RootLayout({ children }) {
