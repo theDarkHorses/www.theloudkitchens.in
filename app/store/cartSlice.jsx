@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { calculateDeliveryFee, calculateGST, roundWithPrecision } from "@/app/utils/delivery";
 import { DELIVERYFEE } from "../utils/constants";
 
@@ -75,6 +75,9 @@ export const cartSlice = createSlice({
                 state.restaurantCharges;
             state.totalWithoutDiscount = totalWithoutDiscount;
             state.total = totalWithoutDiscount - state.discount;
+            if (!state.items) {
+                state = state.total = 0;
+            }
         },
 
         updateItemQuantity: (state, action) => {
@@ -103,6 +106,9 @@ export const cartSlice = createSlice({
 
             state.totalWithoutDiscount = totalWithoutDiscount;
             state.total = totalWithoutDiscount - state.discount;
+
+            if (state.items.length === 0) state.total = 0;
+
         },
         clearCart: (state) => {
             state.items = [];
