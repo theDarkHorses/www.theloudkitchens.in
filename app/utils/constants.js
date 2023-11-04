@@ -7,3 +7,4 @@ export const ACCEPTED = 'Accepted';
 
 export const DELIVERYFEE = 40
 export const MINORDERVALUE = 150
+export const MINORDERVALUEFORCOUPON = 150

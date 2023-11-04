@@ -360,7 +360,7 @@ const page = () => {
             </div>)}
 
             <Link
-              href="/coupons"
+              href="/coupons?from=cart"
               className="flex justify-center items-center py-2 font-lato text-xs text-[#707070] "
             >
               View all coupons
