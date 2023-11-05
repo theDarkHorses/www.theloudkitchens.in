@@ -66,7 +66,7 @@ export default function OrderPlacedConfetti({ id, discount }) {
             <div className=" mx-5 rounded-2xl border min-w-[300px] flex items-center flex-col bg-white justify-center pt-4 space-y-2 divide-dashed divide-y text-[#636989] divide-[#9BA1C1] " style={{ boxShadow: "0px 4px 14px 0px #00000024" }}>
                 <div className="flex items-center justify-center flex-col  py-8 ">
                     <p className="text-lg text-primary font-bold font-raleway">ORDER PLACED!!</p>
-                    <p className="font-bold font-lato text-lg mt-2  text-center">Deliciousness will get delivered right to your doorstep.</p>
+                    <p className="font-medium font-lato text-lg px-5 mt-2  text-center">Deliciousness will get delivered right to your doorstep.</p>
                 </div>
                 <p className="font-lato font-medium text-lg text-[#AC2323] w-full text-center py-2">woah. Thanks!!!!</p>
             </div>

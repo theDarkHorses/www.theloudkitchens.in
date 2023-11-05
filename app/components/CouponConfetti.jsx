@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef } from "react";
 import ReactCanvasConfetti from "react-canvas-confetti";
+import { roundWithPrecision } from "../utils/delivery";
 
 const canvasStyles = {
     position: "fixed",
@@ -63,10 +64,10 @@ export default function CouponConfetti({ id, discount }) {
 
     return (
         <div className="h-screen w-screen overflow-hidden flex items-center justify-center p-5   backdrop-opacity-[0.77] backdrop-blur-sm fixed top-0 left-0 right-0 bottom-0 z-[99999999]">
-            <div className=" mx-5 rounded-2xl border min-w-[300px] flex items-center flex-col bg-white justify-center pt-4 space-y-2 divide-dashed divide-y text-[#636989] divide-[#9BA1C1] " style={{ boxShadow: "0px 4px 14px 0px #00000024" }}>
+            <div className=" mx-5 rounded-2xl border min-w-[300px] self-center flex items-center flex-col bg-white justify-center pt-4 space-y-2 divide-dashed divide-y text-[#636989] divide-[#9BA1C1] " style={{ boxShadow: "0px 4px 14px 0px #00000024" }}>
                 <div className="flex items-center justify-center flex-col  py-8 ">
                     <p className="text-sm font-bold font-raleway">`{id}` applied</p>
-                    <p className="font-bold font-lato text-lg mt-2">You saved ₹{discount}</p>
+                    <p className="font-bold font-lato text-lg mt-2">You saved ₹{roundWithPrecision(discount,2)}</p>
                     <p className="text-sm font-lato font-medium leading-none">with this coupon</p>
                 </div>
                 <p className="font-lato font-medium text-lg text-[#AC2323] w-full text-center py-2">I loove it. Thanks!!!!</p>

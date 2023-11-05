@@ -132,13 +132,14 @@ export default function page() {
             setConfetti(true)
 
             setTimeout(() => {
+                toast.success("Order placed successfully", { id: "order" })
+                router.replace("/orders")
+                dispatch(clearCart())
                 setConfetti(false)
             }
                 , 3000)
 
-            toast.success("Order placed successfully", { id: "order" })
-            router.replace("/orders")
-            dispatch(clearCart())
+
 
         }
         catch (error) {
@@ -172,7 +173,7 @@ export default function page() {
 
     return (
         <section className="min-h-[calc(100vh_-_60px)] bg-[#F6F7FA] pb-20">
-            <header className="bg-white rounded-b-2xl overflow-hidden shadow-lg p-1 sticky top-0" style={{ boxShadow: "0px 1px 13px 0px #0000002B" }} >
+            <header className="bg-white rounded-b-2xl z-50 overflow-hidden shadow-lg p-1 sticky top-0" style={{ boxShadow: "0px 1px 13px 0px #0000002B" }} >
                 <div className="flex items-center px-5 py-3 pt-16 ">
                     <Link href={"/cart"}>
                         <ChevronLeft size={24} className="text-[#292C35] cursor-pointer" />

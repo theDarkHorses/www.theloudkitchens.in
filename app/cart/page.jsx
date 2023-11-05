@@ -397,7 +397,7 @@ const page = () => {
               <div className="">
                 <h1 className="font-bold text-lg drop-shadow-2xl leading-none"><span className="drop-shadow-2xl">Support  #</span><span className="text-[#ff6400] drop-shadow-2xl inline">Bharat</span>Ke<span className="text-[#00d400] drop-shadow-2xl inline">Veer</span> with us</h1>
                 <p className="font-medium text-sm drop-shadow-2xl mt-2">We will match your contribution to our bharat ke veer</p>
-                <p className="font-medium mt-5 text-sm underline flex items-center">Learn More <ChevronRight size={16} /></p>
+                <Link className="font-medium mt-5 text-sm underline flex items-center" href={"https://bharatkeveer.gov.in/"} target="_blank">Learn More <ChevronRight size={16} /></Link>
               </div>
               <div className="flex flex-col">
                 <input className="accent-primary" type="checkbox" checked={donation} onChange={(e) => null} size={20} />
