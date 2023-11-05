@@ -1,12 +1,16 @@
 import React from "react";
 import CouponCard from "../components/CouponCard";
-import { couponsCollectionRef } from "../firebaseConfig";
-import { getDocs } from "firebase/firestore";
+import { DB } from "../firebaseConfig";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import CouponSearch from "../components/CouponSearch";
+import { auth } from "@clerk/nextjs";
 
 const getCoupons = async () => {
-  const allCoupons = await getDocs(couponsCollectionRef);
-  return allCoupons?.docs.map((doc) => ({ name: doc.id, ...doc.data() }));
+  const { userId } = auth()
+  const couponsRef = collection(DB, "coupons")
+  const q = query(couponsRef, where("userId", "in", [userId, ""]));
+  const querySnapshot = await getDocs(q)
+  return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
 };
 
 const layout = async () => {
@@ -14,23 +18,23 @@ const layout = async () => {
   return (
     <div>
       <CouponSearch />
-      <main className="px-5 py-12 space-y-10">
-        {/* {coupons?.map(
-          ({ name, discount, maxDiscount, minValue, date, valid }, index) => {
+      {/* <main className="px-5 py-12 space-y-10">
+        {coupons?.map(
+          ({ id, discountPercent, maxDiscountValue, minCartValue, validTill, validity }, index) => {
             return (
               <CouponCard
-                name={name}
-                discount={discount}
-                maxDiscount={maxDiscount}
-                minValue={minValue}
-                date={date}
-                valid={valid}
+                id={id}
+                discountPercent={discountPercent}
+                maxDiscountValue={maxDiscountValue}
+                minCartValue={minCartValue}
+                validTill={validTill}
+                validity={validity}
                 key={index}
               />
             );
           }
-        )} */}
-      </main>
+        )}
+      </main> */}
     </div>
   );
 };

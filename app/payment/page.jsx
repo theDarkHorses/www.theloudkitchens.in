@@ -18,6 +18,7 @@ import { DB } from "../firebaseConfig";
 import { MINORDERVALUE, PENDING } from "../utils/constants";
 import { useRouter } from "next/navigation";
 import { roundWithPrecision } from "../utils/delivery";
+import OrderPlacedConfetti from "../components/OrderPlacedConfetti";
 
 
 export default function page() {
@@ -40,6 +41,7 @@ export default function page() {
     const [activeTab, setActiveTab] = useState(0)
     const [activeStep, setActiveStep] = useState(0)
     const abortController = useRef()
+    const [confetti, setConfetti] = useState(false)
 
 
     const canPay = fileName && imageUrl
@@ -126,6 +128,13 @@ export default function page() {
                 },
                 paymentProofUrl
             }, { signal: abortController.current.signal })
+
+            setConfetti(true)
+
+            setTimeout(() => {
+                setConfetti(false)
+            }
+                , 3000)
 
             toast.success("Order placed successfully", { id: "order" })
             router.replace("/orders")
@@ -270,6 +279,7 @@ export default function page() {
             <footer>
                 <button onClick={handlePlaceOrder} className={`fixed bottom-0 left-0 right-0 rounded-t-xl z-50  ${canPay ? "bg-primary" : "bg-[#757575]"} text-white w-full py-5 font-lato text-lg`}>Place My order</button>
             </footer>
+            {confetti && <OrderPlacedConfetti />}
         </section>
     )
 }

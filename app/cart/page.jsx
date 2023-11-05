@@ -36,6 +36,8 @@ import { DELIVERYFEE, MINORDERVALUE } from "../utils/constants";
 import { useAuth } from "@clerk/nextjs";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
+import CouponCard from "../components/CouponCard";
+import CouponConfetti from "../components/CouponConfetti";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -63,6 +65,7 @@ const page = () => {
   const [hoverRestaurantCharges, setHoverRestaurantCharges] = useState(false);
   const gst = useSelector(selectGST)
   const restaurantCharges = useSelector(selectRestaurantCharges)
+  const [confetti, setConfetti] = useState(false)
 
 
   const handleShowMore = (index) => {
@@ -117,6 +120,12 @@ const page = () => {
       }
       dispatch(setCouponDetails({ ...coupon, userId }))
       toast.success("Coupon applied", { id: "coupon" })
+
+      setConfetti(true)
+      setTimeout(() => {
+        setConfetti(false)
+      }
+        , 3000)
 
     } catch (error) {
       console.log(error)
@@ -374,10 +383,10 @@ const page = () => {
 
             <Link
               href="/coupons?from=cart"
-              className="flex justify-center items-center py-2 font-lato text-xs text-[#707070] "
+              className="flex justify-center items-center py-2 font-lato text-sm text-primary "
             >
-              View all coupons
-              <ChevronRight size={12} className="self-center" />
+              <p className="">View all coupons</p>
+              <ChevronRight size={16} className="self-end" />
             </Link>
           </div>
           <div className="relative rounded-2xl overflow-hidden mx-2 mt-16 " >
@@ -561,6 +570,7 @@ const page = () => {
         openDrawer={openPaymentDrawer}
         setOpenDrawer={setOpenPaymentDrawer}
       /> */}
+      {confetti && <CouponConfetti id={appliedCoupon.id} discount={totalWithoutDiscount - total} />}
     </>
   );
 };

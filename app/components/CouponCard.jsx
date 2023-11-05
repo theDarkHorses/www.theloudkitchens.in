@@ -7,28 +7,39 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCoupon, setCoupon } from "../store/cartSlice";
 
-const CouponCard = ({ name, discount, maxDiscount, minValue, date, valid }) => {
+const CouponCard = ({ id, discountPercent, maxDiscountValue, minCartValue, validTill, validity }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
   const dispatch = useDispatch();
   const coupon = useSelector(selectCoupon);
+
+  const date = validTill.toDate();
+  const formattedDate = date.toLocaleString('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+
   return (
     <div className="bg-white rounded-2xl shadow-md border border-[#ccc]">
       <Image
         src={offer}
         height={44}
         width={44}
-        className={`relative transition-all duration-300 ease-in-out -top-6 ${
-          isOpen ? "left-[calc(50%_-_22px)]" : "left-3"
-        }`}
+        className={`relative transition-all duration-300 ease-in-out -top-6 ${isOpen ? "left-[calc(50%_-_22px)]" : "left-3"
+          }`}
         alt="offer"
       />
       <div className="relative -top-4 space-y-8 px-9">
         <h4 className="font-lato font-bold text-[#1C1C1C]">
-          {discount}% OFF up to ₹{maxDiscount}
+          {discountPercent}% OFF up to ₹{maxDiscountValue}
         </h4>
         <div className="font-lato text-primary text-xs font-bold flex justify-between items-center ">
-          <div className="border rounded px-3 py-1">{name}</div>
+          <div className="border rounded px-3 py-1">{id}</div>
           <div
             className="flex space-x-1 items-center"
             onClick={() => setIsOpen(!isOpen)}
@@ -40,16 +51,15 @@ const CouponCard = ({ name, discount, maxDiscount, minValue, date, valid }) => {
       {/* Information */}
 
       <div
-        className={`mx-4 border-t transition-height duration-300 ease-in-out border-dashed overflow-hidden ${
-          isOpen ? "h-20" : "h-0 "
-        }`}
+        className={`mx-4 border-t transition-height duration-300 ease-in-out border-dashed overflow-hidden ${isOpen ? "h-20" : "h-0 "
+          }`}
       >
         <ul className="py-5 text-[#636989CC] font-lato text-xs font-bold list-disc px-3">
           <li className="">
-            offer applicable on min. cart value of ₹{minValue}{" "}
+            offer applicable on min. cart value of ₹{minValue}
           </li>
-          <li className="">offer valid till {date}</li>
-          <li className="">Valid {valid} per user</li>
+          <li className="">offer valid till {formattedDate}</li>
+          <li className="">Valid {validity} per user</li>
         </ul>
       </div>
       <div
@@ -67,12 +77,12 @@ const CouponCard = ({ name, discount, maxDiscount, minValue, date, valid }) => {
             onClick={() => {
               dispatch(
                 setCoupon({
-                  name: name,
-                  discount: discount,
-                  maxDiscount: maxDiscount,
-                  minValue: minValue,
-                  date: date,
-                  valid: valid,
+                  id,
+                  discountPercent,
+                  maxDiscountValue,
+                  minCartValue,
+                  validTill,
+                  validity
                 })
               );
             }}
