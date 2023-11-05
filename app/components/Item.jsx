@@ -5,9 +5,9 @@ import Link from "next/link";
 const Item = ({ item, activeTab }) => {
 
   return (
-    <section className="flex justify-between py-7 px-5">
+    <section className={`flex justify-between py-7 px-5 ${!item.isAvailable ? "grayscale" : ""} `}>
       <div className="w-2/3">
-        <Image src={item.isVeg?"/icons/veg.png":"/icons/nonveg.png"} height={18} width={18} className="" alt="type" />
+        <Image src={item.isVeg ? "/icons/veg.png" : "/icons/nonveg.png"} height={18} width={18} className="" alt="type" />
         <h3 className="font-raleway text-lg font-semibold ">
           {item.name}
         </h3>
@@ -33,6 +33,7 @@ const Item = ({ item, activeTab }) => {
         <Link href={`?tab=${activeTab}&item=${item.id}`} className="text-primary py-1 px-8 border-[1px] border-primary font-raleway text-lg font-semibold bg-[#FFE7E7] text-center rounded-lg  relative -top-3  shadow-lg shadow-red-100">
           ADD
         </Link>
+        
       </div>
     </section>
   );

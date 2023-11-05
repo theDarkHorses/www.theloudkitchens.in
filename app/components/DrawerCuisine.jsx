@@ -85,6 +85,7 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
     }, [craftedCuisine]);
 
     const handleAddToBasket = () => {
+        if (!cuisine?.isAvailable) return toast.error("This item is not available", { id: "add-to-basket" })
         toast.loading("Adding to basket...", { id: "add-to-basket" })
         let canProceed = true;
         cuisine?.categories?.forEach((category, categoryIndex) => {
@@ -136,6 +137,8 @@ export default function DrawerCuisine({ cuisine, setCraftedCuisine, craftedCuisi
         }
 
     }, [drawerStatus, cuisine])
+
+
 
 
     return (

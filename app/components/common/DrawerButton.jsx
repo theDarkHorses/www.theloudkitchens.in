@@ -32,7 +32,7 @@ const DrawerButton = ({ name, description, imageUrl, bannerUrl }) => {
               src={bannerUrl}
               width={350}
               height={120}
-              className="rounded-lg object-cover object-center w-full"
+              className="rounded-lg object-cover aspect-video object-center w-full"
               alt="restaurant"
             />
             <div className="flex items-center space-x-2 mx-auto relative -top-5 justify-center">
