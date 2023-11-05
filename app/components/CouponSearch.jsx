@@ -10,7 +10,7 @@ import { doc, getDoc } from "firebase/firestore"
 import { DB } from "../firebaseConfig"
 import { useState } from "react"
 import { useAuth } from "@clerk/nextjs"
-import { times } from "lodash"
+import { MINORDERVALUEFORCOUPON } from "../utils/constants"
 
 export default function CouponSearch() {
     const totalWithoutDiscount = useSelector(selectTotalWithoutDiscount)
@@ -24,8 +24,8 @@ export default function CouponSearch() {
         return router.push("/home")
     }
 
-    if (totalWithoutDiscount < 200) {
-        toast.error("Coupon not applicable to cart value less than ₹200")
+    if (totalWithoutDiscount < MINORDERVALUEFORCOUPON) {
+        toast.error(`Coupon not applicable to cart value less than ₹${MINORDERVALUEFORCOUPON}`, { id: "coupon" })
         return router.push("/cart")
     }
 
@@ -52,7 +52,7 @@ export default function CouponSearch() {
                 return toast.error("Coupon expired", { id: "coupon" })
             }
 
-            if(validTill && validTill.toMillis() < Date.now()) {
+            if (validTill && validTill.toMillis() < Date.now()) {
                 return toast.error("Coupon expired", { id: "coupon" })
             }
             if (totalWithoutDiscount < minCartValue) {

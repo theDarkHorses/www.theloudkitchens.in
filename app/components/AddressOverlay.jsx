@@ -8,6 +8,7 @@ import { memo, useEffect, useState } from "react"
 import { DB } from "../firebaseConfig";
 import { useDispatch } from "react-redux";
 import { setSelectedAddress } from "../store/cartSlice";
+import toast from "react-hot-toast";
 
 function AddressOverlay({ openDrawer, setOpenDrawer }) {
   const [address, setAddress] = useState([]);
@@ -30,7 +31,7 @@ function AddressOverlay({ openDrawer, setOpenDrawer }) {
       console.error("Error fetching addresses:", error);
     }
   }, []);
-  
+
   useEffect(() => {
     try {
       const userCollectionRef = doc(DB, "users", userId);
@@ -47,19 +48,23 @@ function AddressOverlay({ openDrawer, setOpenDrawer }) {
 
   const handleSetSelectedAddress = async (address) => {
     try {
+      toast.loading("Setting address...", { id: "set-address" })
       const userCollectionRef = doc(DB, "users", userId);
       await setDoc(userCollectionRef, { selectedAddress: address }, { merge: true });
       dispatch(setSelectedAddress(address))
       console.log("Address set successfully");
+      toast.success("Address set successfully", { id: "set-address" })
+      setOpenDrawer(false)
     } catch (err) {
       console.log(err.message)
+      toast.error("Something went wrong", { id: "set-address" })
     }
   }
 
   return (
-    <div className={`bg-transparent transition-all duration-300  absolute top-0 bottom-0 left-0 right-0 h-screen w-screen z-[999999] ${openDrawer ? "translate-y-0" : "translate-y-full"}`}>
+    <div className={`bg-transparent transition-all duration-300  fixed top-0 bottom-0  left-0 right-0 h-screen w-screen z-[999999] ${openDrawer ? "translate-y-0" : "translate-y-full "}`}>
       <div className="h-screen w-screen bottom-0 right-0  opacity-[0.77] bg-black fixed top-0 left-0 " onClick={() => setOpenDrawer(false)} />
-      <div style={{ height: window.innerHeight * 0.7, boxShadow: " 0px 0px 9px 0px rgba(0, 0, 0, 0.25)" }} onClick={(e) => e.stopPropagation()} className="fixed bg-[#F6F6F6] mt-10   bottom-0 right-0 left-0  w-screen p-4 pt-10  rounded-t-2xl overflow-hidden overflow-y-scroll no-scrollbar">
+      <div style={{ height: window.innerHeight * 0.7, boxShadow: " 0px 0px 9px 0px rgba(0, 0, 0, 0.25)" }} onClick={(e) => e.stopPropagation()} className="fixed bg-[#F6F6F6] mt-10   bottom-0 pb-28 right-0 left-0  w-screen p-4 pt-10  rounded-t-2xl overflow-hidden overflow-y-scroll no-scrollbar">
 
         <h2 className="font-lato text-xl font-bold text-[#242539]">
           Saved Addresses
@@ -96,7 +101,7 @@ function AddressOverlay({ openDrawer, setOpenDrawer }) {
             </div>
           ))}
           <Link
-            href="/address/new"
+            href="/address/new?from=cart"
             className="flex items-center  pb-4 pt-6 justify-between"
           >
             <div className="items-center flex space-x-2">

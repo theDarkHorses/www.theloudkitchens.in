@@ -15,7 +15,7 @@ import { clearCart } from "../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux"
 import { addDoc, collection } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
-import { PENDING } from "../utils/constants";
+import { MINORDERVALUE, PENDING } from "../utils/constants";
 import { useRouter } from "next/navigation";
 
 
@@ -88,7 +88,7 @@ export default function page() {
     const handleCheckout = async (paymentProofUrl) => {
         if (!cartItems?.length) return toast.error("No items added", { id: "order" })
         if (!selectedAddress) return toast.error("Please select an address", { id: 'order' })
-        if (totalWithoutDiscount < 200) return toast.error("Minimum order value is ₹200", { id: "order" })
+        if (totalWithoutDiscount < MINORDERVALUE) return toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
         if (!paymentProofUrl) return toast.error("Please upload the payment proof", { id: "order" })
         try {
             await addDoc(collection(DB, "orders"), {

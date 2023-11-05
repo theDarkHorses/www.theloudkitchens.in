@@ -28,7 +28,7 @@ const Item = ({ item, activeTab }) => {
           width={150}
           height={140}
           alt="item pic"
-          className="rounded-xl "
+          className="rounded-xl aspect-square object-cover object-center "
         />
         <Link href={`?tab=${activeTab}&item=${item.id}`} className="text-primary py-1 px-8 border-[1px] border-primary font-raleway text-lg font-semibold bg-[#FFE7E7] text-center rounded-lg  relative -top-3  shadow-lg shadow-red-100">
           ADD

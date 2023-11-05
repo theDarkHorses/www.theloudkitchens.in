@@ -16,7 +16,7 @@ import bill from "../../public/icons/bill.svg";
 
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCartItems, selectConfessionText, setCookingReqText, selectDonation, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity, toggleDonation, selectCoupon, setCouponDetails } from "../store/cartSlice";
+import { selectCartItems, selectConfessionText, setCookingReqText, selectDonation, selectCookingReqText, selectSelectedAddress, selectTotalWithoutDiscount, setConfessionText, updateItemQuantity, toggleDonation, selectCoupon, setCouponDetails, selectGST, selectRestaurantCharges } from "../store/cartSlice";
 import Link from "next/link";
 import AddressOverlay from "../components/AddressOverlay";
 import {
@@ -32,10 +32,12 @@ import toast from "react-hot-toast";
 
 import { roundWithPrecision } from "../utils/delivery";
 import { useRouter } from "next/navigation";
-import { DELIVERYFEE } from "../utils/constants";
+import { DELIVERYFEE, MINORDERVALUE } from "../utils/constants";
 import { useAuth } from "@clerk/nextjs";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
+import CouponCard from "../components/CouponCard";
+import CouponConfetti from "../components/CouponConfetti";
 
 const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -58,6 +60,12 @@ const page = () => {
   const donation = useSelector(selectDonation)
   const { userId } = useAuth()
   const [coupons, setCoupons] = useState([])
+  const appliedCoupon = useSelector(selectCoupon)
+  const [hoverPlatformfee, setHoverPlatformfee] = useState(false);
+  const [hoverRestaurantCharges, setHoverRestaurantCharges] = useState(false);
+  const gst = useSelector(selectGST)
+  const restaurantCharges = useSelector(selectRestaurantCharges)
+  const [confetti, setConfetti] = useState(false)
 
 
   const handleShowMore = (index) => {
@@ -75,7 +83,7 @@ const page = () => {
     if (!cartItems?.length) return toast.error("No items added", { id: "order" })
     if (isConfession && !confessionText) return toast.error("Please add a confession", { id: "order" })
     if (!selectedAddress) return toast.error("Please select an address", { id: 'order' })
-    if (totalWithoutDiscount < 200) return toast.error("Minimum order value is ₹200", { id: "order" })
+    if (totalWithoutDiscount < MINORDERVALUE) return toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
     router.push("/payment")
   }
 
@@ -113,14 +121,21 @@ const page = () => {
       dispatch(setCouponDetails({ ...coupon, userId }))
       toast.success("Coupon applied", { id: "coupon" })
 
+      setConfetti(true)
+      setTimeout(() => {
+        setConfetti(false)
+      }
+        , 3000)
+
     } catch (error) {
       console.log(error)
     }
   }
 
+
   return (
     <>
-      <div className="bg-[#E0E1E7] relative pb-40 ">
+      <div className="bg-[#E0E1E7] relative pb-40 min-h-screen overflow-hidden">
         <header className="bg-white rounded-b-2xl overflow-hidden sticky top-0 z-[9999] ">
           <div className="pt-10 pb-[2px] ">
             <Link href="/"
@@ -218,7 +233,16 @@ const page = () => {
                         {item?.name}
                       </h3>
                       <span className="font-lato self-start font-medium sm:self-center inline text-xs text-[#777]">
-                        ( customised )
+                        {
+                          items.map((cuisine, index) => <p key={index} className=" font-lato text-xs text-[#757C8F] space-x-1">
+                            {cuisine.map((subItem, index) => (
+                              <span key={index}>
+                                {subItem.quantity * item.quantity} x{subItem.item.name} {cuisine.length - 1 == index ? "" : " ·"}
+                              </span>
+                            ))}
+                          </p>
+                          )}
+
                       </span>
                     </div>
                     <div
@@ -261,13 +285,13 @@ const page = () => {
                 </div>
                   <div className={`py-4 space-y-5 overflow-hidden transition-height duration-300 ease-in-out ${index === showMore ? "block" : "hidden"}`}>
 
-                    {items[index].map((item, index) => <div key={index} className="px-4 w-full bg-white space-y-2">
+                    {items[index].map((subItem, index) => <div key={index} className="px-4 w-full bg-white space-y-2">
 
                       <div className="flex items-start space-x-3">
-                        <Image src={item?.item?.isVeg ? "/icons/veg.png" : "/icons/nonveg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
+                        <Image src={subItem?.item?.isVeg ? "/icons/veg.png" : "/icons/nonveg.png"} width={40} height={40} className="w-5 h-5 aspect-square" />
                         <div className="space-y-1">
-                          <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">{item?.quantity} x</span> {item?.item?.name}</p>
-                          <p className=" font-lato text-xs text-[#757C8F]">{item?.item?.quantity}</p>
+                          <p className=" text-sm leading-none font-lato text-[#2A3143] font-bold"><span className="text-[#757C8F] text-sm leading-none">{subItem?.quantity * item.quantity} x</span> {subItem?.item?.name}</p>
+                          <p className=" font-lato text-xs text-[#757C8F]">{subItem?.item?.quantity}</p>
                         </div>
                       </div>
                     </div>)
@@ -353,28 +377,30 @@ const page = () => {
                 </div>
               </div>
               <div className="text-primary font-raleway text-xs font-medium mr-6 cursor-pointer" onClick={() => handleApplyCoupon(coupon.id)}>
-                Apply
+                {appliedCoupon.id != coupon.id ? "Apply" : "Applied"}
               </div>
             </div>)}
 
             <Link
-              href="/coupons"
-              className="flex justify-center items-center py-2 font-lato text-xs text-[#707070] "
+              href="/coupons?from=cart"
+              className="flex justify-center items-center py-2 font-lato text-sm text-primary "
             >
-              View all coupons
-              <ChevronRight size={12} className="self-center" />
+              <p className="">View all coupons</p>
+              <ChevronRight size={16} className="self-end" />
             </Link>
           </div>
-          <div className="relative rounded-2xl overflow-hidden mx-2 mt-16 ">
+          <div className="relative rounded-2xl overflow-hidden mx-2 mt-16 " >
             <Image src={"/banner/ind.webp"} width={358} height={129.74} className="rounded-2xl brightness-75 w-full absolute object-cover object-center" alt="banner" />
-            <div className="flex items-start relative z-50 text-white px-3 py-4 justify-between gap-2">
+            <div onClick={(e) => {
+              dispatch(toggleDonation())
+            }} className="flex items-start relative z-50 text-white px-3 py-4 justify-between gap-2">
               <div className="">
                 <h1 className="font-bold text-lg drop-shadow-2xl leading-none"><span className="drop-shadow-2xl">Support  #</span><span className="text-[#ff6400] drop-shadow-2xl inline">Bharat</span>Ke<span className="text-[#00d400] drop-shadow-2xl inline">Veer</span> with us</h1>
                 <p className="font-medium text-sm drop-shadow-2xl mt-2">We will match your contribution to our bharat ke veer</p>
                 <p className="font-medium mt-5 text-sm underline flex items-center">Learn More <ChevronRight size={16} /></p>
               </div>
               <div className="flex flex-col">
-                <input className="accent-primary" type="checkbox" checked={donation} onChange={(e) => dispatch(toggleDonation(e.target.checked))} size={20} />
+                <input className="accent-primary" type="checkbox" checked={donation} onChange={(e) => null} size={20} />
                 <p className="font-lato text-base font-semibold mt-1">₹5</p>
               </div>
             </div>
@@ -413,9 +439,15 @@ const page = () => {
                 FREE Delivery on your order!
               </p>}
             </div>
-            <div className="mx-4 border-[#BABABA] border-dashed border-b-[1px] py-5 space-y-2">
-              <div className="flex items-center justify-between">
-                <p className="font-lato text-sm text-[#666]  border-[#BABABA] border-dashed border-b-[1px] ">
+            <div className="mx-4 border-[#BABABA] border-dashed border-b-[1px] py-5 space-y-2 ">
+              <div className="flex items-center justify-between relative">
+                {hoverPlatformfee && <div className="p-2 shadow-lg rounded-lg absolute left-0 -top-24 bg-white" style={{ boxShadow: "0px 3.13869px 21.9708px 0px rgba(0, 0, 0, 0.25)" }}>
+                  <h2 className="font-lato text-sm text-[#666]">Platform fee</h2>
+                  <p className="font-lato text-xs text-[#999]">
+                    Ye humare gareeb aur berozgar developers ki dihadi hai. placements vaise hi kam hai electrical ke bande coding kr rahe hai. jindgai hi jhand hai.
+                  </p>
+                </div>}
+                <p className="font-lato text-sm text-[#666] cursor-pointer border-[#BABABA] border-dashed border-b-[1px]" onClick={() => setHoverPlatformfee(!hoverPlatformfee)}>
                   Platform fee
                 </p>
                 <p className="font-lato text-sm space-x-2">
@@ -427,8 +459,26 @@ const page = () => {
                   </span>
                 </p>
               </div>
-              <div className="flex  items-center justify-between">
-                <p className="font-lato text-sm text-[#666]  border-[#BABABA] border-dashed border-b-[1px] ">
+              <div className="flex  items-center  justify-between relative">
+                {hoverRestaurantCharges && <div className="p-2 shadow-lg rounded-lg absolute left-0 -top-[100px] space-y-1 bg-white w-full" style={{ boxShadow: "0px 3.13869px 21.9708px 0px rgba(0, 0, 0, 0.25)" }}>
+                  <h2 className="font-lato text-sm text-[#666]">GST and Restaurant Charges</h2>
+                  <p className="font-lato text-xs text-[#999] flex items-start justify-between">
+                    <span>Restaurant Packaging</span>
+                    ₹ {roundWithPrecision(restaurantCharges, 2)}
+                  </p>
+                  <p className="font-lato text-xs text-[#999] flex items-start justify-between ">
+                    <span className="flex flex-col">
+                      <p>Restaurant GST</p>
+                      <p className="text-[#B1B1B1] text-[9px] leading-tight max-w-[200px]">
+                        This tax is implemented by the
+                        Indian govt. hum isme kuch ni kr
+                        sakte.
+                      </p>
+                    </span>
+                    <p className="truncate" >₹ {roundWithPrecision(gst, 2)}</p>
+                  </p>
+                </div>}
+                <p className="font-lato text-sm text-[#666]  border-[#BABABA] border-dashed border-b-[1px] cursor-pointer " onClick={() => setHoverRestaurantCharges(!hoverRestaurantCharges)}>
                   GST and Restaurant Charges
                 </p>
                 <p className="font-lato text-sm font-bold text-[#444]">
@@ -520,6 +570,7 @@ const page = () => {
         openDrawer={openPaymentDrawer}
         setOpenDrawer={setOpenPaymentDrawer}
       /> */}
+      {confetti && <CouponConfetti id={appliedCoupon.id} discount={totalWithoutDiscount - total} />}
     </>
   );
 };

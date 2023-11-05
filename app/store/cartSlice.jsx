@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { calculateDeliveryFee, calculateGST, roundWithPrecision } from "@/app/utils/delivery";
 import { DELIVERYFEE } from "../utils/constants";
 
@@ -22,6 +22,7 @@ const initialState = {
         minCartValue: 0,
         validTill: null,
         validity: 0,
+        userId: "",
     },
     cookingReqText: "",
     confessionText: "",
@@ -74,6 +75,9 @@ export const cartSlice = createSlice({
                 state.restaurantCharges;
             state.totalWithoutDiscount = totalWithoutDiscount;
             state.total = totalWithoutDiscount - state.discount;
+            if (!state.items) {
+                state = state.total = 0;
+            }
         },
 
         updateItemQuantity: (state, action) => {
@@ -102,6 +106,9 @@ export const cartSlice = createSlice({
 
             state.totalWithoutDiscount = totalWithoutDiscount;
             state.total = totalWithoutDiscount - state.discount;
+
+            if (state.items.length === 0) state.total = 0;
+
         },
         clearCart: (state) => {
             state.items = [];
@@ -117,6 +124,15 @@ export const cartSlice = createSlice({
             state.totalWithoutDiscount = 0;
             state.confessionText = "";
             state.cookingReqText = "";
+            state.coupon = {
+                id: null,
+                discountPercent: 0,
+                maxDiscountValue: 0,
+                minCartValue: 0,
+                validTill: null,
+                validity: 0,
+                userId: "",
+            };
         },
         setCouponDetails: (state, action) => {
             state.coupon = action.payload;
@@ -143,7 +159,7 @@ export const cartSlice = createSlice({
                 state.donation = 5;
             }
             state.total = state.totalWithoutDiscount - state.discount + state.donation;
-
+            if (state.items.length === 0) state.total = 0;
         }
 
     },
@@ -165,3 +181,5 @@ export const selectSelectedAddress = (state) => state.cart.selectedAddress;
 export const selectCookingReqText = (state) => state.cart.cookingReqText;
 export const selectConfessionText = (state) => state.cart.confessionText;
 export const selectDonation = (state) => state.cart.donation;
+export const selectGST = (state) => state.cart.gst;
+export const selectRestaurantCharges = (state) => state.cart.restaurantCharges;

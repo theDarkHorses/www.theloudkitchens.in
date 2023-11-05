@@ -6,7 +6,7 @@ export default function Page() {
 
   useEffect(() => {
     const now = new Date();
-    const targetDate = new Date("October 31, 2023 23:59:59");
+    const targetDate = new Date("November 10, 2023 23:59:59");
     const timeDiff = targetDate.getTime() - now.getTime();
     setTimeLeft(Math.floor(timeDiff / 1000));
 

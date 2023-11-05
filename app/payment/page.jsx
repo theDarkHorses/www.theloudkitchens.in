@@ -15,9 +15,10 @@ import { clearCart } from "../store/cartSlice";
 import { useDispatch, useSelector } from "react-redux"
 import { addDoc, collection } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
-import { PENDING } from "../utils/constants";
+import { MINORDERVALUE, PENDING } from "../utils/constants";
 import { useRouter } from "next/navigation";
 import { roundWithPrecision } from "../utils/delivery";
+import OrderPlacedConfetti from "../components/OrderPlacedConfetti";
 
 
 export default function page() {
@@ -39,15 +40,27 @@ export default function page() {
     const router = useRouter()
     const [activeTab, setActiveTab] = useState(0)
     const [activeStep, setActiveStep] = useState(0)
+    const abortController = useRef()
+    const [confetti, setConfetti] = useState(false)
 
+
+    const canPay = fileName && imageUrl
 
 
     useEffect(() => {
         toast.loading("Processing...", { id: "order" });
 
         const verifyPayment = () => {
-            if (!cartItems?.length || totalWithoutDiscount < 200 || !selectedAddress) {
+            if (!cartItems?.length) {
                 toast.error("No items added", { id: "order" })
+                return router.replace("/cart")
+            }
+            if (!selectedAddress) {
+                toast.error("Please select an address", { id: 'order' })
+                return router.replace("/cart")
+            }
+            if (totalWithoutDiscount < MINORDERVALUE) {
+                toast.error(`Minimum order value is ₹${MINORDERVALUE}`, { id: "order" })
                 return router.replace("/cart")
             }
         }
@@ -79,10 +92,18 @@ export default function page() {
     };
 
     const handleCheckout = async (paymentProofUrl) => {
+
         if (!cartItems?.length) return toast.error("No items added", { id: "order" })
         if (!selectedAddress) return toast.error("Please select an address", { id: 'order' })
         if (totalWithoutDiscount < 200) return toast.error("Minimum order value is ₹200", { id: "order" })
         if (!paymentProofUrl) return toast.error("Please upload the payment proof", { id: "order" })
+
+        if (abortController.current) {
+            abortController.current.abort();
+        }
+
+        abortController.current = new AbortController();
+
         try {
             await addDoc(collection(DB, "orders"), {
                 items: cartItems,
@@ -106,11 +127,18 @@ export default function page() {
                     username: user?.username || ""
                 },
                 paymentProofUrl
-            })
+            }, { signal: abortController.current.signal })
 
-            dispatch(clearCart())
+            setConfetti(true)
+
+            setTimeout(() => {
+                setConfetti(false)
+            }
+                , 3000)
+
             toast.success("Order placed successfully", { id: "order" })
             router.replace("/orders")
+            dispatch(clearCart())
 
         }
         catch (error) {
@@ -174,8 +202,8 @@ export default function page() {
                                 <p onClick={() => setActiveTab(0)} className={` py-2 cursor-pointer   ${activeTab == 0 ? "text-primary border-b border-primary" : ""}`}>Pay using UPI</p>
                                 <p onClick={() => setActiveTab(1)} className={` py-2 ${activeTab == 1 ? "text-primary border-primary border-b" : ""}`}>Pay Using QR Code</p>
                             </div>
-                            <div onClick={handleUPIPaymentClick} className={`mt-12 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-4 rounded-lg border ${activeTab == 0 ? "block" : "hidden"}`}>
-                                <p className=" text-primary font-lato text-base">Pay ( Rs {roundWithPrecision(total)}) using UPI</p>
+                            <div onClick={handleUPIPaymentClick} style={{ boxShadow: "0px 0px 20px 0px #AC232340" }} className={`mt-12 border-primary mx-auto w-fit bg-[#EFE2E5] flex items-center space-x-2 px-4 py-4 rounded-lg border ${activeTab == 0 ? "block" : "hidden"}`}>
+                                <p className=" text-primary font-lato text-base font-bold">Pay ( Rs {roundWithPrecision(total)}) using UPI</p>
                                 <Image src={"/icons/rightTriangle.svg"} width={8} height={8} alt="go" />
                             </div>
                             <div className={`mx-auto space-y-5 mt-8 pb-4 ${activeTab == 1 ? "block" : "hidden"}`}>
@@ -249,9 +277,9 @@ export default function page() {
                 </div>
             </main>
             <footer>
-                <button onClick={handlePlaceOrder} className="fixed bottom-0 left-0 right-0 rounded-t-xl z-50 bg-primary text-white w-full py-5 font-lato text-lg">Place My order</button>
+                <button onClick={handlePlaceOrder} className={`fixed bottom-0 left-0 right-0 rounded-t-xl z-50  ${canPay ? "bg-primary" : "bg-[#757575]"} text-white w-full py-5 font-lato text-lg`}>Place My order</button>
             </footer>
+            {confetti && <OrderPlacedConfetti />}
         </section>
     )
 }
-
