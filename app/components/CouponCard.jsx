@@ -5,7 +5,7 @@ import tick from "../../public/icons/dtick.svg";
 import React, { useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCoupon, setCoupon } from "../store/cartSlice";
+import { selectCoupon, setCouponDetails } from "../store/cartSlice";
 
 const CouponCard = ({ id, discountPercent, maxDiscountValue, minCartValue, validTill, validity }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +76,7 @@ const CouponCard = ({ id, discountPercent, maxDiscountValue, minCartValue, valid
             className="font-lato text-primary  font-bold"
             onClick={() => {
               dispatch(
-                setCoupon({
+                setCouponDetails({
                   id,
                   discountPercent,
                   maxDiscountValue,

@@ -36,7 +36,7 @@ import { DELIVERYFEE, MINORDERVALUE } from "../utils/constants";
 import { useAuth } from "@clerk/nextjs";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { DB } from "../firebaseConfig";
-import CouponCard from "../components/CouponCard";
+// import CouponCard from "../components/CouponCard";
 import CouponConfetti from "../components/CouponConfetti";
 
 const page = () => {

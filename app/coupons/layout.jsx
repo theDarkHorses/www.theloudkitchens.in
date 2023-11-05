@@ -1,5 +1,5 @@
 import React from "react";
-import CouponCard from "../components/CouponCard";
+// import CouponCard from "../components/CouponCard";
 import { DB } from "../firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import CouponSearch from "../components/CouponSearch";
